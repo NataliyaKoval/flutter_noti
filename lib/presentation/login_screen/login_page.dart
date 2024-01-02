@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noti/consts/app_colors.dart';
 import 'package:noti/consts/strings.dart';
 import 'package:noti/presentation/login_screen/bloc/login_bloc.dart';
+import 'package:noti/presentation/login_screen/widgets/primary_button.dart';
 import 'package:noti/presentation/login_screen/widgets/time_input_field.dart';
 
 class LoginPage extends StatelessWidget {
@@ -34,11 +35,23 @@ class LoginPage extends StatelessWidget {
           ),
           child: Column(
             children: [
-              Text(Strings.loginPageStrings.title),
+              Text(
+                Strings.loginPageStrings.title,
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
               const SizedBox(
                 height: 26,
               ),
-              Text(Strings.loginPageStrings.hint),
+              Text(
+                Strings.loginPageStrings.hint,
+                style: const TextStyle(
+                  fontSize: 16,
+                  color: AppColors.sonicSilver,
+                ),
+              ),
               const SizedBox(
                 height: 58,
               ),
@@ -80,15 +93,10 @@ class LoginPage extends StatelessWidget {
                 ],
               ),
               Expanded(child: Container()),
-              SizedBox(
-                width: double.infinity,
-                height: 56,
-                child: ElevatedButton(
-                    onPressed: () {},
-                    child: Text(
-                      Strings.loginPageStrings.buttonText,
-                    )),
-              )
+              PrimaryButton(
+                text: Strings.loginPageStrings.buttonText,
+                onPressed: () {},
+              ),
             ],
           ),
         ),
