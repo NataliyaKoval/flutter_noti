@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:noti/consts/app_colors.dart';
+import 'package:noti/consts/strings.dart';
+import 'package:noti/presentation/login_screen/login_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -9,15 +13,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        systemNavigationBarColor: AppColors.eerieBlack,
+        statusBarColor: AppColors.eerieBlack,
+      ),
+    );
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: Strings.appStrings.appName,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Container(
-        color: Colors.green,
-      ),
+      home: const LoginPage(),
     );
   }
 }
