@@ -10,29 +10,30 @@ class PrimaryButton extends StatelessWidget {
   });
 
   final String text;
-  final void Function() onPressed;
+  final void Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: 56,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
+          minimumSize: Size.zero,
+          padding: const EdgeInsets.symmetric(vertical: 16,),
           disabledBackgroundColor: AppColors.gray,
           backgroundColor: AppColors.plumpPurple,
           foregroundColor: AppColors.blueMagentaViolet,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(12),
           ),
         ),
-        //onPressed: onPressed,
-        onPressed: null,
+        onPressed: onPressed,
         child: Text(
           Strings.loginPageStrings.buttonText,
           style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w700,
+            //height: 1.5,
             color: AppColors.white,
           ),
         ),

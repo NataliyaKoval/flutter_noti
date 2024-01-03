@@ -3,14 +3,22 @@ import 'package:flutter/services.dart';
 import 'package:noti/consts/app_colors.dart';
 
 class TimeInputField extends StatelessWidget {
-  const TimeInputField({super.key});
+  const TimeInputField({
+    super.key,
+    required this.onChanged,
+    required this.focusNode,
+  });
+
+  final void Function(String) onChanged;
+  final FocusNode focusNode;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: 44,
       height: 48,
-      child: TextFormField(
+      child: TextField(
+        focusNode: focusNode,
         keyboardType: TextInputType.number,
         inputFormatters: [
           LengthLimitingTextInputFormatter(1),
@@ -25,6 +33,7 @@ class TimeInputField extends StatelessWidget {
           fontWeight: FontWeight.w700,
         ),
         decoration: const InputDecoration(
+          //contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 17),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(8.0)),
             borderSide: BorderSide(
@@ -41,6 +50,7 @@ class TimeInputField extends StatelessWidget {
             ),
           ),
         ),
+        onChanged: onChanged,
       ),
     );
   }

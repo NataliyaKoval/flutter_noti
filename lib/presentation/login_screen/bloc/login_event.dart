@@ -8,3 +8,15 @@ class CurrentTimeTickedEvent extends LoginEvent {
 
   final String currentTime;
 }
+
+class InputChangedEvent extends LoginEvent {
+  InputChangedEvent({
+    required this.inputId,
+    required this.inputValue,
+  });
+
+  final String inputId;
+  final String inputValue;
+}
+
+

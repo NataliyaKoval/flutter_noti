@@ -12,14 +12,23 @@ Stream<DateTime> currentTime() =>
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc()
-      : super(LoginInitial(
-            currentTime: DateFormat('hh:mm').format(DateTime.now()))) {
+      : super(LoginState(
+          currentTime: DateFormat('hh:mm').format(DateTime.now()),
+          isConfirmButtonActive: false,
+        )) {
     _currentTimeSubscription = currentTime().listen(_onCurrentTimeTicked);
     on<CurrentTimeTickedEvent>(_setCurrentTime);
+    on<InputChangedEvent>(_getTimeFromInput);
   }
 
   late final StreamSubscription _currentTimeSubscription;
   String formattedTime = '';
+  String hoursFirstDigit = '';
+  String hoursSecondDigit = '';
+  String minutesFirstDigit = '';
+  String minutesSecondDigit = '';
+  String timeFromInput = '';
+  bool isConfirmButtonActive = false;
 
   void _onCurrentTimeTicked(DateTime dateTime) {
     formattedTime = DateFormat('hh:mm').format(dateTime);
@@ -34,6 +43,39 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   Future<void> _setCurrentTime(
       CurrentTimeTickedEvent event, Emitter<LoginState> emit) async {
-    emit(LoginInitial(currentTime: event.currentTime));
+    emit(LoginState(
+      currentTime: event.currentTime,
+      isConfirmButtonActive: isConfirmButtonActive,
+    ));
+  }
+
+  Future<void> _getTimeFromInput(
+      InputChangedEvent event, Emitter<LoginState> emit) async {
+    switch (event.inputId) {
+      case 'firstInput':
+        hoursFirstDigit = event.inputValue;
+        break;
+      case 'secondInput':
+        hoursSecondDigit = event.inputValue;
+        break;
+      case 'thirdInput':
+        minutesFirstDigit = event.inputValue;
+        break;
+      case 'fourthInput':
+        minutesSecondDigit = event.inputValue;
+        break;
+    }
+
+    if (hoursFirstDigit.isNotEmpty &&
+        hoursSecondDigit.isNotEmpty &&
+        minutesFirstDigit.isNotEmpty &&
+        minutesSecondDigit.isNotEmpty) {
+      timeFromInput =
+          '$hoursFirstDigit$hoursSecondDigit:$minutesFirstDigit$minutesSecondDigit';
+      isConfirmButtonActive = true;
+    } else {
+      timeFromInput = '';
+      isConfirmButtonActive = false;
+    }
   }
 }
