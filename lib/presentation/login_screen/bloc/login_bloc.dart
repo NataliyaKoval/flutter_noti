@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:noti/consts/time_input_id.dart';
 
 part 'login_event.dart';
 
@@ -27,7 +28,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   String hoursSecondDigit = '';
   String minutesFirstDigit = '';
   String minutesSecondDigit = '';
-  String inputTime = '';
 
   void _onCurrentTimeTicked(DateTime dateTime) {
     formattedTime = DateFormat('hh:mm').format(dateTime);
@@ -48,16 +48,16 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   Future<void> _getTimeFromInput(
       InputChangedEvent event, Emitter<LoginState> emit) async {
     switch (event.inputId) {
-      case 'firstInput':
+      case TimeInputId.first:
         hoursFirstDigit = event.inputValue;
         break;
-      case 'secondInput':
+      case TimeInputId.second:
         hoursSecondDigit = event.inputValue;
         break;
-      case 'thirdInput':
+      case TimeInputId.third:
         minutesFirstDigit = event.inputValue;
         break;
-      case 'fourthInput':
+      case TimeInputId.fourth:
         minutesSecondDigit = event.inputValue;
         break;
     }
@@ -66,18 +66,17 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         hoursSecondDigit.isNotEmpty &&
         minutesFirstDigit.isNotEmpty &&
         minutesSecondDigit.isNotEmpty) {
-      inputTime =
-          '$hoursFirstDigit$hoursSecondDigit:$minutesFirstDigit$minutesSecondDigit';
-      emit(state.copyWith(isConfirmButtonActive: true));
+      emit(state.copyWith(isConfirmButtonEnabled: true));
     } else {
-      inputTime = '';
-      emit(state.copyWith(isConfirmButtonActive: false));
+      emit(
+          state.copyWith(isConfirmButtonEnabled: false, isErrorVisible: false));
     }
   }
 
   Future<void> _compareCurrentTimeAndInputTime(
       ConfirmButtonClickedEvent event, Emitter<LoginState> emit) async {
-    if (formattedTime == inputTime) {
+    if (formattedTime ==
+        '$hoursFirstDigit$hoursSecondDigit:$minutesFirstDigit$minutesSecondDigit') {
       emit(state.copyWith(isConfirmed: true));
     } else {
       emit(state.copyWith(isErrorVisible: true));

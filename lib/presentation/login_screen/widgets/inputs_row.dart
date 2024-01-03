@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noti/consts/app_colors.dart';
-import 'package:noti/presentation/login_screen/bloc/login_bloc.dart';
+import 'package:noti/consts/time_input_id.dart';
 import 'package:noti/presentation/login_screen/widgets/time_input_field.dart';
 
 class InputsRow extends StatefulWidget {
-  const InputsRow({super.key});
+  const InputsRow({super.key, required this.onChanged});
+
+  final Function onChanged;
 
   @override
   State<InputsRow> createState() => _InputsRowState();
@@ -34,38 +35,32 @@ class _InputsRowState extends State<InputsRow> {
     fourthFocusNode.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
         TimeInputField(
+          focusNode: firstFocusNode,
           onChanged: (String value) {
             if (value.trim().isNotEmpty) {
-              FocusScope.of(context)
-                  .requestFocus(secondFocusNode);
+              FocusScope.of(context).requestFocus(secondFocusNode);
             }
-            context.read<LoginBloc>().add(InputChangedEvent(
-              inputId: 'firstInput',
-              inputValue: value,
-            ));
+            widget.onChanged(TimeInputId.first, value);
           },
-          focusNode: firstFocusNode,
         ),
         const SizedBox(
           width: 12,
         ),
         TimeInputField(
+          focusNode: secondFocusNode,
           onChanged: (String value) {
             if (value.trim().isNotEmpty) {
               FocusScope.of(context).requestFocus(thirdFocusNode);
             }
-            context.read<LoginBloc>().add(InputChangedEvent(
-              inputId: 'secondInput',
-              inputValue: value,
-            ));
+            widget.onChanged(TimeInputId.second, value);
           },
-          focusNode: secondFocusNode,
         ),
         const Padding(
           padding: EdgeInsets.symmetric(horizontal: 12.0),
@@ -79,32 +74,25 @@ class _InputsRowState extends State<InputsRow> {
           ),
         ),
         TimeInputField(
+          focusNode: thirdFocusNode,
           onChanged: (String value) {
             if (value.trim().isNotEmpty) {
-              FocusScope.of(context)
-                  .requestFocus(fourthFocusNode);
+              FocusScope.of(context).requestFocus(fourthFocusNode);
             }
-            context.read<LoginBloc>().add(InputChangedEvent(
-              inputId: 'thirdInput',
-              inputValue: value,
-            ));
+            widget.onChanged(TimeInputId.third, value);
           },
-          focusNode: thirdFocusNode,
         ),
         const SizedBox(
           width: 12,
         ),
         TimeInputField(
+          focusNode: fourthFocusNode,
           onChanged: (String value) {
             if (value.trim().isNotEmpty) {
               fourthFocusNode.unfocus();
             }
-            context.read<LoginBloc>().add(InputChangedEvent(
-              inputId: 'fourthInput',
-              inputValue: value,
-            ));
+            widget.onChanged(TimeInputId.fourth, value);
           },
-          focusNode: fourthFocusNode,
         ),
       ],
     );

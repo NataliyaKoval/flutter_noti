@@ -4,26 +4,26 @@ part of 'login_bloc.dart';
 class LoginState {
   const LoginState({
     required this.currentTime,
-    this.isConfirmButtonActive = false,
+    this.isConfirmButtonEnabled = false,
     this.isConfirmed = false,
     this.isErrorVisible = false,
   });
 
   final String currentTime;
-  final bool isConfirmButtonActive;
+  final bool isConfirmButtonEnabled;
   final bool isConfirmed;
   final bool isErrorVisible;
 
   LoginState copyWith({
     String? currentTime,
-    bool? isConfirmButtonActive,
+    bool? isConfirmButtonEnabled,
     bool? isConfirmed,
     bool? isErrorVisible,
   }) {
     return LoginState(
       currentTime: currentTime ?? this.currentTime,
-      isConfirmButtonActive:
-          isConfirmButtonActive ?? this.isConfirmButtonActive,
+      isConfirmButtonEnabled:
+          isConfirmButtonEnabled ?? this.isConfirmButtonEnabled,
       isConfirmed: isConfirmed ?? this.isConfirmed,
       isErrorVisible: isErrorVisible ?? this.isErrorVisible,
     );

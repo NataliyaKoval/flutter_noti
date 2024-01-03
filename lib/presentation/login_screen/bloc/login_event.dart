@@ -15,7 +15,7 @@ class InputChangedEvent extends LoginEvent {
     required this.inputValue,
   });
 
-  final String inputId;
+  final TimeInputId inputId;
   final String inputValue;
 }
 

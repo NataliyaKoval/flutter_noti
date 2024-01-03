@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noti/consts/app_colors.dart';
 import 'package:noti/consts/strings.dart';
+import 'package:noti/consts/time_input_id.dart';
 import 'package:noti/presentation/login_screen/bloc/login_bloc.dart';
 import 'package:noti/presentation/login_screen/widgets/error_message.dart';
 import 'package:noti/presentation/login_screen/widgets/inputs_row.dart';
@@ -75,7 +76,11 @@ class LoginPage extends StatelessWidget {
                     const SizedBox(
                       height: 58,
                     ),
-                    const InputsRow(),
+                    InputsRow(onChanged: (TimeInputId id, String value) {
+                      context
+                          .read<LoginBloc>()
+                          .add(InputChangedEvent(inputId: id, inputValue: value));
+                    }),
                     Expanded(child: Container()),
                     AnimatedOpacity(
                       duration: const Duration(milliseconds: 500),
@@ -84,7 +89,7 @@ class LoginPage extends StatelessWidget {
                     ),
                     PrimaryButton(
                       text: Strings.loginPageStrings.buttonText,
-                      onPressed: state.isConfirmButtonActive
+                      onPressed: state.isConfirmButtonEnabled
                           ? () {
                               context
                                   .read<LoginBloc>()
