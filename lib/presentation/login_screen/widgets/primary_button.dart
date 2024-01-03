@@ -16,25 +16,28 @@ class PrimaryButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          minimumSize: Size.zero,
-          padding: const EdgeInsets.symmetric(vertical: 16,),
-          disabledBackgroundColor: AppColors.gray,
-          backgroundColor: AppColors.plumpPurple,
-          foregroundColor: AppColors.blueMagentaViolet,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            minimumSize: Size.zero,
+            padding: const EdgeInsets.symmetric(vertical: 16,),
+            disabledBackgroundColor: AppColors.gray,
+            backgroundColor: AppColors.plumpPurple,
+            foregroundColor: AppColors.blueMagentaViolet,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
           ),
-        ),
-        onPressed: onPressed,
-        child: Text(
-          Strings.loginPageStrings.buttonText,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w700,
-            //height: 1.5,
-            color: AppColors.white,
+          onPressed: onPressed,
+          child: Text(
+            Strings.loginPageStrings.buttonText,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w700,
+              //height: 1.5,
+              color: AppColors.white,
+            ),
           ),
         ),
       ),

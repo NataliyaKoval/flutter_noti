@@ -19,4 +19,4 @@ class InputChangedEvent extends LoginEvent {
   final String inputValue;
 }
 
-
+class ConfirmButtonClickedEvent extends LoginEvent {}

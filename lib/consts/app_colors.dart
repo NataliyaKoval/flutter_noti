@@ -8,4 +8,6 @@ class AppColors {
   static const Color gray = Color(0xFFB9B9B9);
   static const Color white = Color(0xFFFFFFFF);
   static const Color blueMagentaViolet = Color(0xFF4B2AA5);
+  static const Color deepCarminePink = Color(0xFFF43528);
+  static const Color antiFlashWhite = Color(0xFFF3F3F4);
 }

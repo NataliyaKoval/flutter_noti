@@ -14,11 +14,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc()
       : super(LoginState(
           currentTime: DateFormat('hh:mm').format(DateTime.now()),
-          isConfirmButtonActive: false,
         )) {
     _currentTimeSubscription = currentTime().listen(_onCurrentTimeTicked);
     on<CurrentTimeTickedEvent>(_setCurrentTime);
     on<InputChangedEvent>(_getTimeFromInput);
+    on<ConfirmButtonClickedEvent>(_compareCurrentTimeAndInputTime);
   }
 
   late final StreamSubscription _currentTimeSubscription;
@@ -27,8 +27,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   String hoursSecondDigit = '';
   String minutesFirstDigit = '';
   String minutesSecondDigit = '';
-  String timeFromInput = '';
-  bool isConfirmButtonActive = false;
+  String inputTime = '';
 
   void _onCurrentTimeTicked(DateTime dateTime) {
     formattedTime = DateFormat('hh:mm').format(dateTime);
@@ -43,10 +42,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   Future<void> _setCurrentTime(
       CurrentTimeTickedEvent event, Emitter<LoginState> emit) async {
-    emit(LoginState(
-      currentTime: event.currentTime,
-      isConfirmButtonActive: isConfirmButtonActive,
-    ));
+    emit(state.copyWith(currentTime: event.currentTime));
   }
 
   Future<void> _getTimeFromInput(
@@ -70,12 +66,21 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         hoursSecondDigit.isNotEmpty &&
         minutesFirstDigit.isNotEmpty &&
         minutesSecondDigit.isNotEmpty) {
-      timeFromInput =
+      inputTime =
           '$hoursFirstDigit$hoursSecondDigit:$minutesFirstDigit$minutesSecondDigit';
-      isConfirmButtonActive = true;
+      emit(state.copyWith(isConfirmButtonActive: true));
     } else {
-      timeFromInput = '';
-      isConfirmButtonActive = false;
+      inputTime = '';
+      emit(state.copyWith(isConfirmButtonActive: false));
+    }
+  }
+
+  Future<void> _compareCurrentTimeAndInputTime(
+      ConfirmButtonClickedEvent event, Emitter<LoginState> emit) async {
+    if (formattedTime == inputTime) {
+      emit(state.copyWith(isConfirmed: true));
+    } else {
+      emit(state.copyWith(isErrorVisible: true));
     }
   }
 }
