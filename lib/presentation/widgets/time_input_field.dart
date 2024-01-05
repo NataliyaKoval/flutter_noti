@@ -17,7 +17,7 @@ class TimeInputField extends StatelessWidget {
     return SizedBox(
       width: 44,
       height: 48,
-      child: TextField(
+      child: TextFormField(
         focusNode: focusNode,
         keyboardType: TextInputType.number,
         inputFormatters: [

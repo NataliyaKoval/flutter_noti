@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:noti/consts/app_colors.dart';
 import 'package:noti/consts/image_assets.dart';
 import 'package:noti/consts/strings.dart';
+import 'package:noti/presentation/add_new_notification_screen/add_new_notification_page.dart';
 
 class ButtonWithIcon extends StatelessWidget {
   const ButtonWithIcon({super.key});
@@ -16,14 +17,17 @@ class ButtonWithIcon extends StatelessWidget {
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             padding: const EdgeInsets.symmetric(vertical: 12),
-            disabledBackgroundColor: AppColors.gray,
             backgroundColor: AppColors.plumpPurple,
             foregroundColor: AppColors.blueMagentaViolet,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),
           ),
-          onPressed: null,
+          onPressed: () {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => AddNewNotificationPage(),
+            ));
+          },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,

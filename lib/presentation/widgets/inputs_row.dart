@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:noti/consts/app_colors.dart';
 import 'package:noti/consts/time_input_id.dart';
-import 'package:noti/presentation/login_screen/widgets/time_input_field.dart';
+import 'package:noti/presentation/widgets/time_input_field.dart';
 
-class InputsRow extends StatefulWidget {
-  const InputsRow({super.key, required this.onChanged});
+class TimeInputsRow extends StatefulWidget {
+  const TimeInputsRow({super.key, required this.onChanged});
 
   final Function onChanged;
 
   @override
-  State<InputsRow> createState() => _InputsRowState();
+  State<TimeInputsRow> createState() => _TimeInputsRowState();
 }
 
-class _InputsRowState extends State<InputsRow> {
+class _TimeInputsRowState extends State<TimeInputsRow> {
   late final FocusNode firstFocusNode;
   late final FocusNode secondFocusNode;
   late final FocusNode thirdFocusNode;

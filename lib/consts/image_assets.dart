@@ -6,4 +6,5 @@ class ImageAssets {
   static const String error = '${_root}error$_svg';
   static const String delete = '${_root}delete$_svg';
   static const String add = '${_root}add$_svg';
+  static const String placeholder = '${_root}placeholder$_svg';
 }
