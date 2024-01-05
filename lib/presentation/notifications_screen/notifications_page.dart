@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:noti/consts/app_colors.dart';
 import 'package:noti/consts/strings.dart';
 import 'package:noti/presentation/notifications_screen/widgets/custom_tab.dart';
+import 'package:noti/presentation/one_time_tab/one_time_tab.dart';
 
 class NotificationsPage extends StatelessWidget {
   const NotificationsPage({super.key});
@@ -53,9 +54,7 @@ class NotificationsPage extends StatelessWidget {
           body: TabBarView(
             //controller: _tabController,
             children: [
-              Container(
-                color: Colors.yellow,
-              ),
+              OneTimeTab(),
               Container(
                 color: Colors.green,
               ),

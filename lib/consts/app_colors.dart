@@ -10,4 +10,5 @@ class AppColors {
   static const Color blueMagentaViolet = Color(0xFF4B2AA5);
   static const Color deepCarminePink = Color(0xFFF43528);
   static const Color antiFlashWhite = Color(0xFFF3F3F4);
+  static const Color ghostWhite = Color(0xFFF8FAFB);
 }
