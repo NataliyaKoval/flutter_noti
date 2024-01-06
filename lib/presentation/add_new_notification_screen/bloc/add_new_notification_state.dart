@@ -1,6 +1,17 @@
 part of 'add_new_notification_cubit.dart';
 
 @immutable
-abstract class AddNewNotificationState {}
+class AddNewNotificationState {
+  const AddNewNotificationState({this.isConfirmButtonEnabled = false});
 
-class AddNewNotificationInitial extends AddNewNotificationState {}
+  final bool isConfirmButtonEnabled;
+
+  AddNewNotificationState copyWith({
+    bool? isConfirmButtonEnabled,
+  }) {
+    return AddNewNotificationState(
+      isConfirmButtonEnabled:
+          isConfirmButtonEnabled ?? this.isConfirmButtonEnabled,
+    );
+  }
+}

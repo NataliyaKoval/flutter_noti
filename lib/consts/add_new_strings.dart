@@ -6,4 +6,5 @@ class AddNewStrings {
   String get hint => 'Enter message';
   String get selectButtonText => 'Select icon';
   String get confirmButtonText => 'Confirm';
+  String get errorMessage => 'Please enter some text';
 }

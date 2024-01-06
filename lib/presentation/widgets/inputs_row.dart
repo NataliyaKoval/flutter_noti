@@ -43,6 +43,7 @@ class _TimeInputsRowState extends State<TimeInputsRow> {
       children: [
         TimeInputField(
           focusNode: firstFocusNode,
+          formatterRegExp: '[0-2]',
           onChanged: (String value) {
             if (value.trim().isNotEmpty) {
               FocusScope.of(context).requestFocus(secondFocusNode);
@@ -55,6 +56,7 @@ class _TimeInputsRowState extends State<TimeInputsRow> {
         ),
         TimeInputField(
           focusNode: secondFocusNode,
+          formatterRegExp: '[0-9]',
           onChanged: (String value) {
             if (value.trim().isNotEmpty) {
               FocusScope.of(context).requestFocus(thirdFocusNode);
@@ -75,6 +77,7 @@ class _TimeInputsRowState extends State<TimeInputsRow> {
         ),
         TimeInputField(
           focusNode: thirdFocusNode,
+          formatterRegExp: '[0-5]',
           onChanged: (String value) {
             if (value.trim().isNotEmpty) {
               FocusScope.of(context).requestFocus(fourthFocusNode);
@@ -87,6 +90,7 @@ class _TimeInputsRowState extends State<TimeInputsRow> {
         ),
         TimeInputField(
           focusNode: fourthFocusNode,
+          formatterRegExp: '[0-9]',
           onChanged: (String value) {
             if (value.trim().isNotEmpty) {
               fourthFocusNode.unfocus();

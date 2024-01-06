@@ -7,10 +7,12 @@ class TimeInputField extends StatelessWidget {
     super.key,
     required this.onChanged,
     required this.focusNode,
+    required this.formatterRegExp,
   });
 
   final void Function(String) onChanged;
   final FocusNode focusNode;
+  final String formatterRegExp;
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +24,8 @@ class TimeInputField extends StatelessWidget {
         keyboardType: TextInputType.number,
         inputFormatters: [
           LengthLimitingTextInputFormatter(1),
+          FilteringTextInputFormatter.digitsOnly,
+          FilteringTextInputFormatter.allow(RegExp(formatterRegExp)),
         ],
         textAlign: TextAlign.center,
         textAlignVertical: TextAlignVertical.top,
@@ -44,12 +48,22 @@ class TimeInputField extends StatelessWidget {
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(8.0)),
             borderSide: BorderSide(
-              //color: AppColors.platinum,
               color: AppColors.plumpPurple,
               width: 1,
             ),
           ),
+          errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(8.0)),
+            borderSide: BorderSide(
+              color: AppColors.deepCarminePink,
+              width: 1,
+            ),
+          ),
+          errorStyle: TextStyle(height: 0),
         ),
+        validator: (value) => value == null || value.isEmpty
+            ? ''
+            : null,
         onChanged: onChanged,
       ),
     );
