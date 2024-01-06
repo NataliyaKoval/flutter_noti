@@ -3,7 +3,9 @@ import 'package:noti/consts/app_colors.dart';
 import 'package:noti/consts/strings.dart';
 
 class SelectIconButton extends StatelessWidget {
-  const SelectIconButton({super.key});
+  const SelectIconButton({super.key, required this.onPressed});
+
+  final Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class SelectIconButton extends StatelessWidget {
           color: AppColors.plumpPurple,
         ),
       ),
-      onPressed: () {},
+      onPressed: onPressed,
       child: Text(Strings.addNewStrings.selectButtonText),
     );
   }

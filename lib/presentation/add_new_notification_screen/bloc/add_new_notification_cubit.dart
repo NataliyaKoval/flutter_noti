@@ -13,6 +13,7 @@ class AddNewNotificationCubit extends Cubit<AddNewNotificationState> {
   String minutesFirstDigit = '';
   String minutesSecondDigit = '';
   IconData? icon;
+  Color? iconBackground;
 
   void getMessage(String value) {
     message = value;
@@ -50,5 +51,10 @@ class AddNewNotificationCubit extends Cubit<AddNewNotificationState> {
     } else {
       emit(state.copyWith(isConfirmButtonEnabled: false));
     }
+  }
+
+  void getIconBackground(value) {
+    iconBackground = value;
+    print(iconBackground);
   }
 }

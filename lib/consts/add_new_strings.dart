@@ -7,4 +7,8 @@ class AddNewStrings {
   String get selectButtonText => 'Select icon';
   String get confirmButtonText => 'Confirm';
   String get errorMessage => 'Please enter some text';
+
+  String get bottomSheetTitle => 'Icon style';
+  String get backgroundColors => 'Background colors';
+  String get selectIcons => 'Select icons';
 }
