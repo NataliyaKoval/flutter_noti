@@ -50,67 +50,77 @@ class AddNewNotificationPage extends StatelessWidget {
             ),
             child:
                 BlocBuilder<AddNewNotificationCubit, AddNewNotificationState>(
-              builder: (BuildContext context, AddNewNotificationState state) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SubtitleText(text: Strings.addNewStrings.message),
-                    MultilineTextField(
-                      onChanged: (String value) {
-                        context
-                            .read<AddNewNotificationCubit>()
-                            .getMessage(value);
-                      },
-                    ),
-                    const SizedBox(height: 24),
-                    SubtitleText(text: Strings.addNewStrings.typeTime),
-                    TimeInputsRow(onChanged: (TimeInputId id, String value) {
-                      context
-                          .read<AddNewNotificationCubit>()
-                          .getTime(id, value);
-                    }),
-                    const SizedBox(height: 24),
-                    SubtitleText(text: Strings.addNewStrings.icon),
-                    Row(
-                      children: [
-                        Container(
-                          height: 80,
-                          width: 80,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(color: AppColors.gray),
-                          ),
-                          child: Center(
-                              child: SvgPicture.asset(ImageAssets.placeholder)),
+                    builder:
+                        (BuildContext context, AddNewNotificationState state) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SubtitleText(text: Strings.addNewStrings.message),
+                  MultilineTextField(
+                    onChanged: (String value) {
+                      context.read<AddNewNotificationCubit>().getMessage(value);
+                    },
+                  ),
+                  const SizedBox(height: 24),
+                  SubtitleText(text: Strings.addNewStrings.typeTime),
+                  TimeInputsRow(onChanged: (TimeInputId id, String value) {
+                    context.read<AddNewNotificationCubit>().getTime(id, value);
+                  }),
+                  const SizedBox(height: 24),
+                  SubtitleText(text: Strings.addNewStrings.icon),
+                  Row(
+                    children: [
+                      Container(
+                        height: 80,
+                        width: 80,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(color: AppColors.gray),
                         ),
-                        const SizedBox(
-                          width: 16,
-                        ),
-                        SelectIconButton(
-                          onPressed: () {
-                            showModalBottomSheet(
-                              context: context,
-                              //isScrollControlled: true,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30.0),
+                        child: Center(
+                            child: SvgPicture.asset(ImageAssets.placeholder)),
+                      ),
+                      const SizedBox(
+                        width: 16,
+                      ),
+                      SelectIconButton(
+                        onPressed: () {
+                          showModalBottomSheet(
+                            context: context,
+                            //isScrollControlled: true,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(30),
+                                topRight: Radius.circular(30),
                               ),
-                              backgroundColor: AppColors.white,
-                              builder: (BuildContext context) =>
-                                  const IconBottomSheet(),
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                    const Expanded(child: SizedBox()),
-                    BigFilledButton(
-                      onPressed: state.isConfirmButtonEnabled ? () {} : null,
-                      text: Strings.addNewStrings.confirmButtonText,
-                    ),
-                  ],
-                );
-              },
-            ),
+                            ),
+                            backgroundColor: AppColors.white,
+                            builder: (BuildContext innerContext) =>
+                                BlocProvider.value(
+                              value: context.read<AddNewNotificationCubit>(),
+                              child: BlocBuilder<AddNewNotificationCubit,
+                                  AddNewNotificationState>(
+                                builder: (BuildContext context,
+                                    AddNewNotificationState state) {
+                                  return IconBottomSheet(
+                                    iconIndex: state.iconIndex,
+                                  );
+                                },
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                  const Expanded(child: SizedBox()),
+                  BigFilledButton(
+                    onPressed: state.isConfirmButtonEnabled ? () {} : null,
+                    text: Strings.addNewStrings.confirmButtonText,
+                  ),
+                ],
+              );
+            }),
           ),
         );
       }),
