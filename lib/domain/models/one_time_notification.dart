@@ -1,13 +1,15 @@
-import 'package:flutter/material.dart';
-
 class OneTimeNotification {
   const OneTimeNotification({
+    required this.id,
     required this.time,
     required this.message,
-    required this.iconData,
+    this.colorIndex,
+    this.iconIdIndex,
   });
 
+  final String id;
   final DateTime time;
   final String message;
-  final IconData iconData;
+  final int? colorIndex;
+  final int? iconIdIndex;
 }
