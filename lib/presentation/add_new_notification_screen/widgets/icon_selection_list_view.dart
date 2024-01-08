@@ -50,6 +50,10 @@ class IconSelectionListView extends StatelessWidget {
                 child: Center(
                   child: SvgPicture.asset(
                     'assets/icons/${iconIdsList[index]}.svg',
+                    colorFilter: const ColorFilter.mode(
+                      AppColors.plumpPurple,
+                      BlendMode.srcIn,
+                    ),
                     width: 40,
                     height: 40,
                   ),

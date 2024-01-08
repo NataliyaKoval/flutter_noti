@@ -5,17 +5,24 @@ import 'package:noti/consts/app_colors.dart';
 import 'package:noti/consts/image_assets.dart';
 import 'package:noti/consts/strings.dart';
 import 'package:noti/presentation/add_new_notification_screen/bloc/add_new_notification_cubit.dart';
-import 'package:noti/presentation/add_new_notification_screen/widgets/icon_background_row.dart';
+import 'package:noti/presentation/add_new_notification_screen/widgets/icon_background_list_view.dart';
 import 'package:noti/presentation/add_new_notification_screen/widgets/icon_selection_list_view.dart';
+import 'package:noti/presentation/widgets/big_filled_button.dart';
 
 class IconBottomSheet extends StatelessWidget {
-  const IconBottomSheet({super.key, required this.iconIndex});
+  const IconBottomSheet({
+    super.key,
+    required this.iconIndex,
+    required this.iconBackgroundIndex,
+  });
 
   final int iconIndex;
+  final int iconBackgroundIndex;
 
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
@@ -62,11 +69,12 @@ class IconBottomSheet extends StatelessWidget {
           padding: const EdgeInsets.only(left: 8, bottom: 16, right: 8),
           child: SizedBox(
             height: 70,
-            child: IconBackgroundRow(
-              onTap: (Color value) {
+            child: IconBackgroundListView(
+              iconIndex: iconBackgroundIndex,
+              onTap: (int index) {
                 context
                     .read<AddNewNotificationCubit>()
-                    .getIconBackground(value);
+                    .getIconBackground(index);
               },
             ),
           ),
@@ -83,13 +91,32 @@ class IconBottomSheet extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(
-          height: 70,
-          child: IconSelectionListView(
-            onTap: (int index) {
-            context.read<AddNewNotificationCubit>().getIcon(index);
-          },
-            iconIndex: iconIndex,),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: SizedBox(
+            height: 70,
+            child: IconSelectionListView(
+              onTap: (int index) {
+                context.read<AddNewNotificationCubit>().getIcon(index);
+              },
+              iconIndex: iconIndex,
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(
+            top: 94,
+            bottom: 34,
+            left: 16,
+            right: 16,
+          ),
+          child: BigFilledButton(
+            text: Strings.addNewStrings.saveButtonText,
+            onPressed: () {
+              context.read<AddNewNotificationCubit>().saveIconData();
+              Navigator.of(context).pop();
+            },
+          ),
         ),
       ],
     );

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:noti/consts/app_colors.dart';
-import 'package:noti/consts/strings.dart';
 
 class BigFilledButton extends StatelessWidget {
   const BigFilledButton({
@@ -19,7 +18,7 @@ class BigFilledButton extends StatelessWidget {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           minimumSize: Size.zero,
-          padding: const EdgeInsets.symmetric(vertical: 16,),
+          padding: const EdgeInsets.symmetric(vertical: 16),
           disabledBackgroundColor: AppColors.gray,
           backgroundColor: AppColors.plumpPurple,
           foregroundColor: AppColors.blueMagentaViolet,
@@ -29,7 +28,7 @@ class BigFilledButton extends StatelessWidget {
         ),
         onPressed: onPressed,
         child: Text(
-          Strings.loginPageStrings.buttonText,
+          text,
           style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w700,

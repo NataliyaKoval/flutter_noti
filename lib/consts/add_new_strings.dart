@@ -11,4 +11,5 @@ class AddNewStrings {
   String get bottomSheetTitle => 'Icon style';
   String get backgroundColors => 'Background colors';
   String get selectIcons => 'Select icons';
+  String get saveButtonText => 'Save changes';
 }

@@ -53,13 +53,15 @@ class AddNewNotificationCubit extends Cubit<AddNewNotificationState> {
     }
   }
 
-  void getIconBackground(value) {
-    iconBackground = value;
-    print(value);
+  void getIconBackground(int index) {
+    emit(state.copyWith(iconBackgroundIndex: index));
   }
 
   void getIcon(int index) {
-    print(index);
     emit(state.copyWith(iconIndex: index));
+  }
+
+  void saveIconData() {
+    emit(state.copyWith(isIconChosen: true));
   }
 }

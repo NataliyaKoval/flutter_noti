@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:noti/consts/app_colors.dart';
+import 'package:noti/consts/icon_colors_list.dart';
+import 'package:noti/consts/icon_ids_list.dart';
 import 'package:noti/consts/image_assets.dart';
 import 'package:noti/consts/strings.dart';
 import 'package:noti/consts/time_input_id.dart';
@@ -44,7 +46,7 @@ class AddNewNotificationPage extends StatelessWidget {
           body: Padding(
             padding: const EdgeInsets.only(
               top: 24,
-              bottom: 34,
+              bottom: 32,
               left: 16,
               right: 16,
             ),
@@ -76,9 +78,20 @@ class AddNewNotificationPage extends StatelessWidget {
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           border: Border.all(color: AppColors.gray),
+                          color: state.isIconChosen
+                              ? iconColorsList[state.iconBackgroundIndex]
+                              : AppColors.white,
                         ),
                         child: Center(
-                            child: SvgPicture.asset(ImageAssets.placeholder)),
+                            child: state.isIconChosen
+                                ? SvgPicture.asset(
+                                    'assets/icons/${iconIdsList[state.iconIndex]}.svg',
+                                    colorFilter: const ColorFilter.mode(
+                                        AppColors.plumpPurple, BlendMode.srcIn),
+                                    width: 40,
+                                    height: 40,
+                                  )
+                                : SvgPicture.asset(ImageAssets.placeholder)),
                       ),
                       const SizedBox(
                         width: 16,
@@ -87,7 +100,7 @@ class AddNewNotificationPage extends StatelessWidget {
                         onPressed: () {
                           showModalBottomSheet(
                             context: context,
-                            //isScrollControlled: true,
+                            isScrollControlled: true,
                             shape: const RoundedRectangleBorder(
                               borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(30),
@@ -100,10 +113,14 @@ class AddNewNotificationPage extends StatelessWidget {
                               value: context.read<AddNewNotificationCubit>(),
                               child: BlocBuilder<AddNewNotificationCubit,
                                   AddNewNotificationState>(
-                                builder: (BuildContext context,
-                                    AddNewNotificationState state) {
+                                builder: (
+                                  BuildContext context,
+                                  AddNewNotificationState state,
+                                ) {
                                   return IconBottomSheet(
                                     iconIndex: state.iconIndex,
+                                    iconBackgroundIndex:
+                                        state.iconBackgroundIndex,
                                   );
                                 },
                               ),
