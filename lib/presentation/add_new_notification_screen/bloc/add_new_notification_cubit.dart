@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noti/consts/time_input_id.dart';
+import 'package:noti/domain/models/one_time_notification.dart';
+import 'package:noti/domain/use_cases/save_notification_use_case.dart';
+import 'package:uuid/uuid.dart';
 
 part 'add_new_notification_state.dart';
 
 class AddNewNotificationCubit extends Cubit<AddNewNotificationState> {
-  AddNewNotificationCubit() : super(const AddNewNotificationState());
+  AddNewNotificationCubit({required this.saveNotificationUseCase})
+      : super(const AddNewNotificationState());
+
+  final SaveNotificationUseCase saveNotificationUseCase;
 
   String message = '';
   String hoursFirstDigit = '';
   String hoursSecondDigit = '';
   String minutesFirstDigit = '';
   String minutesSecondDigit = '';
-  IconData? icon;
-  Color? iconBackground;
 
   void getMessage(String value) {
     message = value;
@@ -39,15 +43,12 @@ class AddNewNotificationCubit extends Cubit<AddNewNotificationState> {
   }
 
   void _enableConfirmButton() {
-    if (message.isNotEmpty && hoursFirstDigit.isNotEmpty &&
-        hoursSecondDigit.isNotEmpty && minutesFirstDigit.isNotEmpty &&
+    if (message.isNotEmpty &&
+        hoursFirstDigit.isNotEmpty &&
+        hoursSecondDigit.isNotEmpty &&
+        minutesFirstDigit.isNotEmpty &&
         minutesSecondDigit.isNotEmpty) {
       emit(state.copyWith(isConfirmButtonEnabled: true));
-      // DateTime now = DateTime.now();
-      // int hours = int.parse('$hoursFirstDigit$hoursSecondDigit');
-      // int minutes = int.parse('$minutesFirstDigit$minutesSecondDigit');
-      // DateTime time = DateTime(now.year, now.month, now.day, hours, minutes);
-      // print(time);
     } else {
       emit(state.copyWith(isConfirmButtonEnabled: false));
     }
@@ -61,7 +62,27 @@ class AddNewNotificationCubit extends Cubit<AddNewNotificationState> {
     emit(state.copyWith(iconIndex: index));
   }
 
-  void saveIconData() {
+  void displayIconData() {
     emit(state.copyWith(isIconChosen: true));
+  }
+
+  void createAndSaveNotification() async {
+    var uuid = const Uuid();
+    String id = uuid.v1();
+
+    DateTime now = DateTime.now();
+    int hours = int.parse('$hoursFirstDigit$hoursSecondDigit');
+    int minutes = int.parse('$minutesFirstDigit$minutesSecondDigit');
+    DateTime time = DateTime(now.year, now.month, now.day, hours, minutes);
+
+    OneTimeNotification notification = OneTimeNotification(
+      id: id,
+      time: time,
+      message: message,
+      iconIdIndex: state.iconIndex,
+      colorIndex: state.iconBackgroundIndex,
+    );
+
+    await saveNotificationUseCase(notification);
   }
 }

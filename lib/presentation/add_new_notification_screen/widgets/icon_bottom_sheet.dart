@@ -113,7 +113,7 @@ class IconBottomSheet extends StatelessWidget {
           child: BigFilledButton(
             text: Strings.addNewStrings.saveButtonText,
             onPressed: () {
-              context.read<AddNewNotificationCubit>().saveIconData();
+              context.read<AddNewNotificationCubit>().displayIconData();
               Navigator.of(context).pop();
             },
           ),

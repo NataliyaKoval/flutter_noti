@@ -7,6 +7,8 @@ import 'package:noti/consts/icon_ids_list.dart';
 import 'package:noti/consts/image_assets.dart';
 import 'package:noti/consts/strings.dart';
 import 'package:noti/consts/time_input_id.dart';
+import 'package:noti/domain/repository/repository.dart';
+import 'package:noti/domain/use_cases/save_notification_use_case.dart';
 import 'package:noti/presentation/add_new_notification_screen/bloc/add_new_notification_cubit.dart';
 import 'package:noti/presentation/add_new_notification_screen/widgets/icon_bottom_sheet.dart';
 import 'package:noti/presentation/add_new_notification_screen/widgets/multiline_text_field.dart';
@@ -21,7 +23,11 @@ class AddNewNotificationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AddNewNotificationCubit(),
+      create: (context) => AddNewNotificationCubit(
+        saveNotificationUseCase: SaveNotificationUseCase(
+          repository: context.read<Repository>(),
+        ),
+      ),
       child: Builder(builder: (context) {
         return Scaffold(
           resizeToAvoidBottomInset: false,
@@ -132,7 +138,13 @@ class AddNewNotificationPage extends StatelessWidget {
                   ),
                   const Expanded(child: SizedBox()),
                   BigFilledButton(
-                    onPressed: state.isConfirmButtonEnabled ? () {} : null,
+                    onPressed: state.isConfirmButtonEnabled
+                        ? () {
+                            context
+                                .read<AddNewNotificationCubit>()
+                                .createAndSaveNotification();
+                          }
+                        : null,
                     text: Strings.addNewStrings.confirmButtonText,
                   ),
                 ],
