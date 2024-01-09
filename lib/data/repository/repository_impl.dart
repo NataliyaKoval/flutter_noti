@@ -4,7 +4,7 @@ import 'package:noti/domain/models/one_time_notification.dart';
 import 'package:noti/domain/repository/repository.dart';
 
 class RepositoryImpl implements Repository {
-  const RepositoryImpl({
+  RepositoryImpl({
     required this.localDatabase,
   });
 
@@ -15,5 +15,15 @@ class RepositoryImpl implements Repository {
       OneTimeNotification notification) async {
     localDatabase.addOneTimeNotification(
         OneTimeNotificationEntity.fromOneTimeNotification(notification));
+  }
+
+  @override
+  List<OneTimeNotification> getOneTimeNotifications() {
+    return localDatabase.getOneTimeNotifications();
+  }
+
+  @override
+  void removeOneTimeNotification(String id) {
+    localDatabase.removeOneTimeNotification(id);
   }
 }

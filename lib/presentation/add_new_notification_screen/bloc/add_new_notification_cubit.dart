@@ -79,10 +79,11 @@ class AddNewNotificationCubit extends Cubit<AddNewNotificationState> {
       id: id,
       time: time,
       message: message,
-      iconIdIndex: state.iconIndex,
-      colorIndex: state.iconBackgroundIndex,
+      iconIdIndex: state.isIconChosen ? state.iconIndex : null,
+      colorIndex: state.isIconChosen ? state.iconBackgroundIndex : null,
     );
 
     await saveNotificationUseCase(notification);
+    emit(state.copyWith(isConfirmed: true));
   }
 }

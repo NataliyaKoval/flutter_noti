@@ -12,4 +12,8 @@ class LocalDatabase {
   List<OneTimeNotificationEntity> getOneTimeNotifications() {
     return oneTimeNotifications.values.toList();
   }
+
+  void removeOneTimeNotification(String key) {
+    oneTimeNotifications.delete(key);
+  }
 }
