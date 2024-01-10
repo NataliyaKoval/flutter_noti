@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noti/domain/models/one_time_notification.dart';
@@ -17,8 +18,17 @@ class OneTimeTabCubit extends Cubit<OneTimeTabState> {
 
   void getOneTimeNotifications() async {
     try {
-      List<OneTimeNotification> list = await getOneTimeNotificationsUseCase();
-      emit(state.copyWith(list: list));
+      List<OneTimeNotification> savedNotifications =
+          await getOneTimeNotificationsUseCase();
+      List<OneTimeNotification> oldNotifications = List.of(savedNotifications)
+        ..removeWhere((element) => element.time.isAfter(DateTime.now()));
+      for (var element in oldNotifications) {
+        removeOneTimeNotification(element.id);
+      }
+      List<OneTimeNotification> actualNotifications =
+      List.of(savedNotifications)
+        ..removeWhere((element) => element.time.isBefore(DateTime.now()));
+      emit(state.copyWith(list: actualNotifications));
     } catch (e) {
       print(e);
     }
@@ -26,7 +36,8 @@ class OneTimeTabCubit extends Cubit<OneTimeTabState> {
 
   void removeOneTimeNotification(int id) {
     removeOneTimeNotificationUseCase(id);
-    emit(state.copyWith(list: List.of(state.list)..removeWhere((element) => element.id == id)));
+    AwesomeNotifications().cancelSchedule(id);
+    emit(state.copyWith(
+        list: List.of(state.list)..removeWhere((element) => element.id == id)));
   }
 }
-
