@@ -17,12 +17,12 @@ class NotificationCard extends StatelessWidget {
     required this.onPressed,
   });
 
-  final String id;
+  final int id;
   final String message;
   final String time;
   final int? colorIndex;
   final int? iconIndex;
-  final Function(String) onPressed;
+  final Function(int) onPressed;
 
   @override
   Widget build(BuildContext context) {

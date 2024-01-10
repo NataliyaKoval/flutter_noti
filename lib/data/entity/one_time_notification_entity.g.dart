@@ -18,7 +18,7 @@ class OneTimeNotificationEntityAdapter
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return OneTimeNotificationEntity(
-      id: fields[0] as String,
+      id: fields[0] as int,
       time: fields[1] as DateTime,
       message: fields[2] as String,
       colorIndex: fields[3] as int?,

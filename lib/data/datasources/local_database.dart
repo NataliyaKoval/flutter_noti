@@ -13,7 +13,7 @@ class LocalDatabase {
     return oneTimeNotifications.values.toList();
   }
 
-  void removeOneTimeNotification(String key) {
+  void removeOneTimeNotification(int key) {
     oneTimeNotifications.delete(key);
   }
 }

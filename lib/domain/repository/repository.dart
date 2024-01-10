@@ -5,5 +5,5 @@ abstract class Repository {
 
   List<OneTimeNotification> getOneTimeNotifications();
 
-  void removeOneTimeNotification(String id);
+  void removeOneTimeNotification(int id);
 }

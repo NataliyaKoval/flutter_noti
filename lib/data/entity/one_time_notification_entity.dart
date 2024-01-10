@@ -15,7 +15,7 @@ class OneTimeNotificationEntity implements OneTimeNotification {
 
   @HiveField(0)
   @override
-  final String id;
+  final int id;
 
   @HiveField(1)
   @override

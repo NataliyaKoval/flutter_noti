@@ -24,7 +24,7 @@ class OneTimeTabCubit extends Cubit<OneTimeTabState> {
     }
   }
 
-  void removeOneTimeNotification(String id) {
+  void removeOneTimeNotification(int id) {
     removeOneTimeNotificationUseCase(id);
     emit(state.copyWith(list: List.of(state.list)..removeWhere((element) => element.id == id)));
   }

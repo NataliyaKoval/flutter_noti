@@ -23,7 +23,7 @@ class RepositoryImpl implements Repository {
   }
 
   @override
-  void removeOneTimeNotification(String id) {
+  void removeOneTimeNotification(int id) {
     localDatabase.removeOneTimeNotification(id);
   }
 }

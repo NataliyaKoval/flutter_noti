@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noti/domain/repository/repository.dart';
@@ -7,8 +8,34 @@ import 'package:noti/presentation/notifications_screen/widgets/button_with_icon.
 import 'package:noti/presentation/notifications_screen/widgets/notification_card.dart';
 import 'package:noti/presentation/one_time_tab/bloc/one_time_tab_cubit.dart';
 
-class OneTimeTab extends StatelessWidget {
+class OneTimeTab extends StatefulWidget {
   const OneTimeTab({super.key});
+
+  @override
+  State<OneTimeTab> createState() => _OneTimeTabState();
+}
+
+class _OneTimeTabState extends State<OneTimeTab> {
+
+  @override
+  void initState() {
+    super.initState();
+    AwesomeNotifications().setListeners(
+      onNotificationDisplayedMethod: onNotificationDisplayedMethod,
+      onActionReceivedMethod: onActionReceivedMethod,
+    );
+  }
+
+  @pragma('vm:entry-point')
+  static Future<void> onActionReceivedMethod(
+      ReceivedAction receivedAction) async {}
+
+  @pragma('vm:entry-point')
+  Future<void> onNotificationDisplayedMethod(
+      ReceivedNotification receivedNotification) async {
+    print(receivedNotification.id);
+    context.read<OneTimeTabCubit>().removeOneTimeNotification(receivedNotification.id!);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +69,9 @@ class OneTimeTab extends StatelessWidget {
                           '${state.list[index].time.hour}:${state.list[index].time.minute}',
                       colorIndex: state.list[index].colorIndex,
                       iconIndex: state.list[index].iconIdIndex,
-                      onPressed: context.read<OneTimeTabCubit>().removeOneTimeNotification,
+                      onPressed: context
+                          .read<OneTimeTabCubit>()
+                          .removeOneTimeNotification,
                     ),
                   ),
                   Padding(

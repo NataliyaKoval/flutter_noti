@@ -7,7 +7,7 @@ class OneTimeNotification {
     this.iconIdIndex,
   });
 
-  final String id;
+  final int id;
   final DateTime time;
   final String message;
   final int? colorIndex;
