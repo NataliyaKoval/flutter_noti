@@ -9,6 +9,7 @@ import 'package:noti/domain/use_cases/remove_one_time_notification_use_case.dart
 import 'package:noti/presentation/notifications_screen/widgets/custom_tab.dart';
 import 'package:noti/presentation/one_time_tab/bloc/one_time_tab_cubit.dart';
 import 'package:noti/presentation/one_time_tab/one_time_tab.dart';
+import 'package:noti/presentation/recurring_tab/recurring_tab.dart';
 
 class NotificationsPage extends StatefulWidget {
   const NotificationsPage({super.key});
@@ -117,9 +118,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
               //controller: _tabController,
               children: [
                 const OneTimeTab(),
-                Container(
-                  color: Colors.green,
-                ),
+                RecurringTab(),
               ],
             ),
           );

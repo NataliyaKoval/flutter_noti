@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:noti/consts/app_colors.dart';
 import 'package:noti/consts/image_assets.dart';
 import 'package:noti/consts/strings.dart';
-import 'package:noti/presentation/add_new_notification_screen/bloc/add_new_notification_cubit.dart';
-import 'package:noti/presentation/add_new_notification_screen/widgets/icon_background_list_view.dart';
-import 'package:noti/presentation/add_new_notification_screen/widgets/icon_selection_list_view.dart';
+import 'package:noti/presentation/widgets/icon_background_list_view.dart';
+import 'package:noti/presentation/widgets/icon_selection_list_view.dart';
 import 'package:noti/presentation/widgets/big_filled_button.dart';
 
 class IconBottomSheet extends StatelessWidget {
@@ -14,10 +12,16 @@ class IconBottomSheet extends StatelessWidget {
     super.key,
     required this.iconIndex,
     required this.iconBackgroundIndex,
+    required this.onColorTap,
+    required this.onIconTap,
+    required this.onButtonPressed,
   });
 
   final int iconIndex;
   final int iconBackgroundIndex;
+  final Function(int index) onColorTap;
+  final Function(int index) onIconTap;
+  final Function onButtonPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -72,9 +76,7 @@ class IconBottomSheet extends StatelessWidget {
             child: IconBackgroundListView(
               iconIndex: iconBackgroundIndex,
               onTap: (int index) {
-                context
-                    .read<AddNewNotificationCubit>()
-                    .getIconBackground(index);
+                onColorTap(index);
               },
             ),
           ),
@@ -97,7 +99,7 @@ class IconBottomSheet extends StatelessWidget {
             height: 70,
             child: IconSelectionListView(
               onTap: (int index) {
-                context.read<AddNewNotificationCubit>().getIcon(index);
+                onIconTap(index);
               },
               iconIndex: iconIndex,
             ),
@@ -113,7 +115,7 @@ class IconBottomSheet extends StatelessWidget {
           child: BigFilledButton(
             text: Strings.addNewStrings.saveButtonText,
             onPressed: () {
-              context.read<AddNewNotificationCubit>().displayIconData();
+              onButtonPressed();
               Navigator.of(context).pop();
             },
           ),
