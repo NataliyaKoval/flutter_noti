@@ -11,7 +11,6 @@ import 'package:noti/presentation/widgets/multiline_text_field.dart';
 import 'package:noti/presentation/widgets/notification_icon.dart';
 import 'package:noti/presentation/widgets/select_icon_button.dart';
 import 'package:noti/presentation/widgets/subtitle_text.dart';
-import 'package:noti/presentation/notifications_screen/notifications_page.dart';
 import 'package:noti/presentation/widgets/big_filled_button.dart';
 import 'package:noti/presentation/widgets/inputs_row.dart';
 
@@ -29,11 +28,7 @@ class AddNewNotificationPage extends StatelessWidget {
       child: BlocListener<AddNewNotificationCubit, AddNewNotificationState>(
         listener: (context, state) {
           if (state.isConfirmed == true) {
-            Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => NotificationsPage(),
-                ));
+            Navigator.pop(context);
           }
         },
         child: Builder(

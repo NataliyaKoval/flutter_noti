@@ -11,7 +11,6 @@ import 'package:noti/presentation/widgets/notification_icon.dart';
 import 'package:noti/presentation/widgets/select_icon_button.dart';
 import 'package:noti/presentation/widgets/subtitle_text.dart';
 import 'package:noti/presentation/add_recurring_notification_screen/bloc/add_recurring_notification_cubit.dart';
-import 'package:noti/presentation/notifications_screen/notifications_page.dart';
 
 class AddRecurringNotificationPage extends StatelessWidget {
   const AddRecurringNotificationPage({super.key, required this.interval});
@@ -31,12 +30,7 @@ class AddRecurringNotificationPage extends StatelessWidget {
           AddRecurringNotificationState>(
         listener: (context, state) {
           if (state.isConfirmed == true) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => NotificationsPage(),
-              ),
-            );
+            Navigator.pop(context);
           }
         },
         child: Builder(
