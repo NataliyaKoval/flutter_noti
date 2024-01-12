@@ -42,7 +42,7 @@ class LocalDatabase {
         .toList();
   }
 
-  void removeOneMinuteNotification(int key) {
+  void removeRecurringNotification(int key) {
     recurringNotifications.delete(key);
   }
 }

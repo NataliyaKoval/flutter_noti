@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noti/presentation/add_new_notification_screen/add_new_notification_page.dart';
 import 'package:noti/presentation/notifications_screen/widgets/button_with_icon.dart';
-import 'package:noti/presentation/notifications_screen/widgets/notification_card.dart';
+import 'package:noti/presentation/widgets/notification_card.dart';
 import 'package:noti/presentation/one_time_tab/bloc/one_time_tab_cubit.dart';
 
 class OneTimeTab extends StatefulWidget {

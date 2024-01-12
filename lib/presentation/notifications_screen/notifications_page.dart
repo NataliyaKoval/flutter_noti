@@ -5,7 +5,7 @@ import 'package:noti/consts/app_colors.dart';
 import 'package:noti/consts/strings.dart';
 import 'package:noti/domain/repository/repository.dart';
 import 'package:noti/domain/use_cases/get_one_time_notifications_use_case.dart';
-import 'package:noti/domain/use_cases/remove_one_time_notification_use_case.dart';
+import 'package:noti/domain/use_cases/remove_notification_use_case.dart';
 import 'package:noti/presentation/notifications_screen/widgets/custom_tab.dart';
 import 'package:noti/presentation/one_time_tab/bloc/one_time_tab_cubit.dart';
 import 'package:noti/presentation/one_time_tab/one_time_tab.dart';
@@ -68,7 +68,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
         getOneTimeNotificationsUseCase: GetOneTimeNotificationsUseCase(
           repository: context.read<Repository>(),
         ),
-        removeOneTimeNotificationUseCase: RemoveOneTimeNotificationUseCase(
+        removeNotificationUseCase: RemoveNotificationUseCase(
           repository: context.read<Repository>(),
         ),
       )..getOneTimeNotifications(),

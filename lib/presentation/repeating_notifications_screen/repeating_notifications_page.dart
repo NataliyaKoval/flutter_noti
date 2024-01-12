@@ -4,9 +4,10 @@ import 'package:noti/consts/app_colors.dart';
 import 'package:noti/consts/strings.dart';
 import 'package:noti/domain/repository/repository.dart';
 import 'package:noti/domain/use_cases/get_recurring_notifications_use_case.dart';
+import 'package:noti/domain/use_cases/remove_notification_use_case.dart';
 import 'package:noti/presentation/add_recurring_notification_screen/add_recurring_notification_page.dart';
 import 'package:noti/presentation/notifications_screen/widgets/button_with_icon.dart';
-import 'package:noti/presentation/notifications_screen/widgets/notification_card.dart';
+import 'package:noti/presentation/widgets/notification_card.dart';
 import 'package:noti/presentation/repeating_notifications_screen/bloc/repeating_notifications_cubit.dart';
 
 class RepeatingNotificationsPage extends StatelessWidget {
@@ -21,6 +22,9 @@ class RepeatingNotificationsPage extends StatelessWidget {
         getRecurringNotificationsUseCase: GetRecurringNotificationsUseCase(
           repository: context.read<Repository>(),
         ),
+        removeNotificationUseCase: RemoveNotificationUseCase(
+          repository: context.read<Repository>(),
+        ),
         interval: interval,
       )..getNotifications(),
       child: Scaffold(
@@ -28,7 +32,7 @@ class RepeatingNotificationsPage extends StatelessWidget {
           backgroundColor: AppColors.eerieBlack,
           toolbarHeight: 44,
           centerTitle: true,
-          title: Text('$interval ${Strings.recurringStrings.minute}'),
+          title: Text('$interval ${Strings.notificationsScreenStrings.minute}'),
           titleTextStyle: const TextStyle(
             color: Colors.white,
             fontSize: 16,
@@ -59,7 +63,7 @@ class RepeatingNotificationsPage extends StatelessWidget {
                       itemBuilder: (context, index) => NotificationCard(
                         id: state.notifications[index].id,
                         message: state.notifications[index].message,
-                        time: '1 minute',
+                        time: '$interval minute',
                         colorIndex: state.notifications[index].colorIndex,
                         iconIndex: state.notifications[index].iconIdIndex,
                         onPressed: context

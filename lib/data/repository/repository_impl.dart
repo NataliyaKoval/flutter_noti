@@ -24,8 +24,12 @@ class RepositoryImpl implements Repository {
   }
 
   @override
-  void removeOneTimeNotification(int id) {
-    localDatabase.removeOneTimeNotification(id);
+  void removeNotification(int id, int? interval) {
+    if (interval != null) {
+      localDatabase.removeRecurringNotification(id);
+    } else {
+      localDatabase.removeOneTimeNotification(id);
+    }
   }
 
   @override
@@ -45,10 +49,5 @@ class RepositoryImpl implements Repository {
     } else {
       throw Exception();
     }
-  }
-
-  @override
-  void removeRecurringNotification(int id) {
-    localDatabase.removeOneMinuteNotification(id);
   }
 }

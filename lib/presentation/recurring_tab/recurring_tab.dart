@@ -25,7 +25,7 @@ class RecurringTab extends StatelessWidget {
           );
         },
         title: Text(
-          '${_interval[index]} ${Strings.recurringStrings.minute}',
+          '${_interval[index]} ${Strings.notificationsScreenStrings.minute}',
           style: const TextStyle(
             fontSize: 16,
             height: 1.5,

@@ -3,16 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noti/domain/models/recurring_notification.dart';
 import 'package:noti/domain/use_cases/get_recurring_notifications_use_case.dart';
+import 'package:noti/domain/use_cases/remove_notification_use_case.dart';
 
 part 'repeating_notifications_state.dart';
 
 class RepeatingNotificationsCubit extends Cubit<RepeatingNotificationsState> {
   RepeatingNotificationsCubit({
     required this.getRecurringNotificationsUseCase,
+    required this.removeNotificationUseCase,
     required this.interval,
   }) : super(const RepeatingNotificationsState(notifications: []));
 
   final GetRecurringNotificationsUseCase getRecurringNotificationsUseCase;
+  final RemoveNotificationUseCase removeNotificationUseCase;
   final int interval;
 
   void getNotifications() async {
@@ -26,8 +29,7 @@ class RepeatingNotificationsCubit extends Cubit<RepeatingNotificationsState> {
   }
 
   void removeNotification(int id) {
-    //TODO
-    //removeOneTimeNotificationUseCase(id);
+    removeNotificationUseCase(RemoveNotificationParams(id: id, interval: interval));
     AwesomeNotifications().cancelSchedule(id);
     emit(state.copyWith(
         notifications: List.of(state.notifications)

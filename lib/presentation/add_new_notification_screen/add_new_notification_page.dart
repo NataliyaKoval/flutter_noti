@@ -9,7 +9,7 @@ import 'package:noti/presentation/add_new_notification_screen/bloc/add_new_notif
 import 'package:noti/presentation/widgets/icon_bottom_sheet.dart';
 import 'package:noti/presentation/widgets/multiline_text_field.dart';
 import 'package:noti/presentation/widgets/notification_icon.dart';
-import 'package:noti/presentation/widgets/select_icon_button.dart';
+import 'package:noti/presentation/widgets/small_outlined_button.dart';
 import 'package:noti/presentation/widgets/subtitle_text.dart';
 import 'package:noti/presentation/widgets/big_filled_button.dart';
 import 'package:noti/presentation/widgets/inputs_row.dart';
@@ -97,7 +97,8 @@ class AddNewNotificationPage extends StatelessWidget {
                             const SizedBox(
                               width: 16,
                             ),
-                            SelectIconButton(
+                            SmallOutlinedButton(
+                              text: Strings.addNewStrings.selectButtonText,
                               onPressed: () {
                                 showModalBottomSheet(
                                   context: context,

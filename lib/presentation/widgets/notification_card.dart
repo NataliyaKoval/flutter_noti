@@ -5,13 +5,15 @@ import 'package:noti/consts/icon_colors_list.dart';
 import 'package:noti/consts/icon_ids_list.dart';
 import 'package:noti/consts/image_assets.dart';
 import 'package:noti/consts/strings.dart';
+import 'package:noti/presentation/widgets/small_outlined_button.dart';
 
 class NotificationCard extends StatelessWidget {
   const NotificationCard({
     super.key,
     required this.id,
     required this.message,
-    required this.time,
+    this.time,
+    this.interval,
     this.colorIndex,
     this.iconIndex,
     required this.onPressed,
@@ -19,7 +21,8 @@ class NotificationCard extends StatelessWidget {
 
   final int id;
   final String message;
-  final String time;
+  final String? time;
+  final int? interval;
   final int? colorIndex;
   final int? iconIndex;
   final Function(int) onPressed;
@@ -58,6 +61,7 @@ class NotificationCard extends StatelessWidget {
                     )
                   : Container(),
               Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
                     Strings.notificationsScreenStrings.time,
@@ -68,8 +72,12 @@ class NotificationCard extends StatelessWidget {
                     width: 4,
                   ),
                   Text(
-                    time,
-                    style: TextStyle(),
+                    time ?? '$interval minute',
+                    style: TextStyle(
+                      fontSize: 14,
+                      height: 1.43,
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                 ],
               ),
@@ -77,17 +85,48 @@ class NotificationCard extends StatelessWidget {
                 height: 8,
               ),
               Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
                     Strings.notificationsScreenStrings.message,
                     style: const TextStyle(
-                        color: AppColors.sonicSilver, height: 1.4),
+                        color: AppColors.sonicSilver, height: 1.43),
                   ),
                   SizedBox(
                     width: 4,
                   ),
-                  Text(message),
+                  Text(
+                    message,
+                    style: TextStyle(
+                      fontSize: 14,
+                      height: 1.43,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
                 ],
+              ),
+              const SizedBox(height: 16),
+              Padding(
+                padding: const EdgeInsets.only(right: 16),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: SmallOutlinedButton(
+                        text: Strings.notificationsScreenStrings.selectTriger1,
+                        onPressed: () {},
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 13,
+                    ),
+                    Expanded(
+                      child: SmallOutlinedButton(
+                        text: Strings.notificationsScreenStrings.selectTriger2,
+                        onPressed: () {},
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
