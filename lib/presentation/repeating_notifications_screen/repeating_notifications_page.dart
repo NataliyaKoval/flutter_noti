@@ -73,13 +73,16 @@ class RepeatingNotificationsPage extends StatelessWidget {
                     ),
                     Padding(
                       padding: EdgeInsets.only(bottom: 16),
-                      child: ButtonWithIcon(
-                        onPressed: () =>
-                            Navigator.of(context).push(MaterialPageRoute(
+                      child: ButtonWithIcon(onPressed: () async {
+                        await Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) =>
                               AddRecurringNotificationPage(interval: interval),
-                        )),
-                      ),
+                        ));
+                        if (!context.mounted) return;
+                        context
+                            .read<RepeatingNotificationsCubit>()
+                            .getNotifications();
+                      }),
                     ),
                   ],
                 );

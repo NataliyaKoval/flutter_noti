@@ -64,15 +64,14 @@ class _OneTimeTabState extends State<OneTimeTab> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(bottom: 16),
-                  child: ButtonWithIcon(
-                    //todo
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => AddNewNotificationPage(),
-                      ));
-                    }
-                  ),
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: ButtonWithIcon(onPressed: () async {
+                    await Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const AddNewNotificationPage(),
+                    ));
+                    if (!context.mounted) return;
+                    context.read<OneTimeTabCubit>().getOneTimeNotifications();
+                  }),
                 ),
               ],
             ),
