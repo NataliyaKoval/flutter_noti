@@ -13,16 +13,11 @@ import 'package:noti/presentation/widgets/subtitle_text.dart';
 import 'package:noti/presentation/add_recurring_notification_screen/bloc/add_recurring_notification_cubit.dart';
 import 'package:noti/presentation/notifications_screen/notifications_page.dart';
 
-class AddRecurringNotificationPage extends StatefulWidget {
-  const AddRecurringNotificationPage({super.key});
+class AddRecurringNotificationPage extends StatelessWidget {
+  const AddRecurringNotificationPage({super.key, required this.interval});
 
-  @override
-  State<AddRecurringNotificationPage> createState() =>
-      _AddRecurringNotificationPageState();
-}
+  final int interval;
 
-class _AddRecurringNotificationPageState
-    extends State<AddRecurringNotificationPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -30,12 +25,13 @@ class _AddRecurringNotificationPageState
         saveRecurringNotificationUseCase: SaveRecurringNotificationUseCase(
           repository: context.read<Repository>(),
         ),
+        interval: interval,
       ),
       child: BlocListener<AddRecurringNotificationCubit,
           AddRecurringNotificationState>(
         listener: (context, state) {
           if (state.isConfirmed == true) {
-            Navigator.push(
+            Navigator.pushReplacement(
               context,
               MaterialPageRoute(
                 builder: (context) => NotificationsPage(),
@@ -127,13 +123,13 @@ class _AddRecurringNotificationPageState
                                                 context
                                                     .read<
                                                         AddRecurringNotificationCubit>()
-                                                    .getIconBackground(index);
+                                                    .setIconBackground(index);
                                               },
                                               onIconTap: (int index) {
                                                 context
                                                     .read<
                                                         AddRecurringNotificationCubit>()
-                                                    .getIcon(index);
+                                                    .setIcon(index);
                                               },
                                               onButtonPressed: () => context
                                                   .read<

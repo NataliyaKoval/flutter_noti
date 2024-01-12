@@ -29,18 +29,26 @@ class RepositoryImpl implements Repository {
   }
 
   @override
-  void addOneMinuteNotification(RecurringNotification notification) {
-    localDatabase.addOneMinuteNotification(
+  void addRecurringNotification(RecurringNotification notification) {
+    localDatabase.addRecurringNotification(
         RecurringNotificationEntity.fromRecurringNotification(notification));
   }
 
   @override
-  List<RecurringNotification> getOneMinuteNotifications() {
-    return localDatabase.getOneMinuteNotifications();
+  List<RecurringNotification> getRecurringNotifications(int interval) {
+    if (interval == 1) {
+      return localDatabase.getOneMinuteNotifications();
+    } else if (interval == 3) {
+      return localDatabase.getThreeMinuteNotifications();
+    } else if (interval == 5) {
+      return localDatabase.getFiveMinuteNotifications();
+    } else {
+      throw Exception();
+    }
   }
 
   @override
-  void removeOneMinuteNotification(int id) {
+  void removeRecurringNotification(int id) {
     localDatabase.removeOneMinuteNotification(id);
   }
 }

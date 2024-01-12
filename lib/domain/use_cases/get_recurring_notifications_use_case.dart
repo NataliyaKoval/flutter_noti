@@ -10,6 +10,6 @@ class GetRecurringNotificationsUseCase
 
   @override
   Future<List<RecurringNotification>> call(int params) async {
-    return repository.getOneMinuteNotifications();
+    return repository.getRecurringNotifications(params);
   }
 }

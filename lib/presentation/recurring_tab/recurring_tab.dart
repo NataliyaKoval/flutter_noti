@@ -2,27 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:noti/consts/app_colors.dart';
 import 'package:noti/consts/image_assets.dart';
-import 'package:noti/presentation/one_minute_notifications_screen/one_ninute_notifications_page.dart';
+import 'package:noti/consts/strings.dart';
+import 'package:noti/presentation/repeating_notifications_screen/repeating_notifications_page.dart';
 
 class RecurringTab extends StatelessWidget {
   const RecurringTab({super.key});
 
-  static const List<int> _recurringTime = [1, 3, 5];
+  static const List<int> _interval = [1, 3, 5];
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: _recurringTime.length,
+      itemCount: _interval.length,
       itemBuilder: (context, index) => ListTile(
         onTap: () {
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) => OneMinuteNotificationsPage(),
+              builder: (context) => RepeatingNotificationsPage(
+                interval: _interval[index],
+              ),
             ),
           );
         },
         title: Text(
-          '${_recurringTime[index]} minute',
+          '${_interval[index]} ${Strings.recurringStrings.minute}',
           style: const TextStyle(
             fontSize: 16,
             height: 1.5,

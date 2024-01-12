@@ -72,7 +72,6 @@ class _OneTimeTabState extends State<OneTimeTab> {
                         builder: (context) => AddNewNotificationPage(),
                       ));
                     }
-
                   ),
                 ),
               ],

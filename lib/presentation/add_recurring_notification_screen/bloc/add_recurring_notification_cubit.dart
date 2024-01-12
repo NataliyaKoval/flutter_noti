@@ -8,11 +8,13 @@ part 'add_recurring_notification_state.dart';
 
 class AddRecurringNotificationCubit
     extends Cubit<AddRecurringNotificationState> {
-  AddRecurringNotificationCubit(
-      {required this.saveRecurringNotificationUseCase})
-      : super(const AddRecurringNotificationState());
+  AddRecurringNotificationCubit({
+    required this.saveRecurringNotificationUseCase,
+    required this.interval,
+  }) : super(const AddRecurringNotificationState());
 
   final SaveRecurringNotificationUseCase saveRecurringNotificationUseCase;
+  final int interval;
 
   void setMessage(String value) {
     emit(state.copyWith(message: value));
@@ -27,11 +29,11 @@ class AddRecurringNotificationCubit
     }
   }
 
-  void getIconBackground(int index) {
+  void setIconBackground(int index) {
     emit(state.copyWith(iconBackgroundIndex: index));
   }
 
-  void getIcon(int index) {
+  void setIcon(int index) {
     emit(state.copyWith(iconIndex: index));
   }
 
@@ -45,6 +47,7 @@ class AddRecurringNotificationCubit
       message: state.message,
       iconIdIndex: state.isIconChosen ? state.iconIndex : null,
       colorIndex: state.isIconChosen ? state.iconBackgroundIndex : null,
+      interval: interval,
     );
 
     await AwesomeNotifications().createNotification(
@@ -54,13 +57,10 @@ class AddRecurringNotificationCubit
         body: notification.message,
         notificationLayout: NotificationLayout.Default,
       ),
-      schedule: NotificationInterval(interval: 60, repeats: true),
+      schedule: NotificationInterval(interval: interval * 60, repeats: true),
     );
 
-    await saveRecurringNotificationUseCase(SaveRecurringNotificationParams(
-      notification: notification,
-      minutesInterval: 1,
-    ));
+    await saveRecurringNotificationUseCase(notification);
     emit(state.copyWith(isConfirmed: true));
   }
 }

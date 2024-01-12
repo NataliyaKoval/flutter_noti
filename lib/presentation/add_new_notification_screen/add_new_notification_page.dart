@@ -29,7 +29,7 @@ class AddNewNotificationPage extends StatelessWidget {
       child: BlocListener<AddNewNotificationCubit, AddNewNotificationState>(
         listener: (context, state) {
           if (state.isConfirmed == true) {
-            Navigator.push(
+            Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                   builder: (context) => NotificationsPage(),

@@ -22,13 +22,14 @@ class RecurringNotificationEntityAdapter
       message: fields[1] as String,
       colorIndex: fields[2] as int?,
       iconIdIndex: fields[3] as int?,
+      interval: fields[4] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, RecurringNotificationEntity obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -36,7 +37,9 @@ class RecurringNotificationEntityAdapter
       ..writeByte(2)
       ..write(obj.colorIndex)
       ..writeByte(3)
-      ..write(obj.iconIdIndex);
+      ..write(obj.iconIdIndex)
+      ..writeByte(4)
+      ..write(obj.interval);
   }
 
   @override

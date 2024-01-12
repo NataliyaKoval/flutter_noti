@@ -10,6 +10,7 @@ class RecurringNotificationEntity implements RecurringNotification {
     required this.message,
     this.colorIndex,
     this.iconIdIndex,
+    required this.interval,
   });
 
   @HiveField(0)
@@ -28,6 +29,10 @@ class RecurringNotificationEntity implements RecurringNotification {
   @override
   final int? iconIdIndex;
 
+  @HiveField(4)
+  @override
+  final int interval;
+
   factory RecurringNotificationEntity.fromRecurringNotification(
           RecurringNotification notification) =>
       RecurringNotificationEntity(
@@ -35,5 +40,6 @@ class RecurringNotificationEntity implements RecurringNotification {
         message: notification.message,
         colorIndex: notification.colorIndex,
         iconIdIndex: notification.iconIdIndex,
+        interval: notification.interval,
       );
 }

@@ -8,9 +8,9 @@ abstract class Repository {
 
   void removeOneTimeNotification(int id);
 
-  void addOneMinuteNotification(RecurringNotification notification);
+  void addRecurringNotification(RecurringNotification notification);
 
-  List<RecurringNotification> getOneMinuteNotifications();
+  List<RecurringNotification> getRecurringNotifications(int interval);
 
-  void removeOneMinuteNotification(int id);
+  void removeRecurringNotification(int id);
 }
