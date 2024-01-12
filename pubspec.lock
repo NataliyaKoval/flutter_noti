@@ -33,6 +33,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.11.0"
+  awesome_notifications:
+    dependency: "direct main"
+    description:
+      name: awesome_notifications
+      sha256: "20374499ae8e3c595f396afd43d7301c2765ebce64fbbd6ddd5f9e1b09c3f39b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.9.0"
+  awesome_notifications_core:
+    dependency: "direct main"
+    description:
+      name: awesome_notifications_core
+      sha256: "7042ad1feb78800edd3f0fd26f049bd1483e0ef226bb2d88ad8faeb665564459"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.9.0"
   bloc:
     dependency: transitive
     description:
@@ -248,6 +264,11 @@ packages:
     version: "2.0.9"
   flutter_test:
     dependency: "direct dev"
+    description: flutter
+    source: sdk
+    version: "0.0.0"
+  flutter_web_plugins:
+    dependency: transitive
     description: flutter
     source: sdk
     version: "0.0.0"

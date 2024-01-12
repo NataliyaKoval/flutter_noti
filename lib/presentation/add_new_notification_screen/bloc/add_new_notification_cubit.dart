@@ -1,9 +1,9 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noti/consts/time_input_id.dart';
 import 'package:noti/domain/models/one_time_notification.dart';
 import 'package:noti/domain/use_cases/save_notification_use_case.dart';
-import 'package:uuid/uuid.dart';
 
 part 'add_new_notification_state.dart';
 
@@ -67,22 +67,41 @@ class AddNewNotificationCubit extends Cubit<AddNewNotificationState> {
   }
 
   void createAndSaveNotification() async {
-    var uuid = const Uuid();
-    String id = uuid.v1();
-
     DateTime now = DateTime.now();
     int hours = int.parse('$hoursFirstDigit$hoursSecondDigit');
     int minutes = int.parse('$minutesFirstDigit$minutesSecondDigit');
     DateTime time = DateTime(now.year, now.month, now.day, hours, minutes);
 
     OneTimeNotification notification = OneTimeNotification(
-      id: id,
+      id: createUniqueId(),
       time: time,
       message: message,
-      iconIdIndex: state.iconIndex,
-      colorIndex: state.iconBackgroundIndex,
+      iconIdIndex: state.isIconChosen ? state.iconIndex : null,
+      colorIndex: state.isIconChosen ? state.iconBackgroundIndex : null,
+    );
+
+    await AwesomeNotifications().createNotification(
+      content: NotificationContent(
+        id: createUniqueId(),
+        channelKey: 'scheduled_channel',
+        title: 'Reminder',
+        body: notification.message,
+        notificationLayout: NotificationLayout.Default,
+        wakeUpScreen: true,
+      ),
+      schedule: NotificationCalendar(
+        hour: time.hour,
+        minute: time.minute,
+        second: 0,
+        millisecond: 0,
+      ),
     );
 
     await saveNotificationUseCase(notification);
+    emit(state.copyWith(isConfirmed: true));
+  }
+
+  int createUniqueId() {
+    return DateTime.now().millisecondsSinceEpoch.remainder(100000);
   }
 }

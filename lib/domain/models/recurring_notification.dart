@@ -1,15 +1,15 @@
-class OneTimeNotification {
-  const OneTimeNotification({
+class RecurringNotification {
+  const RecurringNotification({
     required this.id,
-    required this.time,
     required this.message,
     this.colorIndex,
     this.iconIdIndex,
+    required this.interval
   });
 
   final int id;
-  final DateTime time;
   final String message;
   final int? colorIndex;
   final int? iconIdIndex;
+  final int interval;
 }

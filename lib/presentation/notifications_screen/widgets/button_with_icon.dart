@@ -3,10 +3,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:noti/consts/app_colors.dart';
 import 'package:noti/consts/image_assets.dart';
 import 'package:noti/consts/strings.dart';
-import 'package:noti/presentation/add_new_notification_screen/add_new_notification_page.dart';
 
 class ButtonWithIcon extends StatelessWidget {
-  const ButtonWithIcon({super.key});
+  const ButtonWithIcon({super.key, required this.onPressed});
+
+  final Function onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +25,7 @@ class ButtonWithIcon extends StatelessWidget {
             ),
           ),
           onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => AddNewNotificationPage(),
-            ));
+            onPressed();
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
