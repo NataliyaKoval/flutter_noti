@@ -50,4 +50,9 @@ class RepositoryImpl implements Repository {
       throw Exception();
     }
   }
+
+  @override
+  OneTimeNotification? getSavedNotification(int id) {
+    return localDatabase.getSavedNotification(id);
+  }
 }

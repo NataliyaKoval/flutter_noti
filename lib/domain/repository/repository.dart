@@ -11,4 +11,6 @@ abstract class Repository {
   void addRecurringNotification(RecurringNotification notification);
 
   List<RecurringNotification> getRecurringNotifications(int interval);
+
+  OneTimeNotification? getSavedNotification(int id);
 }

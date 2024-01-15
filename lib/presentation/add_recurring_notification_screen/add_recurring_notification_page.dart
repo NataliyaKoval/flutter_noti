@@ -6,7 +6,6 @@ import 'package:noti/domain/repository/repository.dart';
 import 'package:noti/domain/use_cases/save_recurring_notification_use_case.dart';
 import 'package:noti/presentation/widgets/big_filled_button.dart';
 import 'package:noti/presentation/widgets/icon_bottom_sheet.dart';
-import 'package:noti/presentation/widgets/multiline_text_field.dart';
 import 'package:noti/presentation/widgets/notification_icon.dart';
 import 'package:noti/presentation/widgets/small_outlined_button.dart';
 import 'package:noti/presentation/widgets/subtitle_text.dart';
@@ -69,13 +68,13 @@ class AddRecurringNotificationPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SubtitleText(text: Strings.addNewStrings.message),
-                        MultilineTextField(
-                          onChanged: (String value) {
-                            context
-                                .read<AddRecurringNotificationCubit>()
-                                .setMessage(value);
-                          },
-                        ),
+                        // MultilineTextField(
+                        //   onChanged: (String value) {
+                        //     context
+                        //         .read<AddRecurringNotificationCubit>()
+                        //         .setMessage(value);
+                        //   },
+                        // ),
                         const SizedBox(height: 24),
                         SubtitleText(text: Strings.addNewStrings.icon),
                         Row(

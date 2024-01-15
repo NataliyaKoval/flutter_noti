@@ -8,11 +8,13 @@ class TimeInputField extends StatelessWidget {
     required this.onChanged,
     required this.focusNode,
     required this.formatterRegExp,
+    required this.controller,
   });
 
   final void Function(String) onChanged;
   final FocusNode focusNode;
   final String formatterRegExp;
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +22,7 @@ class TimeInputField extends StatelessWidget {
       width: 44,
       height: 48,
       child: TextFormField(
+        controller: controller,
         focusNode: focusNode,
         keyboardType: TextInputType.number,
         inputFormatters: [

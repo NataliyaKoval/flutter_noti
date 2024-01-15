@@ -45,4 +45,8 @@ class LocalDatabase {
   void removeRecurringNotification(int key) {
     recurringNotifications.delete(key);
   }
+
+  OneTimeNotificationEntity? getSavedNotification(int key) {
+    return oneTimeNotifications.get(key);
+  }
 }

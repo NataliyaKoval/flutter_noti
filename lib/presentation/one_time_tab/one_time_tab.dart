@@ -54,8 +54,7 @@ class _OneTimeTabState extends State<OneTimeTab> {
                   itemBuilder: (context, index) => NotificationCard(
                     id: state.list[index].id,
                     message: state.list[index].message,
-                    time:
-                        '${state.list[index].time.hour}:${state.list[index].time.minute}',
+                    time: state.list[index].time,
                     colorIndex: state.list[index].colorIndex,
                     iconIndex: state.list[index].iconIdIndex,
                     onPressed: context

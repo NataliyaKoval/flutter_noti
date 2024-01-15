@@ -3,51 +3,52 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noti/consts/time_input_id.dart';
 import 'package:noti/domain/models/one_time_notification.dart';
+import 'package:noti/domain/use_cases/get_saved_notification_use_case.dart';
 import 'package:noti/domain/use_cases/save_notification_use_case.dart';
 
 part 'add_new_notification_state.dart';
 
 class AddNewNotificationCubit extends Cubit<AddNewNotificationState> {
-  AddNewNotificationCubit({required this.saveNotificationUseCase})
-      : super(const AddNewNotificationState());
+  AddNewNotificationCubit({
+    required this.saveNotificationUseCase,
+    required this.getSavedNotificationUseCase,
+    this.id,
+  }) : super(const AddNewNotificationState());
 
   final SaveNotificationUseCase saveNotificationUseCase;
+  final GetSavedNotificationUseCase getSavedNotificationUseCase;
+  final int? id;
+  OneTimeNotification? savedNotification;
 
-  String message = '';
-  String hoursFirstDigit = '';
-  String hoursSecondDigit = '';
-  String minutesFirstDigit = '';
-  String minutesSecondDigit = '';
-
-  void getMessage(String value) {
-    message = value;
+  void setMessage(String value) {
+    emit(state.copyWith(message: value));
     _enableConfirmButton();
   }
 
-  void getTime(TimeInputId id, String value) {
+  void setTime(TimeInputId id, String value) {
     switch (id) {
       case TimeInputId.first:
-        hoursFirstDigit = value;
+        emit(state.copyWith(hoursFirstDigit: value));
         break;
       case TimeInputId.second:
-        hoursSecondDigit = value;
+        emit(state.copyWith(hoursSecondDigit: value));
         break;
       case TimeInputId.third:
-        minutesFirstDigit = value;
+        emit(state.copyWith(minutesFirstDigit: value));
         break;
       case TimeInputId.fourth:
-        minutesSecondDigit = value;
+        emit(state.copyWith(minutesSecondDigit: value));
         break;
     }
     _enableConfirmButton();
   }
 
   void _enableConfirmButton() {
-    if (message.isNotEmpty &&
-        hoursFirstDigit.isNotEmpty &&
-        hoursSecondDigit.isNotEmpty &&
-        minutesFirstDigit.isNotEmpty &&
-        minutesSecondDigit.isNotEmpty) {
+    if (state.message.isNotEmpty &&
+        state.hoursFirstDigit.isNotEmpty &&
+        state.hoursSecondDigit.isNotEmpty &&
+        state.minutesFirstDigit.isNotEmpty &&
+        state.minutesSecondDigit.isNotEmpty) {
       emit(state.copyWith(isConfirmButtonEnabled: true));
     } else {
       emit(state.copyWith(isConfirmButtonEnabled: false));
@@ -68,23 +69,23 @@ class AddNewNotificationCubit extends Cubit<AddNewNotificationState> {
 
   void createAndSaveNotification() async {
     DateTime now = DateTime.now();
-    int hours = int.parse('$hoursFirstDigit$hoursSecondDigit');
-    int minutes = int.parse('$minutesFirstDigit$minutesSecondDigit');
+    int hours = int.parse('${state.hoursFirstDigit}${state.hoursSecondDigit}');
+    int minutes =
+        int.parse('${state.minutesFirstDigit}${state.minutesSecondDigit}');
     DateTime time = DateTime(now.year, now.month, now.day, hours, minutes);
 
     OneTimeNotification notification = OneTimeNotification(
-      id: createUniqueId(),
+      id: savedNotification?.id ?? createUniqueId(),
       time: time,
-      message: message,
+      message: state.message,
       iconIdIndex: state.isIconChosen ? state.iconIndex : null,
       colorIndex: state.isIconChosen ? state.iconBackgroundIndex : null,
     );
 
     await AwesomeNotifications().createNotification(
       content: NotificationContent(
-        id: createUniqueId(),
+        id: notification.id,
         channelKey: 'scheduled_channel',
-        title: 'Reminder',
         body: notification.message,
         notificationLayout: NotificationLayout.Default,
         wakeUpScreen: true,
@@ -103,5 +104,20 @@ class AddNewNotificationCubit extends Cubit<AddNewNotificationState> {
 
   int createUniqueId() {
     return DateTime.now().millisecondsSinceEpoch.remainder(100000);
+  }
+
+  void getSavedNotification() async {
+    if (id != null) {
+      savedNotification = await getSavedNotificationUseCase(id!);
+      String? hours = savedNotification?.time.hour.toString().padLeft(2, '0');
+      String? minutes = savedNotification?.time.minute.toString().padLeft(2, '0');
+      emit(state.copyWith(
+        message: savedNotification?.message,
+        hoursFirstDigit: hours?[0],
+        hoursSecondDigit: hours?[1],
+        minutesFirstDigit: minutes?[0],
+        minutesSecondDigit: minutes?[1],
+      ));
+    }
   }
 }
