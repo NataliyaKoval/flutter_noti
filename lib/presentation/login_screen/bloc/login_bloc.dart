@@ -18,16 +18,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         )) {
     _currentTimeSubscription = currentTime().listen(_onCurrentTimeTicked);
     on<CurrentTimeTickedEvent>(_setCurrentTime);
-    on<InputChangedEvent>(_getTimeFromInput);
+    on<InputChangedEvent>(_setTimeFromInput);
     on<ConfirmButtonClickedEvent>(_compareCurrentTimeAndInputTime);
   }
 
   late final StreamSubscription _currentTimeSubscription;
   String formattedTime = '';
-  String hoursFirstDigit = '';
-  String hoursSecondDigit = '';
-  String minutesFirstDigit = '';
-  String minutesSecondDigit = '';
 
   void _onCurrentTimeTicked(DateTime dateTime) {
     formattedTime = DateFormat('hh:mm').format(dateTime);
@@ -45,27 +41,27 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     emit(state.copyWith(currentTime: event.currentTime));
   }
 
-  Future<void> _getTimeFromInput(
+  Future<void> _setTimeFromInput(
       InputChangedEvent event, Emitter<LoginState> emit) async {
     switch (event.inputId) {
       case TimeInputId.first:
-        hoursFirstDigit = event.inputValue;
+        emit(state.copyWith(hoursFirstDigit: event.inputValue));
         break;
       case TimeInputId.second:
-        hoursSecondDigit = event.inputValue;
+        emit(state.copyWith(hoursSecondDigit: event.inputValue));
         break;
       case TimeInputId.third:
-        minutesFirstDigit = event.inputValue;
+        emit(state.copyWith(minutesFirstDigit: event.inputValue));
         break;
       case TimeInputId.fourth:
-        minutesSecondDigit = event.inputValue;
+        emit(state.copyWith(minutesSecondDigit: event.inputValue));
         break;
     }
 
-    if (hoursFirstDigit.isNotEmpty &&
-        hoursSecondDigit.isNotEmpty &&
-        minutesFirstDigit.isNotEmpty &&
-        minutesSecondDigit.isNotEmpty) {
+    if (state.hoursFirstDigit.isNotEmpty &&
+        state.hoursSecondDigit.isNotEmpty &&
+        state.minutesFirstDigit.isNotEmpty &&
+        state.minutesSecondDigit.isNotEmpty) {
       emit(state.copyWith(isConfirmButtonEnabled: true));
     } else {
       emit(
@@ -76,7 +72,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   Future<void> _compareCurrentTimeAndInputTime(
       ConfirmButtonClickedEvent event, Emitter<LoginState> emit) async {
     if (formattedTime ==
-        '$hoursFirstDigit$hoursSecondDigit:$minutesFirstDigit$minutesSecondDigit') {
+        '${state.hoursFirstDigit}${state.hoursSecondDigit}:${state.minutesFirstDigit}${state.minutesSecondDigit}') {
       emit(state.copyWith(isConfirmed: true));
     } else {
       emit(state.copyWith(isErrorVisible: true));

@@ -9,8 +9,36 @@ import 'package:noti/presentation/widgets/big_filled_button.dart';
 import 'package:noti/presentation/widgets/inputs_row.dart';
 import 'package:noti/presentation/notifications_screen/notifications_page.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  late final TextEditingController hoursFirstDigitController;
+  late final TextEditingController hoursSecondDigitController;
+  late final TextEditingController minutesFirstDigitController;
+  late final TextEditingController minutesSecondDigitController;
+
+  @override
+  void initState() {
+    super.initState();
+    hoursFirstDigitController = TextEditingController();
+    hoursSecondDigitController = TextEditingController();
+    minutesFirstDigitController = TextEditingController();
+    minutesSecondDigitController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    hoursFirstDigitController.dispose();
+    hoursSecondDigitController.dispose();
+    minutesFirstDigitController.dispose();
+    minutesSecondDigitController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +46,13 @@ class LoginPage extends StatelessWidget {
       create: (context) => LoginBloc(),
       child: BlocListener<LoginBloc, LoginState>(
         listener: (BuildContext context, LoginState state) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            hoursFirstDigitController.text = state.hoursFirstDigit;
+            hoursSecondDigitController.text = state.hoursSecondDigit;
+            minutesFirstDigitController.text = state.minutesFirstDigit;
+            minutesSecondDigitController.text = state.minutesSecondDigit;
+          });
+
           if (state.isConfirmed == true) {
             Navigator.pushReplacement(
               context,
@@ -76,10 +111,17 @@ class LoginPage extends StatelessWidget {
                     const SizedBox(
                       height: 58,
                     ),
-                    TimeInputsRow(onChanged: (TimeInputId id, String value) {
-                      context.read<LoginBloc>().add(
-                          InputChangedEvent(inputId: id, inputValue: value));
-                    }),
+                    TimeInputsRow(
+                        hoursFirstDigitController: hoursFirstDigitController,
+                        hoursSecondDigitController: hoursSecondDigitController,
+                        minutesFirstDigitController:
+                            minutesFirstDigitController,
+                        minutesSecondDigitController:
+                            minutesSecondDigitController,
+                        onChanged: (TimeInputId id, String value) {
+                          context.read<LoginBloc>().add(InputChangedEvent(
+                              inputId: id, inputValue: value));
+                        }),
                     Expanded(child: Container()),
                     AnimatedOpacity(
                       duration: const Duration(milliseconds: 500),

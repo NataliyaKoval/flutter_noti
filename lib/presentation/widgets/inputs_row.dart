@@ -4,9 +4,20 @@ import 'package:noti/consts/time_input_id.dart';
 import 'package:noti/presentation/widgets/time_input_field.dart';
 
 class TimeInputsRow extends StatefulWidget {
-  const TimeInputsRow({super.key, required this.onChanged});
+  const TimeInputsRow({
+    super.key,
+    required this.onChanged,
+    required this.hoursFirstDigitController,
+    required this.hoursSecondDigitController,
+    required this.minutesFirstDigitController,
+    required this.minutesSecondDigitController,
+  });
 
   final Function onChanged;
+  final TextEditingController hoursFirstDigitController;
+  final TextEditingController hoursSecondDigitController;
+  final TextEditingController minutesFirstDigitController;
+  final TextEditingController minutesSecondDigitController;
 
   @override
   State<TimeInputsRow> createState() => _TimeInputsRowState();
@@ -42,6 +53,7 @@ class _TimeInputsRowState extends State<TimeInputsRow> {
       mainAxisSize: MainAxisSize.min,
       children: [
         TimeInputField(
+          controller: widget.hoursFirstDigitController,
           focusNode: firstFocusNode,
           formatterRegExp: '[0-2]',
           onChanged: (String value) {
@@ -55,6 +67,7 @@ class _TimeInputsRowState extends State<TimeInputsRow> {
           width: 12,
         ),
         TimeInputField(
+          controller: widget.hoursSecondDigitController,
           focusNode: secondFocusNode,
           formatterRegExp: '[0-9]',
           onChanged: (String value) {
@@ -76,6 +89,7 @@ class _TimeInputsRowState extends State<TimeInputsRow> {
           ),
         ),
         TimeInputField(
+          controller: widget.minutesFirstDigitController,
           focusNode: thirdFocusNode,
           formatterRegExp: '[0-5]',
           onChanged: (String value) {
@@ -89,6 +103,7 @@ class _TimeInputsRowState extends State<TimeInputsRow> {
           width: 12,
         ),
         TimeInputField(
+          controller: widget.minutesSecondDigitController,
           focusNode: fourthFocusNode,
           formatterRegExp: '[0-9]',
           onChanged: (String value) {

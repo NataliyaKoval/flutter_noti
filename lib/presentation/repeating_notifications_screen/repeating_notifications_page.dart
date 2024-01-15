@@ -63,7 +63,7 @@ class RepeatingNotificationsPage extends StatelessWidget {
                       itemBuilder: (context, index) => NotificationCard(
                         id: state.notifications[index].id,
                         message: state.notifications[index].message,
-                        time: '$interval minute',
+                        interval: interval,
                         colorIndex: state.notifications[index].colorIndex,
                         iconIndex: state.notifications[index].iconIdIndex,
                         onPressed: context
@@ -72,14 +72,17 @@ class RepeatingNotificationsPage extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(bottom: 16),
-                      child: ButtonWithIcon(
-                        onPressed: () =>
-                            Navigator.of(context).push(MaterialPageRoute(
+                      padding: const EdgeInsets.only(bottom: 16),
+                      child: ButtonWithIcon(onPressed: () async {
+                        await Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) =>
                               AddRecurringNotificationPage(interval: interval),
-                        )),
-                      ),
+                        ));
+                        if (!context.mounted) return;
+                        context
+                            .read<RepeatingNotificationsCubit>()
+                            .getNotifications();
+                      }),
                     ),
                   ],
                 );

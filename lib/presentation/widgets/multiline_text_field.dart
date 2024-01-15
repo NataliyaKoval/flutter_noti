@@ -6,13 +6,16 @@ class MultilineTextField extends StatelessWidget {
   const MultilineTextField({
     super.key,
     required this.onChanged,
+    required this.controller,
   });
 
   final Function(String) onChanged;
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
       decoration: InputDecoration(
         contentPadding:
             const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
