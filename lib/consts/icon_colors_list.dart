@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:noti/consts/app_colors.dart';
 
 const List<Color> iconColorsList = [

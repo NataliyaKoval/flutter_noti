@@ -55,4 +55,9 @@ class RepositoryImpl implements Repository {
   OneTimeNotification? getSavedNotification(int id) {
     return localDatabase.getSavedNotification(id);
   }
+
+  @override
+  RecurringNotification? getSavedRecurringNotification(int id) {
+    return localDatabase.getSavedRecurringNotification(id);
+  }
 }

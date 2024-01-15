@@ -49,4 +49,8 @@ class LocalDatabase {
   OneTimeNotificationEntity? getSavedNotification(int key) {
     return oneTimeNotifications.get(key);
   }
+
+  RecurringNotificationEntity? getSavedRecurringNotification(int key) {
+    return recurringNotifications.get(key);
+  }
 }

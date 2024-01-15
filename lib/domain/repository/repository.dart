@@ -13,4 +13,6 @@ abstract class Repository {
   List<RecurringNotification> getRecurringNotifications(int interval);
 
   OneTimeNotification? getSavedNotification(int id);
+
+  RecurringNotification? getSavedRecurringNotification(int id);
 }
