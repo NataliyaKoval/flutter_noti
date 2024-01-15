@@ -110,13 +110,19 @@ class AddNewNotificationCubit extends Cubit<AddNewNotificationState> {
     if (id != null) {
       savedNotification = await getSavedNotificationUseCase(id!);
       String? hours = savedNotification?.time.hour.toString().padLeft(2, '0');
-      String? minutes = savedNotification?.time.minute.toString().padLeft(2, '0');
+      String? minutes =
+          savedNotification?.time.minute.toString().padLeft(2, '0');
       emit(state.copyWith(
         message: savedNotification?.message,
         hoursFirstDigit: hours?[0],
         hoursSecondDigit: hours?[1],
         minutesFirstDigit: minutes?[0],
         minutesSecondDigit: minutes?[1],
+        iconIndex: savedNotification?.iconIdIndex,
+        iconBackgroundIndex: savedNotification?.colorIndex,
+        isIconChosen: savedNotification?.iconIdIndex != null &&
+            savedNotification?.colorIndex != null,
+        isConfirmButtonEnabled: true,
       ));
     }
   }
