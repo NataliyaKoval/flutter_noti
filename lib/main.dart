@@ -8,6 +8,7 @@ import 'package:noti/data/entity/one_time_notification_entity.dart';
 import 'package:noti/data/entity/recurring_notification_entity.dart';
 import 'package:noti/di/providers.dart';
 import 'package:noti/presentation/notifications_screen/notifications_page.dart';
+import 'package:noti/presentation/trigger_screen/trigger_page.dart';
 import 'package:noti/themes/app_theme.dart';
 import 'package:provider/provider.dart';
 
@@ -48,7 +49,7 @@ Future<void> main() async {
       ),
     ],
   );
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -76,7 +77,8 @@ class _MyAppState extends State<MyApp> {
         //   useMaterial3: true,
         // ),
         //home: const LoginPage(),
-        home: const NotificationsPage(),
+        //home: const NotificationsPage(),
+        home: TriggerPage(),
       ),
     );
   }

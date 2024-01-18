@@ -45,4 +45,5 @@ class ImageAssets {
   static const String success = '${_root}success$_svg';
   static const String timer = '${_root}timer$_svg';
   static const String users = '${_root}users$_svg';
+  static const String checkbox = '${_root}checkbox$_svg';
 }
