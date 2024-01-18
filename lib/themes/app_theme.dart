@@ -13,10 +13,8 @@ class AppTheme {
           borderRadius: BorderRadius.circular(6), color: AppColors.plumpPurple),
     ),
     listTileTheme: const ListTileThemeData(
-      // contentPadding: EdgeInsets.all(0),
-       dense: true,
+      dense: true,
       horizontalTitleGap: 0.0,
-      //minLeadingWidth: 0,
     ),
     expansionTileTheme: const ExpansionTileThemeData(
       textColor: AppColors.eerieBlack,

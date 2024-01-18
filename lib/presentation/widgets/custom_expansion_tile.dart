@@ -1,74 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:noti/consts/app_colors.dart';
 import 'package:noti/consts/image_assets.dart';
+import 'package:noti/presentation/trigger_screen/trigger_page.dart';
 
 class CustomExpansionTile extends StatelessWidget {
   const CustomExpansionTile({
     super.key,
     required this.title,
     required this.children,
-    required this.isLineVisible,
+    required this.lineVisibility,
   });
 
   final String title;
   final List<Widget> children;
-  final bool isLineVisible;
+  final LineVisibility lineVisibility;
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         Visibility(
-          visible: isLineVisible,
+          visible: lineVisibility == LineVisibility.full ||
+              lineVisibility == LineVisibility.partial,
           child: Positioned.fill(
             child: Container(
               alignment: Alignment.centerLeft,
-              child: Stack(
-                // alignment: Alignment.topCenter,
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 27),
-                    child: VerticalDivider(
-                      color: Colors.red,
-                      width: 1,
-                    ),
-                  ),
-                  Positioned(
-                    top: 20,
-                    left: 24,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: 8,
-                          height: 8,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(width: 1, color: Colors.green),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 7,
-                          child: Divider(
-                            color: Colors.red,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+              child: _displayLine(),
             ),
           ),
         ),
         Padding(
-          padding: isLineVisible
+          padding: lineVisibility == LineVisibility.full ||
+                  lineVisibility == LineVisibility.partial
               ? const EdgeInsets.only(left: 42)
               : const EdgeInsets.only(left: 0),
           child: ExpansionTile(
             controlAffinity: ListTileControlAffinity.leading,
             trailing: SvgPicture.asset(ImageAssets.checkbox),
-            //tilePadding: EdgeInsets.symmetric(vertical: 16),
             title: Padding(
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: Text(
@@ -87,5 +56,93 @@ class CustomExpansionTile extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  Widget _displayLine() {
+    if (lineVisibility == LineVisibility.full) {
+      return Stack(
+        children: [
+          const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 27),
+              child: VerticalDivider(
+                color: AppColors.antiFlashWhite,
+                width: 1,
+              )),
+          Positioned(
+            top: 20,
+            left: 24,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  width: 8,
+                  height: 8,
+                  decoration: BoxDecoration(
+                    color: AppColors.white,
+                    shape: BoxShape.circle,
+                    border:
+                        Border.all(width: 1, color: AppColors.antiFlashWhite),
+                  ),
+                ),
+                const SizedBox(
+                  width: 7,
+                  child: Divider(
+                    color: AppColors.antiFlashWhite,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      );
+    } else if (lineVisibility == LineVisibility.partial) {
+      return Stack(
+        children: [
+          const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 27),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 30,
+                    child: VerticalDivider(
+                      color: AppColors.antiFlashWhite,
+                      width: 1,
+                    ),
+                  ),
+                  Expanded(child: SizedBox()),
+                ],
+              )),
+          Positioned(
+            top: 20,
+            left: 24,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  width: 8,
+                  height: 8,
+                  decoration: BoxDecoration(
+                    color: AppColors.white,
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      width: 1,
+                      color: AppColors.antiFlashWhite,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  width: 7,
+                  child: Divider(
+                    color: AppColors.antiFlashWhite,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      );
+    } else {
+      return SizedBox();
+    }
   }
 }

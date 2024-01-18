@@ -1,7 +1,10 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:noti/presentation/trigger_screen/widgets/bold_list_tile.dart';
 import 'package:noti/presentation/trigger_screen/widgets/custom_list_tile.dart';
 import 'package:noti/presentation/widgets/custom_expansion_tile.dart';
+
+enum LineVisibility { full, partial, none }
 
 class TriggerPage extends StatelessWidget {
   const TriggerPage({super.key});
@@ -19,19 +22,24 @@ class TriggerPage extends StatelessWidget {
     );
   }
 
-  Widget _displayListView(TriggerItem item, [bool isLineVisible = false]) {
+  Widget _displayListView(TriggerItem item, [LineVisibility lineVisibility = LineVisibility.none]) {
     return switch (item) {
       AllTriggers() => BoldListTile(title: item.label),
-      Category() => CustomExpansionTile(
-          title: item.label,
-          isLineVisible: isLineVisible,
-          children: item.children.map((e) {
-            return _displayListView(e, true);
-          }).toList()),
-      Option() => CustomListTile(
-          text: item.label,
-          isLineVisible: isLineVisible,
-        ),
+      Category() =>
+          CustomExpansionTile(
+              title: item.label,
+              lineVisibility: lineVisibility,
+              children: item.children.mapIndexed((index, e) {
+                if (index == item.children.length - 1) {
+                  return _displayListView(e, LineVisibility.partial);
+                }
+                return _displayListView(e, LineVisibility.full);
+              }).toList()),
+      Option() =>
+          CustomListTile(
+            text: item.label,
+            lineVisibility: lineVisibility,
+          ),
     };
   }
 }
@@ -85,7 +93,7 @@ List<TriggerItem> items = [
     children: [
       Category(
         label:
-            'Some very long names of action with many symbols in two, three, or four lines with text; the limit should be four lines.',
+        'Some very long names of action with many symbols in two, three, or four lines with text; the limit should be four lines.',
         children: [Option(label: '🚴 Biking'), Option(label: '🏃 Running')],
       ),
       Category(
@@ -93,7 +101,7 @@ List<TriggerItem> items = [
         children: [
           Option(
             label:
-                '🏓 Some very long names of action with many symbols in two, three, or four lines with text; the limit should be four lines.',
+            '🏓 Some very long names of action with many symbols in two, three, or four lines with text; the limit should be four lines.',
           ),
           Option(label: '🏐 Volleyball'),
         ],
