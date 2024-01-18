@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:noti/presentation/trigger_screen/widgets/bold_list_tile.dart';
+import 'package:noti/presentation/trigger_screen/widgets/custom_list_tile.dart';
 import 'package:noti/presentation/widgets/custom_expansion_tile.dart';
 
 class TriggerPage extends StatelessWidget {
@@ -18,16 +19,18 @@ class TriggerPage extends StatelessWidget {
     );
   }
 
-  Widget _displayListView(TriggerItem item) {
+  Widget _displayListView(TriggerItem item, [bool isLineVisible = false]) {
     return switch (item) {
       AllTriggers() => BoldListTile(title: item.label),
       Category() => CustomExpansionTile(
           title: item.label,
+          isLineVisible: isLineVisible,
           children: item.children.map((e) {
-            return _displayListView(e);
+            return _displayListView(e, true);
           }).toList()),
-      Option() => ListTile(
-          title: Text(item.label),
+      Option() => CustomListTile(
+          text: item.label,
+          isLineVisible: isLineVisible,
         ),
     };
   }
@@ -52,9 +55,23 @@ class Category extends TriggerItem {
     required super.label,
     super.isChecked,
     required this.children,
+    this.isLineVisible = false,
   });
 
   final List<TriggerItem> children;
+  final bool isLineVisible;
+
+  Category copyWith({
+    List<TriggerItem>? children,
+    bool? isLineVisible,
+    String? label,
+  }) {
+    return Category(
+      children: children ?? this.children,
+      isLineVisible: isLineVisible ?? this.isLineVisible,
+      label: label ?? this.label,
+    );
+  }
 }
 
 class Option extends TriggerItem {

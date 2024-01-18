@@ -14,9 +14,9 @@ class AppTheme {
     ),
     listTileTheme: const ListTileThemeData(
       // contentPadding: EdgeInsets.all(0),
-      // dense: true,
-      // horizontalTitleGap: 0.0,
-      // minLeadingWidth: 0,
+       dense: true,
+      horizontalTitleGap: 0.0,
+      //minLeadingWidth: 0,
     ),
     expansionTileTheme: const ExpansionTileThemeData(
       textColor: AppColors.eerieBlack,
