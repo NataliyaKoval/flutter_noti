@@ -7,8 +7,7 @@ import 'package:noti/consts/strings.dart';
 import 'package:noti/data/entity/one_time_notification_entity.dart';
 import 'package:noti/data/entity/recurring_notification_entity.dart';
 import 'package:noti/di/providers.dart';
-import 'package:noti/presentation/notifications_screen/notifications_page.dart';
-import 'package:noti/presentation/trigger_screen/trigger_page.dart';
+import 'package:noti/presentation/login_screen/login_page.dart';
 import 'package:noti/themes/app_theme.dart';
 import 'package:provider/provider.dart';
 
@@ -26,14 +25,6 @@ Future<void> main() async {
     null,
     [
       NotificationChannel(
-        channelKey: 'basic_channel',
-        channelName: 'Basic Notifications',
-        defaultColor: Colors.teal,
-        importance: NotificationImportance.High,
-        channelShowBadge: true,
-        channelDescription: 'Notification channel for basic tests',
-      ),
-      NotificationChannel(
         channelKey: 'scheduled_channel',
         channelName: 'Scheduled Notifications',
         defaultColor: Colors.teal,
@@ -49,7 +40,7 @@ Future<void> main() async {
       ),
     ],
   );
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -73,12 +64,7 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         title: Strings.appStrings.appName,
         theme: AppTheme.lightTheme,
-        // theme: ThemeData(
-        //   useMaterial3: true,
-        // ),
-        //home: const LoginPage(),
-        //home: const NotificationsPage(),
-        home: TriggerPage(),
+        home: const LoginPage(),
       ),
     );
   }

@@ -1,5 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:noti/consts/app_colors.dart';
+import 'package:noti/consts/strings.dart';
 import 'package:noti/presentation/trigger_screen/widgets/bold_list_tile.dart';
 import 'package:noti/presentation/trigger_screen/widgets/custom_list_tile.dart';
 import 'package:noti/presentation/widgets/custom_expansion_tile.dart';
@@ -12,7 +14,24 @@ class TriggerPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: AppColors.eerieBlack,
+        toolbarHeight: 44,
+        centerTitle: true,
+        title: Text(
+          'Select trigger 1',
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ),
       body: ListView.builder(
         itemCount: items.length,
         itemBuilder: (context, index) {

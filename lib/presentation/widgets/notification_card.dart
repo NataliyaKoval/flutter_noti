@@ -10,6 +10,7 @@ import 'package:noti/presentation/add_new_notification_screen/add_new_notificati
 import 'package:noti/presentation/add_recurring_notification_screen/add_recurring_notification_page.dart';
 import 'package:noti/presentation/one_time_tab/bloc/one_time_tab_cubit.dart';
 import 'package:noti/presentation/repeating_notifications_screen/bloc/repeating_notifications_cubit.dart';
+import 'package:noti/presentation/trigger_screen/trigger_page.dart';
 import 'package:noti/presentation/widgets/small_outlined_button.dart';
 
 class NotificationCard extends StatelessWidget {
@@ -146,7 +147,13 @@ class NotificationCard extends StatelessWidget {
                         child: SmallOutlinedButton(
                           text:
                               Strings.notificationsScreenStrings.selectTriger1,
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const TriggerPage(),
+                              ),
+                            );
+                          },
                         ),
                       ),
                       const SizedBox(
