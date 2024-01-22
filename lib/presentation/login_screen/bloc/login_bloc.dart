@@ -14,7 +14,7 @@ Stream<DateTime> currentTime() =>
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc()
       : super(LoginState(
-          currentTime: DateFormat('hh:mm').format(DateTime.now()),
+          currentTime: DateFormat('HH:mm').format(DateTime.now()),
         )) {
     _currentTimeSubscription = currentTime().listen(_onCurrentTimeTicked);
     on<CurrentTimeTickedEvent>(_setCurrentTime);
@@ -26,7 +26,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   String formattedTime = '';
 
   void _onCurrentTimeTicked(DateTime dateTime) {
-    formattedTime = DateFormat('hh:mm').format(dateTime);
+    formattedTime = DateFormat('HH:mm').format(dateTime);
     add(CurrentTimeTickedEvent(formattedTime));
   }
 
@@ -75,7 +75,13 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         '${state.hoursFirstDigit}${state.hoursSecondDigit}:${state.minutesFirstDigit}${state.minutesSecondDigit}') {
       emit(state.copyWith(isConfirmed: true));
     } else {
-      emit(state.copyWith(isErrorVisible: true));
+      emit(state.copyWith(
+        isErrorVisible: true,
+        hoursFirstDigit: '',
+        hoursSecondDigit: '',
+        minutesFirstDigit: '',
+        minutesSecondDigit: '',
+      ));
     }
   }
 }
