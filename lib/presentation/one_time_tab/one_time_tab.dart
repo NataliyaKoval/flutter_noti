@@ -1,6 +1,7 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:noti/consts/strings.dart';
 import 'package:noti/presentation/add_new_notification_screen/add_new_notification_page.dart';
 import 'package:noti/presentation/notifications_screen/widgets/button_with_icon.dart';
 import 'package:noti/presentation/widgets/notification_card.dart';
@@ -66,7 +67,8 @@ class _OneTimeTabState extends State<OneTimeTab> {
                   padding: const EdgeInsets.only(bottom: 16),
                   child: ButtonWithIcon(onPressed: () async {
                     await Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const AddNewNotificationPage(),
+                      builder: (context) => AddNewNotificationPage(
+                          title: Strings.addNewStrings.title),
                     ));
                     if (!context.mounted) return;
                     context.read<OneTimeTabCubit>().getOneTimeNotifications();
