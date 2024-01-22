@@ -69,6 +69,7 @@ class MultilineTextField extends StatelessWidget {
         color: AppColors.eerieBlack,
       ),
       keyboardType: TextInputType.multiline,
+      textCapitalization: TextCapitalization.sentences,
       onChanged: onChanged,
       // validator: (value) => value == null || value.isEmpty
       //     ? Strings.addNewStrings.errorMessage
