@@ -16,9 +16,10 @@ import 'package:noti/presentation/widgets/big_filled_button.dart';
 import 'package:noti/presentation/widgets/inputs_row.dart';
 
 class AddNewNotificationPage extends StatefulWidget {
-  const AddNewNotificationPage({super.key, this.id});
+  const AddNewNotificationPage({super.key, this.id, required this.title});
 
   final int? id;
+  final String title;
 
   @override
   State<AddNewNotificationPage> createState() => _AddNewNotificationPageState();
@@ -85,7 +86,7 @@ class _AddNewNotificationPageState extends State<AddNewNotificationPage> {
                 toolbarHeight: 44,
                 centerTitle: true,
                 title: Text(
-                  Strings.addNewStrings.title,
+                  widget.title,
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w700,

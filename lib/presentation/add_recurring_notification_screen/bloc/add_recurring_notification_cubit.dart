@@ -60,6 +60,7 @@ class AddRecurringNotificationCubit
       content: NotificationContent(
         id: notification.id,
         channelKey: 'recurring_channel',
+        title: 'noti',
         body: notification.message,
         notificationLayout: NotificationLayout.Default,
       ),
