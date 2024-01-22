@@ -93,6 +93,7 @@ class _CustomListTileState extends State<CustomListTile> {
                 child: Text(widget.text),
               ),
               trailing: InkWell(
+                customBorder: CircleBorder(),
                 onTap: () {
                   setState(() {
                     isChecked = !isChecked;

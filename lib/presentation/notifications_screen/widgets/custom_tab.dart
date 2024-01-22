@@ -13,25 +13,22 @@ class CustomTab extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(6),
         ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(iconData),
-              const SizedBox(
-                width: 6,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(iconData),
+            const SizedBox(
+              width: 6,
+            ),
+            Text(
+              text,
+              style: const TextStyle(
+                fontSize: 16,
+                height: 1.5,
+                fontWeight: FontWeight.w500
               ),
-              Text(
-                text,
-                style: const TextStyle(
-                  fontSize: 16,
-                  height: 1.5,
-                  fontWeight: FontWeight.w500
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

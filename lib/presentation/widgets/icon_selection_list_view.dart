@@ -15,22 +15,22 @@ class IconSelectionListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
+    return ListView.separated(padding: EdgeInsets.only(left: 11),
       scrollDirection: Axis.horizontal,
       separatorBuilder: (context, index) => const SizedBox(
         width: 6,
       ),
       itemCount: iconIdsList.length,
       itemBuilder: (BuildContext context, int index) {
-        return InkWell(
+        return GestureDetector(
           onTap: () {
             onTap(index);
           },
           child: Stack(
             alignment: Alignment.center,
             children: [
-              Visibility(
-                visible: index == iconIndex,
+              Opacity(
+                opacity: index == iconIndex ? 1 : 0,
                 child: Container(
                   width: 70,
                   height: 70,

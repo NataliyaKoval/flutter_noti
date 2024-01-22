@@ -4,7 +4,7 @@ import 'package:noti/consts/app_colors.dart';
 import 'package:noti/consts/image_assets.dart';
 import 'package:noti/presentation/trigger_screen/trigger_page.dart';
 
-class CustomExpansionTile extends StatelessWidget {
+class CustomExpansionTile extends StatefulWidget {
   const CustomExpansionTile({
     super.key,
     required this.title,
@@ -17,12 +17,19 @@ class CustomExpansionTile extends StatelessWidget {
   final LineVisibility lineVisibility;
 
   @override
+  State<CustomExpansionTile> createState() => _CustomExpansionTileState();
+}
+
+class _CustomExpansionTileState extends State<CustomExpansionTile> {
+  bool isChecked = false;
+
+  @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         Visibility(
-          visible: lineVisibility == LineVisibility.full ||
-              lineVisibility == LineVisibility.partial,
+          visible: widget.lineVisibility == LineVisibility.full ||
+              widget.lineVisibility == LineVisibility.partial,
           child: Positioned.fill(
             child: Container(
               alignment: Alignment.centerLeft,
@@ -31,17 +38,34 @@ class CustomExpansionTile extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: lineVisibility == LineVisibility.full ||
-                  lineVisibility == LineVisibility.partial
+          padding: widget.lineVisibility == LineVisibility.full ||
+                  widget.lineVisibility == LineVisibility.partial
               ? const EdgeInsets.only(left: 42)
               : const EdgeInsets.only(left: 0),
           child: ExpansionTile(
             controlAffinity: ListTileControlAffinity.leading,
-            trailing: SvgPicture.asset(ImageAssets.checkbox),
+            trailing: InkWell(
+              customBorder: CircleBorder(),
+              onTap: () {
+                setState(() {
+                  isChecked = !isChecked;
+                });
+              },
+              child: isChecked
+                  ? SvgPicture.asset(ImageAssets.checkbox)
+                  : Container(
+                height: 24,
+                width: 24,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: AppColors.antiFlashWhite,
+                ),
+              ),
+            ),
             title: Padding(
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: Text(
-                title,
+                widget.title,
                 maxLines: 4,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
@@ -51,7 +75,7 @@ class CustomExpansionTile extends StatelessWidget {
                 ),
               ),
             ),
-            children: children,
+            children: widget.children,
           ),
         ),
       ],
@@ -59,7 +83,7 @@ class CustomExpansionTile extends StatelessWidget {
   }
 
   Widget _displayLine() {
-    if (lineVisibility == LineVisibility.full) {
+    if (widget.lineVisibility == LineVisibility.full) {
       return Stack(
         children: [
           const Padding(
@@ -95,7 +119,7 @@ class CustomExpansionTile extends StatelessWidget {
           ),
         ],
       );
-    } else if (lineVisibility == LineVisibility.partial) {
+    } else if (widget.lineVisibility == LineVisibility.partial) {
       return Stack(
         children: [
           const Padding(

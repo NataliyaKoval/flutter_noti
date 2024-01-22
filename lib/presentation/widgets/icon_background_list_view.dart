@@ -15,6 +15,7 @@ class IconBackgroundListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
+      padding: EdgeInsets.only(left: 11),
       scrollDirection: Axis.horizontal,
       separatorBuilder: (context, index) =>
       const SizedBox(
@@ -22,15 +23,15 @@ class IconBackgroundListView extends StatelessWidget {
       ),
       itemCount: iconColorsList.length,
       itemBuilder: (context, index) =>
-          InkWell(
+          GestureDetector (
             onTap: () {
               onTap(index);
             },
             child: Stack(
               alignment: Alignment.center,
               children: [
-                Visibility(
-                  visible: index == iconIndex,
+                Opacity(
+                  opacity: index == iconIndex ? 1 : 0,
                   child: Container(
                     width: 70,
                     height: 70,
