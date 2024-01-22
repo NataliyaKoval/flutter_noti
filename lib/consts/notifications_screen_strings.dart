@@ -7,6 +7,6 @@ class NotificationsScreenStrings {
   String get addNew => 'Add new notification';
 
   String get minute => 'minute';
-  String get selectTriger1 => 'Select triger 1';
-  String get selectTriger2 => 'Select triger 2';
+  String get selectTrigger1 => 'Select trigger 1';
+  String get selectTrigger2 => 'Select trigger 2';
 }

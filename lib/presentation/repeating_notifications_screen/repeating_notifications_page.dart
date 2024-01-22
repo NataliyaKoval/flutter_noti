@@ -11,9 +11,14 @@ import 'package:noti/presentation/widgets/notification_card.dart';
 import 'package:noti/presentation/repeating_notifications_screen/bloc/repeating_notifications_cubit.dart';
 
 class RepeatingNotificationsPage extends StatelessWidget {
-  const RepeatingNotificationsPage({super.key, required this.interval});
+  const RepeatingNotificationsPage({
+    super.key,
+    required this.interval,
+    required this.title,
+  });
 
   final int interval;
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +37,7 @@ class RepeatingNotificationsPage extends StatelessWidget {
           backgroundColor: AppColors.eerieBlack,
           toolbarHeight: 44,
           centerTitle: true,
-          title: Text('$interval ${Strings.notificationsScreenStrings.minute}'),
+          title: Text('$interval $title'),
           titleTextStyle: const TextStyle(
             color: Colors.white,
             fontSize: 16,
@@ -75,8 +80,10 @@ class RepeatingNotificationsPage extends StatelessWidget {
                       padding: const EdgeInsets.only(bottom: 16),
                       child: ButtonWithIcon(onPressed: () async {
                         await Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) =>
-                              AddRecurringNotificationPage(interval: interval),
+                          builder: (context) => AddRecurringNotificationPage(
+                            interval: interval,
+                            title: Strings.addNewStrings.title,
+                          ),
                         ));
                         if (!context.mounted) return;
                         context

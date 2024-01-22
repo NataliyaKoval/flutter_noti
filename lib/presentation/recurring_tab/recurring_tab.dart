@@ -20,6 +20,7 @@ class RecurringTab extends StatelessWidget {
             MaterialPageRoute(
               builder: (context) => RepeatingNotificationsPage(
                 interval: _interval[index],
+                title: _interval[index] == 1 ? 'minute' : 'minutes',
               ),
             ),
           );

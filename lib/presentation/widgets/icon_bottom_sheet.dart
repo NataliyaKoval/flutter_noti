@@ -70,7 +70,7 @@ class IconBottomSheet extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 8, bottom: 16, right: 8),
+          padding: const EdgeInsets.only(bottom: 16),
           child: SizedBox(
             height: 70,
             child: IconBackgroundListView(
@@ -93,16 +93,13 @@ class IconBottomSheet extends StatelessWidget {
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: SizedBox(
-            height: 70,
-            child: IconSelectionListView(
-              onTap: (int index) {
-                onIconTap(index);
-              },
-              iconIndex: iconIndex,
-            ),
+        SizedBox(
+          height: 70,
+          child: IconSelectionListView(
+            onTap: (int index) {
+              onIconTap(index);
+            },
+            iconIndex: iconIndex,
           ),
         ),
         Padding(

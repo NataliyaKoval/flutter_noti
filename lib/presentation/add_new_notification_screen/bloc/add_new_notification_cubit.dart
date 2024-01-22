@@ -88,6 +88,7 @@ class AddNewNotificationCubit extends Cubit<AddNewNotificationState> {
         channelKey: 'scheduled_channel',
         body: notification.message,
         notificationLayout: NotificationLayout.Default,
+        title: 'noti',
         wakeUpScreen: true,
       ),
       schedule: NotificationCalendar(

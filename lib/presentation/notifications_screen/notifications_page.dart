@@ -88,7 +88,8 @@ class _NotificationsPageState extends State<NotificationsPage> {
                 ),
               ),
               bottom: PreferredSize(
-                preferredSize: const Size(400, 62),
+                preferredSize: const Size(double.infinity, 80),
+                //preferredSize: const Size(400, 62),
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Container(
@@ -109,6 +110,13 @@ class _NotificationsPageState extends State<NotificationsPage> {
                           iconData: Icons.history,
                         ),
                       ],
+                      onTap: (value) {
+                        if (value == 0) {
+                          context
+                              .read<OneTimeTabCubit>()
+                              .getOneTimeNotifications();
+                        }
+                      },
                     ),
                   ),
                 ),

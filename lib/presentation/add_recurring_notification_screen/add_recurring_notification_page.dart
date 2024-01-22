@@ -18,10 +18,12 @@ class AddRecurringNotificationPage extends StatefulWidget {
     super.key,
     required this.interval,
     this.id,
+    required this.title,
   });
 
   final int interval;
   final int? id;
+  final String title;
 
   @override
   State<AddRecurringNotificationPage> createState() =>
@@ -77,7 +79,7 @@ class _AddRecurringNotificationPageState
                 toolbarHeight: 44,
                 centerTitle: true,
                 title: Text(
-                  Strings.addNewStrings.title,
+                  widget.title,
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
