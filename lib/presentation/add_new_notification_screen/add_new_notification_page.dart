@@ -52,26 +52,36 @@ class _AddNewNotificationPageState extends State<AddNewNotificationPage> {
     super.dispose();
   }
 
+  void _setControllersText(AddNewNotificationState state) {
+    messageController.text = state.message;
+    hoursFirstDigitController.text = state.hoursFirstDigit;
+    hoursSecondDigitController.text = state.hoursSecondDigit;
+    minutesFirstDigitController.text = state.minutesFirstDigit;
+    minutesSecondDigitController.text = state.minutesSecondDigit;
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AddNewNotificationCubit(
-        id: widget.id,
-        saveNotificationUseCase: SaveNotificationUseCase(
-          repository: context.read<Repository>(),
-        ),
-        getSavedNotificationUseCase: GetSavedNotificationUseCase(
-          repository: context.read<Repository>(),
-        ),
-      )..getSavedNotification(),
+      create: (context) {
+        AddNewNotificationCubit cubit = AddNewNotificationCubit(
+          id: widget.id,
+          saveNotificationUseCase: SaveNotificationUseCase(
+            repository: context.read<Repository>(),
+          ),
+          getSavedNotificationUseCase: GetSavedNotificationUseCase(
+            repository: context.read<Repository>(),
+          ),
+        );
+
+        _setControllersText(cubit.state);
+        cubit.getSavedNotification();
+        return cubit;
+      },
       child: BlocListener<AddNewNotificationCubit, AddNewNotificationState>(
-        listener: (context, state) {
+        listener: (BuildContext context, AddNewNotificationState state) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            messageController.text = state.message;
-            hoursFirstDigitController.text = state.hoursFirstDigit;
-            hoursSecondDigitController.text = state.hoursSecondDigit;
-            minutesFirstDigitController.text = state.minutesFirstDigit;
-            minutesSecondDigitController.text = state.minutesSecondDigit;
+            _setControllersText(state);
           });
           if (state.isConfirmed == true) {
             Navigator.pop(context);
@@ -182,12 +192,12 @@ class _AddNewNotificationPageState extends State<AddNewNotificationPage> {
                                           onColorTap: (int index) {
                                             context
                                                 .read<AddNewNotificationCubit>()
-                                                .getIconBackground(index);
+                                                .setIconBackground(index);
                                           },
                                           onIconTap: (int index) {
                                             context
                                                 .read<AddNewNotificationCubit>()
-                                                .getIcon(index);
+                                                .setIcon(index);
                                           },
                                           onButtonPressed: () => context
                                               .read<AddNewNotificationCubit>()

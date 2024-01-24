@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:noti/consts/app_colors.dart';
 import 'package:noti/consts/time_input_id.dart';
-import 'package:noti/presentation/login_screen/bloc/login_bloc.dart';
+import 'package:noti/consts/zero_width_space.dart';
 import 'package:noti/presentation/widgets/time_input_field.dart';
 
 class TimeInputsRow extends StatefulWidget {
@@ -49,7 +49,7 @@ class _TimeInputsRowState extends State<TimeInputsRow> {
     }
     else if (value.length > 2) {
       FocusScope.of(context).nextFocus();
-      String endSubstring = space + value.substring(2);
+      String endSubstring = zeroWidthSpace + value.substring(2);
       String startSubstring = value.substring(0, 2);
       switch (index) {
         case 0:
@@ -93,6 +93,7 @@ class _TimeInputsRowState extends State<TimeInputsRow> {
           focusNode: nodesList[0],
           formatterRegExp: RegExp(r'\u200B[0-2]{0,2}'),
           onChanged: (String value) {
+            print(value);
             widget.onChanged(TimeInputId.first, value);
             _onChange(value, 0);
           },

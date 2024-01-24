@@ -2,6 +2,7 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noti/consts/time_input_id.dart';
+import 'package:noti/consts/zero_width_space.dart';
 import 'package:noti/domain/models/one_time_notification.dart';
 import 'package:noti/domain/use_cases/get_saved_notification_use_case.dart';
 import 'package:noti/domain/use_cases/save_notification_use_case.dart';
@@ -26,18 +27,22 @@ class AddNewNotificationCubit extends Cubit<AddNewNotificationState> {
   }
 
   void setTime(TimeInputId id, String value) {
+    String newValue = value;
+    if (newValue == '') {
+      newValue = zeroWidthSpace;
+    }
     switch (id) {
       case TimeInputId.first:
-        emit(state.copyWith(hoursFirstDigit: value));
+        emit(state.copyWith(hoursFirstDigit: newValue));
         break;
       case TimeInputId.second:
-        emit(state.copyWith(hoursSecondDigit: value));
+        emit(state.copyWith(hoursSecondDigit: newValue));
         break;
       case TimeInputId.third:
-        emit(state.copyWith(minutesFirstDigit: value));
+        emit(state.copyWith(minutesFirstDigit: newValue));
         break;
       case TimeInputId.fourth:
-        emit(state.copyWith(minutesSecondDigit: value));
+        emit(state.copyWith(minutesSecondDigit: newValue));
         break;
     }
     _enableConfirmButton();
@@ -45,21 +50,21 @@ class AddNewNotificationCubit extends Cubit<AddNewNotificationState> {
 
   void _enableConfirmButton() {
     if (state.message.isNotEmpty &&
-        state.hoursFirstDigit.isNotEmpty &&
-        state.hoursSecondDigit.isNotEmpty &&
-        state.minutesFirstDigit.isNotEmpty &&
-        state.minutesSecondDigit.isNotEmpty) {
+        state.hoursFirstDigit.length == 2 &&
+        state.hoursSecondDigit.length == 2 &&
+        state.minutesFirstDigit.length == 2 &&
+        state.minutesSecondDigit.length == 2) {
       emit(state.copyWith(isConfirmButtonEnabled: true));
     } else {
       emit(state.copyWith(isConfirmButtonEnabled: false));
     }
   }
 
-  void getIconBackground(int index) {
+  void setIconBackground(int index) {
     emit(state.copyWith(iconBackgroundIndex: index));
   }
 
-  void getIcon(int index) {
+  void setIcon(int index) {
     emit(state.copyWith(iconIndex: index));
   }
 
@@ -69,13 +74,15 @@ class AddNewNotificationCubit extends Cubit<AddNewNotificationState> {
 
   void createAndSaveNotification() async {
     DateTime now = DateTime.now();
-    int hours = int.parse('${state.hoursFirstDigit}${state.hoursSecondDigit}');
-    int minutes =
-        int.parse('${state.minutesFirstDigit}${state.minutesSecondDigit}');
+    int hours = int.parse(
+        '${state.hoursFirstDigit.substring(1)}${state.hoursSecondDigit.substring(1)}');
+    int minutes = int.parse(
+        '${state.minutesFirstDigit.substring(1)}${state.minutesSecondDigit.substring(1)}');
     DateTime time = DateTime(now.year, now.month, now.day, hours, minutes);
 
     OneTimeNotification notification = OneTimeNotification(
-      id: savedNotification?.id ?? createUniqueId(),
+      id: savedNotification?.id ??
+          DateTime.now().millisecondsSinceEpoch.remainder(10000),
       time: time,
       message: state.message,
       iconIdIndex: state.isIconChosen ? state.iconIndex : null,
@@ -103,10 +110,6 @@ class AddNewNotificationCubit extends Cubit<AddNewNotificationState> {
     emit(state.copyWith(isConfirmed: true));
   }
 
-  int createUniqueId() {
-    return DateTime.now().millisecondsSinceEpoch.remainder(100000);
-  }
-
   void getSavedNotification() async {
     if (id != null) {
       savedNotification = await getSavedNotificationUseCase(id!);
@@ -115,10 +118,10 @@ class AddNewNotificationCubit extends Cubit<AddNewNotificationState> {
           savedNotification?.time.minute.toString().padLeft(2, '0');
       emit(state.copyWith(
         message: savedNotification?.message,
-        hoursFirstDigit: hours?[0],
-        hoursSecondDigit: hours?[1],
-        minutesFirstDigit: minutes?[0],
-        minutesSecondDigit: minutes?[1],
+        hoursFirstDigit: '$zeroWidthSpace${hours?[0]}',
+        hoursSecondDigit: '$zeroWidthSpace${hours?[1]}',
+        minutesFirstDigit: '$zeroWidthSpace${minutes?[0]}',
+        minutesSecondDigit: '$zeroWidthSpace${minutes?[1]}',
         iconIndex: savedNotification?.iconIdIndex,
         iconBackgroundIndex: savedNotification?.colorIndex,
         isIconChosen: savedNotification?.iconIdIndex != null &&

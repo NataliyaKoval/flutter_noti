@@ -3,12 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:noti/consts/time_input_id.dart';
+import 'package:noti/consts/zero_width_space.dart';
 
 part 'login_event.dart';
 
 part 'login_state.dart';
-
-const space = '\u200B';
 
 Stream<DateTime> currentTime() =>
     Stream.periodic(const Duration(seconds: 1), (_) => DateTime.now());
@@ -47,7 +46,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       InputChangedEvent event, Emitter<LoginState> emit) async {
     String value = event.inputValue;
     if (value == '') {
-      value = space;
+      value = zeroWidthSpace;
     }
     switch (event.inputId) {
       case TimeInputId.first:
@@ -83,10 +82,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     } else {
       emit(state.copyWith(
         isErrorVisible: true,
-        hoursFirstDigit: space,
-        hoursSecondDigit: space,
-        minutesFirstDigit: space,
-        minutesSecondDigit: space,
+        hoursFirstDigit: zeroWidthSpace,
+        hoursSecondDigit: zeroWidthSpace,
+        minutesFirstDigit: zeroWidthSpace,
+        minutesSecondDigit: zeroWidthSpace,
       ));
     }
   }

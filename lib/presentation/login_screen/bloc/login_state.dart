@@ -7,10 +7,10 @@ class LoginState {
     this.isConfirmButtonEnabled = false,
     this.isConfirmed = false,
     this.isErrorVisible = false,
-    this.hoursFirstDigit = space,
-    this.hoursSecondDigit = space,
-    this.minutesFirstDigit = space,
-    this.minutesSecondDigit = space,
+    this.hoursFirstDigit = zeroWidthSpace,
+    this.hoursSecondDigit = zeroWidthSpace,
+    this.minutesFirstDigit = zeroWidthSpace,
+    this.minutesSecondDigit = zeroWidthSpace,
   });
 
   final String currentTime;
