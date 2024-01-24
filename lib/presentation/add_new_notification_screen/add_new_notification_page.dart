@@ -13,7 +13,7 @@ import 'package:noti/presentation/widgets/notification_icon.dart';
 import 'package:noti/presentation/widgets/small_outlined_button.dart';
 import 'package:noti/presentation/widgets/subtitle_text.dart';
 import 'package:noti/presentation/widgets/big_filled_button.dart';
-import 'package:noti/presentation/widgets/inputs_row.dart';
+import 'package:noti/presentation/widgets/time_inputs_row.dart';
 
 class AddNewNotificationPage extends StatefulWidget {
   const AddNewNotificationPage({super.key, this.id, required this.title});

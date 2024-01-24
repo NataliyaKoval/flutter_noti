@@ -8,6 +8,8 @@ part 'login_event.dart';
 
 part 'login_state.dart';
 
+const space = '\u200B';
+
 Stream<DateTime> currentTime() =>
     Stream.periodic(const Duration(seconds: 1), (_) => DateTime.now());
 
@@ -43,25 +45,29 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   Future<void> _setTimeFromInput(
       InputChangedEvent event, Emitter<LoginState> emit) async {
+    String value = event.inputValue;
+    if (value == '') {
+      value = space;
+    }
     switch (event.inputId) {
       case TimeInputId.first:
-        emit(state.copyWith(hoursFirstDigit: event.inputValue));
+        emit(state.copyWith(hoursFirstDigit: value));
         break;
       case TimeInputId.second:
-        emit(state.copyWith(hoursSecondDigit: event.inputValue));
+        emit(state.copyWith(hoursSecondDigit: value));
         break;
       case TimeInputId.third:
-        emit(state.copyWith(minutesFirstDigit: event.inputValue));
+        emit(state.copyWith(minutesFirstDigit: value));
         break;
       case TimeInputId.fourth:
-        emit(state.copyWith(minutesSecondDigit: event.inputValue));
+        emit(state.copyWith(minutesSecondDigit: value));
         break;
     }
 
-    if (state.hoursFirstDigit.isNotEmpty &&
-        state.hoursSecondDigit.isNotEmpty &&
-        state.minutesFirstDigit.isNotEmpty &&
-        state.minutesSecondDigit.isNotEmpty) {
+    if (state.hoursFirstDigit.length == 2 &&
+        state.hoursSecondDigit.length == 2 &&
+        state.minutesFirstDigit.length == 2 &&
+        state.minutesSecondDigit.length == 2) {
       emit(state.copyWith(isConfirmButtonEnabled: true));
     } else {
       emit(
@@ -72,15 +78,15 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   Future<void> _compareCurrentTimeAndInputTime(
       ConfirmButtonClickedEvent event, Emitter<LoginState> emit) async {
     if (formattedTime ==
-        '${state.hoursFirstDigit}${state.hoursSecondDigit}:${state.minutesFirstDigit}${state.minutesSecondDigit}') {
+        '${state.hoursFirstDigit.substring(1)}${state.hoursSecondDigit.substring(1)}:${state.minutesFirstDigit.substring(1)}${state.minutesSecondDigit.substring(1)}') {
       emit(state.copyWith(isConfirmed: true));
     } else {
       emit(state.copyWith(
         isErrorVisible: true,
-        hoursFirstDigit: '',
-        hoursSecondDigit: '',
-        minutesFirstDigit: '',
-        minutesSecondDigit: '',
+        hoursFirstDigit: space,
+        hoursSecondDigit: space,
+        minutesFirstDigit: space,
+        minutesSecondDigit: space,
       ));
     }
   }

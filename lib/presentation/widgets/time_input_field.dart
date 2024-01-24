@@ -13,7 +13,7 @@ class TimeInputField extends StatelessWidget {
 
   final void Function(String) onChanged;
   final FocusNode focusNode;
-  final String formatterRegExp;
+  final RegExp formatterRegExp;
   final TextEditingController controller;
 
   @override
@@ -26,21 +26,23 @@ class TimeInputField extends StatelessWidget {
         focusNode: focusNode,
         keyboardType: TextInputType.number,
         inputFormatters: [
-          LengthLimitingTextInputFormatter(1),
-          FilteringTextInputFormatter.digitsOnly,
-          FilteringTextInputFormatter.allow(RegExp(formatterRegExp)),
+          //LengthLimitingTextInputFormatter(2),
+          FilteringTextInputFormatter.allow(formatterRegExp),
+          // FilteringTextInputFormatter.allow(RegExp(r'[\u200B+\d]')),
+          // FilteringTextInputFormatter.allow(RegExp(formatterRegExp)),
         ],
         textAlign: TextAlign.center,
-        textAlignVertical: TextAlignVertical.top,
+        textAlignVertical: TextAlignVertical.center,
         cursorHeight: 24,
         cursorWidth: 2,
         cursorColor: AppColors.eerieBlack,
         style: const TextStyle(
           fontSize: 16,
+          height: 1.5,
           fontWeight: FontWeight.w700,
         ),
         decoration: const InputDecoration(
-          //contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 17),
+          contentPadding: EdgeInsets.zero,
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(8.0)),
             borderSide: BorderSide(
@@ -64,9 +66,7 @@ class TimeInputField extends StatelessWidget {
           ),
           errorStyle: TextStyle(height: 0),
         ),
-        validator: (value) => value == null || value.isEmpty
-            ? ''
-            : null,
+        validator: (value) => value == null || value.isEmpty ? '' : null,
         onChanged: onChanged,
       ),
     );

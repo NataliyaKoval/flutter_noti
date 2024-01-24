@@ -6,8 +6,8 @@ import 'package:noti/consts/time_input_id.dart';
 import 'package:noti/presentation/login_screen/bloc/login_bloc.dart';
 import 'package:noti/presentation/login_screen/widgets/error_message.dart';
 import 'package:noti/presentation/widgets/big_filled_button.dart';
-import 'package:noti/presentation/widgets/inputs_row.dart';
 import 'package:noti/presentation/notifications_screen/notifications_page.dart';
+import 'package:noti/presentation/widgets/time_inputs_row.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -63,11 +63,13 @@ class _LoginPageState extends State<LoginPage> {
           }
         },
         child: Scaffold(
+          backgroundColor: AppColors.white,
           resizeToAvoidBottomInset: false,
           appBar: AppBar(
             backgroundColor: AppColors.eerieBlack,
             toolbarHeight: 44,
             centerTitle: true,
+            elevation: 0,
             title: Text(Strings.loginPageStrings.title),
             titleTextStyle: const TextStyle(
               color: Colors.white,
@@ -75,77 +77,77 @@ class _LoginPageState extends State<LoginPage> {
               fontWeight: FontWeight.w700,
             ),
           ),
-          body: Padding(
-            padding: const EdgeInsets.only(top: 96),
-            child: BlocBuilder<LoginBloc, LoginState>(
-              builder: (context, state) {
-                return Column(
-                  children: [
-                    Text(
+          body: BlocBuilder<LoginBloc, LoginState>(
+            builder: (context, state) {
+              return Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 72, bottom: 16),
+                    child: Text(
                       Strings.loginPageStrings.title,
                       style: const TextStyle(
                         fontSize: 24,
+                        height: 1.33,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    const SizedBox(
-                      height: 26,
+                  ),
+                  Text(
+                    Strings.loginPageStrings.hint,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      height: 1.5,
+                      color: AppColors.sonicSilver,
                     ),
-                    Text(
-                      Strings.loginPageStrings.hint,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        color: AppColors.sonicSilver,
-                      ),
+                  ),
+                  const SizedBox(
+                    height: 42,
+                  ),
+                  Text(
+                    state.currentTime,
+                    style: const TextStyle(
+                      fontSize: 32,
+                      height: 1.5,
+                      fontWeight: FontWeight.w700,
                     ),
-                    const SizedBox(
-                      height: 58,
+                  ),
+                  const SizedBox(
+                    height: 42,
+                  ),
+                  TimeInputsRow(
+                      hoursFirstDigitController: hoursFirstDigitController,
+                      hoursSecondDigitController: hoursSecondDigitController,
+                      minutesFirstDigitController:
+                          minutesFirstDigitController,
+                      minutesSecondDigitController:
+                          minutesSecondDigitController,
+                      onChanged: (TimeInputId id, String value) {
+                        context.read<LoginBloc>().add(InputChangedEvent(
+                            inputId: id, inputValue: value));
+                      }),
+                  Expanded(child: Container()),
+                  AnimatedOpacity(
+                    duration: const Duration(milliseconds: 500),
+                    opacity: state.isErrorVisible ? 1 : 0,
+                    child: const ErrorMessage(),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 32, horizontal: 16),
+                    child: BigFilledButton(
+                      text: Strings.loginPageStrings.buttonText,
+                      onPressed: state.isConfirmButtonEnabled
+                          ? () {
+                              context
+                                  .read<LoginBloc>()
+                                  .add(ConfirmButtonClickedEvent());
+                            }
+                          : null,
                     ),
-                    Text(
-                      state.currentTime,
-                      style: const TextStyle(
-                        fontSize: 32,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 58,
-                    ),
-                    TimeInputsRow(
-                        hoursFirstDigitController: hoursFirstDigitController,
-                        hoursSecondDigitController: hoursSecondDigitController,
-                        minutesFirstDigitController:
-                            minutesFirstDigitController,
-                        minutesSecondDigitController:
-                            minutesSecondDigitController,
-                        onChanged: (TimeInputId id, String value) {
-                          context.read<LoginBloc>().add(InputChangedEvent(
-                              inputId: id, inputValue: value));
-                        }),
-                    Expanded(child: Container()),
-                    AnimatedOpacity(
-                      duration: const Duration(milliseconds: 500),
-                      opacity: state.isErrorVisible ? 1 : 0,
-                      child: const ErrorMessage(),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 32, horizontal: 16),
-                      child: BigFilledButton(
-                        text: Strings.loginPageStrings.buttonText,
-                        onPressed: state.isConfirmButtonEnabled
-                            ? () {
-                                context
-                                    .read<LoginBloc>()
-                                    .add(ConfirmButtonClickedEvent());
-                              }
-                            : null,
-                      ),
-                    ),
-                  ],
-                );
-              },
-            ),
+                  ),
+                ],
+              );
+            },
           ),
         ),
       ),
