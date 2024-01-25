@@ -16,4 +16,5 @@ class AppColors {
   static const Color ivory = Color(0xFFFFFEF1);
   static const Color magnolia = Color(0xFFF5F1FF);
   static const Color honeydew = Color(0xFFFFF1FF);
+  static const Color black = Color(0xFF000000);
 }

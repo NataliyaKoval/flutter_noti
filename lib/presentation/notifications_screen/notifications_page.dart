@@ -1,6 +1,7 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:noti/consts/app_colors.dart';
+import 'package:noti/consts/image_assets.dart';
 import 'package:noti/consts/strings.dart';
 import 'package:noti/domain/repository/repository.dart';
 import 'package:noti/domain/use_cases/get_one_time_notifications_use_case.dart';
@@ -19,47 +20,7 @@ class NotificationsPage extends StatefulWidget {
 }
 
 class _NotificationsPageState extends State<NotificationsPage> {
-  @override
-  void initState() {
-    super.initState();
-    AwesomeNotifications().isNotificationAllowed().then(
-      (isAllowed) {
-        if (!isAllowed) {
-          showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-              title: Text('Allow Notifications'),
-              content: Text('Our app would like to send you notifications'),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text(
-                    'Don\'t Allow',
-                    style: TextStyle(color: Colors.grey, fontSize: 18),
-                  ),
-                ),
-                TextButton(
-                  onPressed: () => AwesomeNotifications()
-                      .requestPermissionToSendNotifications()
-                      .then((_) => Navigator.pop(context)),
-                  child: Text(
-                    'Allow',
-                    style: TextStyle(
-                      color: Colors.teal,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          );
-        }
-      },
-    );
-  }
+  int activeTab = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -93,18 +54,20 @@ class _NotificationsPageState extends State<NotificationsPage> {
                       height: 48,
                       padding: const EdgeInsets.all(4),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: AppColors.antiFlashWhite,
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: TabBar(
                         tabs: [
                           CustomTab(
                             text: Strings.notificationsScreenStrings.firstTab,
-                            iconData: Icons.timer_outlined,
+                            iconData: ImageAssets.timerTab,
+                            isActive: activeTab == 0,
                           ),
                           CustomTab(
                             text: Strings.notificationsScreenStrings.secondTab,
-                            iconData: Icons.history,
+                            iconData: ImageAssets.recursion,
+                            isActive: activeTab == 1,
                           ),
                         ],
                         onTap: (value) {
@@ -113,6 +76,9 @@ class _NotificationsPageState extends State<NotificationsPage> {
                                 .read<OneTimeTabCubit>()
                                 .getOneTimeNotifications();
                           }
+                          setState(() {
+                            activeTab = value;
+                          });
                         },
                       ),
                     ),

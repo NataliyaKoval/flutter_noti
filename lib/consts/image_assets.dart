@@ -46,4 +46,6 @@ class ImageAssets {
   static const String timer = '${_root}timer$_svg';
   static const String users = '${_root}users$_svg';
   static const String checkbox = '${_root}checkbox$_svg';
+  static const String recursion = '${_root}recursion$_svg';
+  static const String timerTab = '${_root}timer_tab$_svg';
 }
