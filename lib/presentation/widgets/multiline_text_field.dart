@@ -62,6 +62,7 @@ class MultilineTextField extends StatelessWidget {
       minLines: 4,
       maxLines: 4,
       cursorHeight: 24,
+      cursorRadius: const Radius.circular(5),
       cursorColor: AppColors.eerieBlack,
       style: const TextStyle(
         fontSize: 16,
@@ -71,9 +72,6 @@ class MultilineTextField extends StatelessWidget {
       keyboardType: TextInputType.multiline,
       textCapitalization: TextCapitalization.sentences,
       onChanged: onChanged,
-      // validator: (value) => value == null || value.isEmpty
-      //     ? Strings.addNewStrings.errorMessage
-      //     : null,
     );
   }
 }

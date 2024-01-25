@@ -28,14 +28,13 @@ class TimeInputField extends StatelessWidget {
         inputFormatters: [
           //LengthLimitingTextInputFormatter(2),
           FilteringTextInputFormatter.allow(formatterRegExp),
-          // FilteringTextInputFormatter.allow(RegExp(r'[\u200B+\d]')),
-          // FilteringTextInputFormatter.allow(RegExp(formatterRegExp)),
         ],
         textAlign: TextAlign.center,
         textAlignVertical: TextAlignVertical.center,
         cursorHeight: 24,
         cursorWidth: 2,
         cursorColor: AppColors.eerieBlack,
+        cursorRadius: const Radius.circular(5),
         style: const TextStyle(
           fontSize: 16,
           height: 1.5,

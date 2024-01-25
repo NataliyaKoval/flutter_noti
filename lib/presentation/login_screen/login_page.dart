@@ -7,6 +7,7 @@ import 'package:noti/presentation/login_screen/bloc/login_bloc.dart';
 import 'package:noti/presentation/login_screen/widgets/error_message.dart';
 import 'package:noti/presentation/widgets/big_filled_button.dart';
 import 'package:noti/presentation/notifications_screen/notifications_page.dart';
+import 'package:noti/presentation/widgets/custom_app_bar.dart';
 import 'package:noti/presentation/widgets/time_inputs_row.dart';
 
 class LoginPage extends StatefulWidget {
@@ -65,18 +66,9 @@ class _LoginPageState extends State<LoginPage> {
         child: Scaffold(
           backgroundColor: AppColors.white,
           resizeToAvoidBottomInset: false,
-          appBar: AppBar(
-            backgroundColor: AppColors.eerieBlack,
-            toolbarHeight: 44,
-            centerTitle: true,
-            elevation: 0,
-            title: Text(Strings.loginPageStrings.title),
-            titleTextStyle: const TextStyle(
-              color: Colors.white,
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
+          appBar: PreferredSize(
+              preferredSize: const Size.fromHeight(44),
+              child: CustomAppBar(title: Strings.loginPageStrings.title,)),
           body: BlocBuilder<LoginBloc, LoginState>(
             builder: (context, state) {
               return Column(

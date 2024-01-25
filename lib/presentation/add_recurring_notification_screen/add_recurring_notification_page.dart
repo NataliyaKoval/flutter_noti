@@ -6,6 +6,7 @@ import 'package:noti/domain/repository/repository.dart';
 import 'package:noti/domain/use_cases/get_saved_recurring_notification_use_case.dart';
 import 'package:noti/domain/use_cases/save_recurring_notification_use_case.dart';
 import 'package:noti/presentation/widgets/big_filled_button.dart';
+import 'package:noti/presentation/widgets/custom_app_bar.dart';
 import 'package:noti/presentation/widgets/icon_bottom_sheet.dart';
 import 'package:noti/presentation/widgets/multiline_text_field.dart';
 import 'package:noti/presentation/widgets/notification_icon.dart';
@@ -74,22 +75,16 @@ class _AddRecurringNotificationPageState
           builder: (context) {
             return Scaffold(
               resizeToAvoidBottomInset: false,
-              appBar: AppBar(
-                backgroundColor: AppColors.eerieBlack,
-                toolbarHeight: 44,
-                centerTitle: true,
-                title: Text(
-                  widget.title,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
+              appBar: PreferredSize(
+                preferredSize: const Size.fromHeight(44),
+                child: CustomAppBar(
+                  title: widget.title,
+                  leading: IconButton(
+                    icon: const Icon(Icons.arrow_back_ios),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
                   ),
-                ),
-                leading: IconButton(
-                  icon: const Icon(Icons.arrow_back_ios),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
                 ),
               ),
               body: Padding(
