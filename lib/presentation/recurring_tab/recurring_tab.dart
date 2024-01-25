@@ -15,6 +15,7 @@ class RecurringTab extends StatelessWidget {
     return ListView.builder(
       itemCount: _interval.length,
       itemBuilder: (context, index) => ListTile(
+        tileColor: AppColors.ghostWhite,
         onTap: () {
           Navigator.of(context).push(
             MaterialPageRoute(
@@ -42,7 +43,7 @@ class RecurringTab extends StatelessWidget {
         ),
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
         shape: const Border(
-          bottom: BorderSide(color: AppColors.gray),
+          bottom: BorderSide(color: AppColors.platinum),
         ),
       ),
     );
