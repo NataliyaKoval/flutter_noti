@@ -37,6 +37,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
         length: 2,
         child: Builder(builder: (context) {
           return Scaffold(
+            backgroundColor: AppColors.white,
             appBar: PreferredSize(
               preferredSize: const Size.fromHeight(122),
               child: CustomAppBar(
@@ -87,7 +88,6 @@ class _NotificationsPageState extends State<NotificationsPage> {
               ),
             ),
             body: TabBarView(
-              //controller: _tabController,
               children: [
                 const OneTimeTab(),
                 RecurringTab(),

@@ -64,7 +64,7 @@ class _OneTimeTabState extends State<OneTimeTab> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 16),
+                  padding: const EdgeInsets.only(bottom: 34, top: 24),
                   child: ButtonWithIcon(onPressed: () async {
                     await Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => AddNewNotificationPage(
