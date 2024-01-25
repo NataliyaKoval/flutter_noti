@@ -74,6 +74,7 @@ class _AddRecurringNotificationPageState
         child: Builder(
           builder: (context) {
             return Scaffold(
+              backgroundColor: AppColors.white,
               resizeToAvoidBottomInset: false,
               appBar: PreferredSize(
                 preferredSize: const Size.fromHeight(44),

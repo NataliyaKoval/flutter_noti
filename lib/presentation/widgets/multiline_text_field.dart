@@ -25,7 +25,6 @@ class MultilineTextField extends StatelessWidget {
           fontSize: 16,
           height: 1.5,
         ),
-        helperText: ' ',
         border: const OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(8.0)),
           borderSide: BorderSide(
@@ -68,7 +67,7 @@ class MultilineTextField extends StatelessWidget {
         height: 1.5,
         color: AppColors.eerieBlack,
       ),
-      textInputAction: TextInputAction.go,
+      textInputAction: TextInputAction.next,
       textCapitalization: TextCapitalization.sentences,
       onChanged: onChanged,
     );
