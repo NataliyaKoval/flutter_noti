@@ -84,7 +84,7 @@ class NotificationCard extends StatelessWidget {
                 ),
                 colorIndex != null && iconIndex != null
                     ? Padding(
-                        padding: const EdgeInsets.only(bottom: 3),
+                        padding: const EdgeInsets.only(bottom: 8),
                         child: Container(
                           width: 32,
                           height: 32,
@@ -106,7 +106,7 @@ class NotificationCard extends StatelessWidget {
                     Text(
                       Strings.notificationsScreenStrings.time,
                       style: const TextStyle(
-                          color: AppColors.sonicSilver, height: 1.4),
+                          color: AppColors.sonicSilver, height: 1.43),
                     ),
                     const SizedBox(
                       width: 4,
@@ -124,28 +124,35 @@ class NotificationCard extends StatelessWidget {
                 const SizedBox(
                   height: 8,
                 ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      Strings.notificationsScreenStrings.message,
-                      style: const TextStyle(
-                          color: AppColors.sonicSilver, height: 1.43),
-                    ),
-                    SizedBox(
-                      width: 4,
-                    ),
-                    Text(
-                      message,
-                      style: TextStyle(
-                        fontSize: 14,
-                        height: 1.43,
-                        fontWeight: FontWeight.w700,
+                Padding(
+                  padding: const EdgeInsets.only(right: 16),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        Strings.notificationsScreenStrings.message,
+                        style: const TextStyle(
+                            color: AppColors.sonicSilver, height: 1.43),
                       ),
-                    ),
-                  ],
+                      SizedBox(
+                        width: 4,
+                      ),
+                      Expanded(
+                        child: Text(
+                          message,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: 14,
+                            height: 1.43,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 12),
                 Padding(
                   padding: const EdgeInsets.only(right: 16),
                   child: Row(

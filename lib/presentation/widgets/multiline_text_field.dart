@@ -68,7 +68,7 @@ class MultilineTextField extends StatelessWidget {
         height: 1.5,
         color: AppColors.eerieBlack,
       ),
-      keyboardType: TextInputType.multiline,
+      textInputAction: TextInputAction.go,
       textCapitalization: TextCapitalization.sentences,
       onChanged: onChanged,
     );
