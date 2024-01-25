@@ -22,5 +22,9 @@ class AppTheme {
       collapsedTextColor: AppColors.eerieBlack,
       collapsedIconColor: AppColors.eerieBlack,
     ),
+    textSelectionTheme: const TextSelectionThemeData(
+      cursorColor: AppColors.eerieBlack,
+      selectionHandleColor: AppColors.eerieBlack,
+    ),
   );
 }

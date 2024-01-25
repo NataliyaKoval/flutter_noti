@@ -63,7 +63,6 @@ class MultilineTextField extends StatelessWidget {
       maxLines: 4,
       cursorHeight: 24,
       cursorRadius: const Radius.circular(5),
-      cursorColor: AppColors.eerieBlack,
       style: const TextStyle(
         fontSize: 16,
         height: 1.5,
