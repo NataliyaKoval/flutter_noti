@@ -45,6 +45,7 @@ class CustomTab extends StatelessWidget {
               text,
               textAlign: TextAlign.center,
               style: const TextStyle(
+                leadingDistribution: TextLeadingDistribution.even,
                 fontSize: 16,
                 height: 1.5,
                 fontWeight: FontWeight.w500,

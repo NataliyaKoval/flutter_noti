@@ -34,6 +34,7 @@ class SmallOutlinedButton extends StatelessWidget {
           fontSize: 14,
           height: 1.43,
           fontWeight: FontWeight.w700,
+          leadingDistribution: TextLeadingDistribution.even,
         ),
       ),
     );
