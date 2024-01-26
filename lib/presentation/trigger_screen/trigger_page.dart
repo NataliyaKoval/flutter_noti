@@ -44,11 +44,7 @@ class TriggerPage extends StatelessWidget {
               itemCount: items.length + 1,
               itemBuilder: (context, index) {
                 if (index == items.length) {
-                  return const Divider(
-                    color: AppColors.platinum,
-                    height: 1,
-                    thickness: 1,
-                  );
+                  return const SizedBox();
                 }
                 return _displayListView(items[index]);
               },

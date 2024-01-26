@@ -31,9 +31,8 @@ class TimeInputField extends StatelessWidget {
         ],
         textAlign: TextAlign.center,
         textAlignVertical: TextAlignVertical.center,
-        cursorHeight: 24,
         cursorWidth: 2,
-        cursorRadius: const Radius.circular(5),
+        cursorRadius: const Radius.circular(2),
         style: const TextStyle(
           fontSize: 16,
           height: 1.5,

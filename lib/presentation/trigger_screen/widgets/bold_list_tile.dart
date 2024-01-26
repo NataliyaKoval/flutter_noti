@@ -18,7 +18,7 @@ class _BoldListTileState extends State<BoldListTile> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      shape: Border(bottom: BorderSide(color: AppColors.platinum,)),
+      // shape: Border(bottom: BorderSide(color: AppColors.platinum,)),
       contentPadding: const EdgeInsets.only(
         left: 16,
         top: 4,
