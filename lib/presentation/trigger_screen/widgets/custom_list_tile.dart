@@ -124,7 +124,8 @@ class _CustomListTileState extends State<CustomListTile> {
               contentPadding: EdgeInsets.only(top: 3, bottom: 3, right: 16),
               shape: _buildBorder(),
               title: Text(widget.text,
-                  maxLines: 5,
+                  maxLines: 4,
+                  overflow: TextOverflow.ellipsis,
                   softWrap: true,
                   style: const TextStyle(
                       fontSize: 16, height: 1.5, color: AppColors.eerieBlack)),
