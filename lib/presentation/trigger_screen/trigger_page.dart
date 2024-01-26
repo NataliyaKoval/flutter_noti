@@ -36,9 +36,20 @@ class TriggerPage extends StatelessWidget {
         children: [
           Expanded(
             child: ListView.separated(
-              separatorBuilder: (context, index) => Divider(color: Colors.blue, height: 3, thickness: 3),
-              itemCount: items.length,
+              separatorBuilder: (context, index) => const Divider(
+                color: AppColors.platinum,
+                height: 1,
+                thickness: 1,
+              ),
+              itemCount: items.length + 1,
               itemBuilder: (context, index) {
+                if (index == items.length) {
+                  return const Divider(
+                    color: AppColors.platinum,
+                    height: 1,
+                    thickness: 1,
+                  );
+                }
                 return _displayListView(items[index]);
               },
             ),

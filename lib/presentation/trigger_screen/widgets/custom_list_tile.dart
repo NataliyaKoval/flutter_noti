@@ -58,8 +58,7 @@ class _CustomListTileState extends State<CustomListTile> {
                                 ? EdgeInsets.only(left: 24, right: 11)
                                 : EdgeInsets.only(left: 27, right: 11),
                             child: VerticalDivider(
-                              color: Colors.red,
-                              // color: AppColors.antiFlashWhite,
+                              color: AppColors.antiFlashWhite,
                               width: 1,
                             ),
                           )
@@ -72,8 +71,7 @@ class _CustomListTileState extends State<CustomListTile> {
                                 SizedBox(
                                   height: 26,
                                   child: VerticalDivider(
-                                    color: Colors.red,
-                                    // color: AppColors.antiFlashWhite,
+                                    color: AppColors.antiFlashWhite,
                                     width: 1,
                                   ),
                                 ),
@@ -95,16 +93,14 @@ class _CustomListTileState extends State<CustomListTile> {
                               shape: BoxShape.circle,
                               border: Border.all(
                                 width: 1,
-                                color: Colors.red,
-                                // color: AppColors.platinum,
+                                color: AppColors.platinum,
                               ),
                             ),
                           ),
                           const SizedBox(
                             width: 7,
                             child: Divider(
-                              color: Colors.red,
-                              // color: AppColors.antiFlashWhite,
+                              color: AppColors.antiFlashWhite,
                             ),
                           ),
                         ],
@@ -117,38 +113,40 @@ class _CustomListTileState extends State<CustomListTile> {
           ),
         ),
         Container(
-          padding: widget.lineVisibility == LineVisibility.full ||
+          margin: widget.lineVisibility == LineVisibility.full ||
                   widget.lineVisibility == LineVisibility.partial
               ? const EdgeInsets.only(left: 39)
               : const EdgeInsets.only(left: 0),
-          child: ListTile(
-            contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 3),
-            // contentPadding: EdgeInsets.only(top: 3, bottom: 3, right: 16),
-            shape: _buildBorder(),
-            title: Text(widget.text,
-                maxLines: 5,
-                softWrap: true,
-                style: const TextStyle(
-                    fontSize: 16, height: 1.5, color: AppColors.eerieBlack)),
-            trailing: InkWell(
-              customBorder: CircleBorder(),
-              onTap: () {
-                setState(() {
-                  isChecked = !isChecked;
-                });
-              },
-              child: isChecked
-                  ? SvgPicture.asset(ImageAssets.checkbox)
-                  : Container(
-                      height: 24,
-                      width: 24,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        // color: AppColors.antiFlashWhite,
-                        color: Colors.red,
-                        border: Border.all(color: AppColors.platinum),
+          child: Container(
+            margin: EdgeInsets.only(left: 16),
+            child: ListTile(
+              // contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 3),
+              contentPadding: EdgeInsets.only(top: 3, bottom: 3, right: 16),
+              shape: _buildBorder(),
+              title: Text(widget.text,
+                  maxLines: 5,
+                  softWrap: true,
+                  style: const TextStyle(
+                      fontSize: 16, height: 1.5, color: AppColors.eerieBlack)),
+              trailing: InkWell(
+                customBorder: CircleBorder(),
+                onTap: () {
+                  setState(() {
+                    isChecked = !isChecked;
+                  });
+                },
+                child: isChecked
+                    ? SvgPicture.asset(ImageAssets.checkbox)
+                    : Container(
+                        height: 24,
+                        width: 24,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: AppColors.antiFlashWhite,
+                          border: Border.all(color: AppColors.platinum),
+                        ),
                       ),
-                    ),
+              ),
             ),
           ),
         ),
@@ -163,21 +161,18 @@ class _CustomListTileState extends State<CustomListTile> {
     if (widget.lineVisibility == LineVisibility.none) {
       return const Border(
         bottom: BorderSide(
-          // color: AppColors.platinum,
-          color: Colors.red,
+          color: AppColors.platinum,
           width: 1,
         ),
       );
     } else if (widget.isFirstItem) {
       return const Border(
         bottom: BorderSide(
-          // color: AppColors.antiFlashWhite,
-          color: Colors.red,
+          color: AppColors.antiFlashWhite,
           width: 1,
         ),
         top: BorderSide(
-          color: Colors.red,
-          // color: AppColors.antiFlashWhite,
+          color: AppColors.antiFlashWhite,
           width: 1,
         ),
       );
@@ -188,10 +183,9 @@ class _CustomListTileState extends State<CustomListTile> {
     }
     return Border(
       bottom: BorderSide(
-          color: Colors.red,
-          // color: widget.lineVisibility == LineVisibility.partial
-          //     ? AppColors.platinum
-          //     : AppColors.antiFlashWhite,
+          color: widget.lineVisibility == LineVisibility.partial
+              ? AppColors.platinum
+              : AppColors.antiFlashWhite,
           width: 1),
     );
   }

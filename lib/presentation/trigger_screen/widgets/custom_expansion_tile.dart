@@ -51,7 +51,7 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> {
               shape: _buildBorder(),
               tilePadding: widget.lineVisibility == LineVisibility.full ||
                       widget.lineVisibility == LineVisibility.partial
-                  ? const EdgeInsets.symmetric(horizontal: 13, vertical: 3)
+                  ? const EdgeInsets.only(left: 13, right: 16, top: 3, bottom: 3)
                   : const EdgeInsets.symmetric(horizontal: 16, vertical: 3),
               controlAffinity: ListTileControlAffinity.leading,
               leading: AnimatedRotation(
@@ -113,8 +113,7 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> {
     if (widget.isFirstItem) {
       return Border(
         top: BorderSide(
-          color: Colors.red,
-          // color: AppColors.antiFlashWhite,
+          color: AppColors.antiFlashWhite,
         ),
       );
     }
@@ -127,8 +126,7 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> {
           const Padding(
               padding: EdgeInsets.only(left: 27, right: 11),
               child: VerticalDivider(
-                // color: AppColors.antiFlashWhite,
-                color: Colors.red,
+                color: AppColors.antiFlashWhite,
                 width: 1,
               )),
           Positioned(
@@ -145,16 +143,14 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> {
                     shape: BoxShape.circle,
                     border: Border.all(
                       width: 1,
-                      // color: AppColors.platinum,
-                      color: Colors.red,
+                      color: AppColors.platinum,
                     ),
                   ),
                 ),
                 const SizedBox(
                   width: 7,
                   child: Divider(
-                    // color: AppColors.antiFlashWhite,
-                    color: Colors.red,
+                    color: AppColors.antiFlashWhite,
                   ),
                 ),
               ],
@@ -172,8 +168,7 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> {
                   SizedBox(
                     height: 30,
                     child: VerticalDivider(
-                      // color: AppColors.antiFlashWhite,
-                      color: Colors.red,
+                      color: AppColors.antiFlashWhite,
                       width: 1,
                     ),
                   ),
@@ -194,16 +189,14 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> {
                     shape: BoxShape.circle,
                     border: Border.all(
                       width: 1,
-                      // color: AppColors.platinum,
-                      color: Colors.red,
+                      color: AppColors.platinum,
                     ),
                   ),
                 ),
                 const SizedBox(
                   width: 7,
                   child: Divider(
-                    // color: AppColors.antiFlashWhite,
-                    color: Colors.red,
+                    color: AppColors.antiFlashWhite,
                   ),
                 ),
               ],
