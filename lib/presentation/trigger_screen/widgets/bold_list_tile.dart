@@ -18,13 +18,20 @@ class _BoldListTileState extends State<BoldListTile> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      shape: Border(bottom: BorderSide(color: AppColors.platinum,)),
+      contentPadding: const EdgeInsets.only(
+        left: 16,
+        top: 4,
+        right: 16,
+        bottom: 4,
+      ),
       title: Text(
         widget.title,
         style: const TextStyle(
             fontSize: 16, height: 1.5, fontWeight: FontWeight.w700),
       ),
       trailing: InkWell(
-        customBorder: CircleBorder(),
+        customBorder: const CircleBorder(),
         onTap: () {
           setState(() {
             isChecked = !isChecked;
@@ -33,13 +40,14 @@ class _BoldListTileState extends State<BoldListTile> {
         child: isChecked
             ? SvgPicture.asset(ImageAssets.checkbox)
             : Container(
-          height: 24,
-          width: 24,
-          decoration: const BoxDecoration(
-            shape: BoxShape.circle,
-            color: AppColors.antiFlashWhite,
-          ),
-        ),
+                height: 24,
+                width: 24,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: AppColors.antiFlashWhite,
+                  border: Border.all(color: AppColors.platinum),
+                ),
+              ),
       ),
     );
   }

@@ -19,6 +19,7 @@ class TriggerPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.white,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(44),
         child: CustomAppBar(
@@ -65,21 +66,29 @@ class TriggerPage extends StatelessWidget {
   }
 
   Widget _displayListView(TriggerItem item,
-      [LineVisibility lineVisibility = LineVisibility.none]) {
+      [LineVisibility lineVisibility = LineVisibility.none,
+      bool isFirstItem = false,
+      int depth = 0]) {
     return switch (item) {
       AllTriggers() => BoldListTile(title: item.label),
       Category() => CustomExpansionTile(
           title: item.label,
           lineVisibility: lineVisibility,
+          isFirstItem: isFirstItem,
           children: item.children.mapIndexed((index, e) {
             if (index == item.children.length - 1) {
-              return _displayListView(e, LineVisibility.partial);
+              return _displayListView(
+                  e, LineVisibility.partial, false, depth + 1);
+            } else if (index == 0) {
+              return _displayListView(e, LineVisibility.full, true, depth + 1);
             }
-            return _displayListView(e, LineVisibility.full);
+            return _displayListView(e, LineVisibility.full, false, depth + 1);
           }).toList()),
       Option() => CustomListTile(
           text: item.label,
           lineVisibility: lineVisibility,
+          isFirstItem: isFirstItem,
+          depth: depth,
         ),
     };
   }

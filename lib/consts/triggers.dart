@@ -40,7 +40,7 @@ class Option extends TriggerItem {
   Option({required super.label, super.isChecked});
 }
 
-List<TriggerItem> items2 = [
+List<TriggerItem> items1 = [
   AllTriggers(label: "All Triggers"),
   Category(
     label: 'Sport',
@@ -74,7 +74,7 @@ List<TriggerItem> items2 = [
   Option(label: '🍜 Dinner'),
 ];
 
-List<TriggerItem> items1 = [
+List<TriggerItem> items2 = [
   AllTriggers(label: "All Triggers"),
   Category(
     label: 'Sport',
