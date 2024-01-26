@@ -37,7 +37,9 @@ class Category extends TriggerItem {
 }
 
 class Option extends TriggerItem {
-  Option({required super.label, super.isChecked});
+  Option({required super.label, super.isChecked, this.hasCustomDivider = false});
+
+  final bool hasCustomDivider;
 }
 
 List<TriggerItem> items1 = [
@@ -57,7 +59,7 @@ List<TriggerItem> items1 = [
             label:
                 '🏓 Some very long names of action with many symbols in two, three, or four lines with text; the limit should be four lines.',
           ),
-          Option(label: '🏐 Volleyball'),
+          Option(label: '🏐 Volleyball', hasCustomDivider: true),
         ],
       )
     ],

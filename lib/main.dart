@@ -8,6 +8,7 @@ import 'package:noti/data/entity/one_time_notification_entity.dart';
 import 'package:noti/data/entity/recurring_notification_entity.dart';
 import 'package:noti/di/providers.dart';
 import 'package:noti/presentation/login_screen/login_page.dart';
+import 'package:noti/presentation/notifications_screen/notifications_page.dart';
 import 'package:noti/themes/app_theme.dart';
 import 'package:provider/provider.dart';
 
@@ -64,7 +65,8 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         title: Strings.appStrings.appName,
         theme: AppTheme.lightTheme,
-        home: const LoginPage(),
+        home: const NotificationsPage(),
+        // home: const LoginPage(),
       ),
     );
   }

@@ -111,7 +111,12 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> {
 
   _buildBorder() {
     if (widget.isFirstItem) {
-      return Border(top: BorderSide(color: AppColors.antiFlashWhite));
+      return Border(
+        top: BorderSide(
+          color: Colors.red,
+          // color: AppColors.antiFlashWhite,
+        ),
+      );
     }
   }
 
@@ -122,7 +127,8 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> {
           const Padding(
               padding: EdgeInsets.only(left: 27, right: 11),
               child: VerticalDivider(
-                color: AppColors.antiFlashWhite,
+                // color: AppColors.antiFlashWhite,
+                color: Colors.red,
                 width: 1,
               )),
           Positioned(
@@ -139,14 +145,16 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> {
                     shape: BoxShape.circle,
                     border: Border.all(
                       width: 1,
-                      color: AppColors.platinum,
+                      // color: AppColors.platinum,
+                      color: Colors.red,
                     ),
                   ),
                 ),
                 const SizedBox(
                   width: 7,
                   child: Divider(
-                    color: AppColors.antiFlashWhite,
+                    // color: AppColors.antiFlashWhite,
+                    color: Colors.red,
                   ),
                 ),
               ],
@@ -164,7 +172,8 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> {
                   SizedBox(
                     height: 30,
                     child: VerticalDivider(
-                      color: AppColors.antiFlashWhite,
+                      // color: AppColors.antiFlashWhite,
+                      color: Colors.red,
                       width: 1,
                     ),
                   ),
@@ -185,14 +194,16 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> {
                     shape: BoxShape.circle,
                     border: Border.all(
                       width: 1,
-                      color: AppColors.platinum,
+                      // color: AppColors.platinum,
+                      color: Colors.red,
                     ),
                   ),
                 ),
                 const SizedBox(
                   width: 7,
                   child: Divider(
-                    color: AppColors.antiFlashWhite,
+                    // color: AppColors.antiFlashWhite,
+                    color: Colors.red,
                   ),
                 ),
               ],

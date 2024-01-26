@@ -35,7 +35,8 @@ class TriggerPage extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
-            child: ListView.builder(
+            child: ListView.separated(
+              separatorBuilder: (context, index) => Divider(color: Colors.blue, height: 3, thickness: 3),
               itemCount: items.length,
               itemBuilder: (context, index) {
                 return _displayListView(items[index]);
@@ -89,6 +90,7 @@ class TriggerPage extends StatelessWidget {
           lineVisibility: lineVisibility,
           isFirstItem: isFirstItem,
           depth: depth,
+          hasCustomDivider: item.hasCustomDivider,
         ),
     };
   }
