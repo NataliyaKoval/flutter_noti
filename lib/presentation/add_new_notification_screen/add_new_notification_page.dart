@@ -87,6 +87,12 @@ class _AddNewNotificationPageState extends State<AddNewNotificationPage> {
           if (state.isConfirmed == true) {
             Navigator.pop(context);
           }
+          if (state.isNotificationsPermissionSnackBarShown) {
+            final snackBar = const SnackBar(
+              content: Text('Please allow notifications in your phone settings'),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          }
         },
         child: Builder(
           builder: (context) {

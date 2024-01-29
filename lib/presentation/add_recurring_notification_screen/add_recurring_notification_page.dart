@@ -70,6 +70,12 @@ class _AddRecurringNotificationPageState
           if (state.isConfirmed == true) {
             Navigator.pop(context);
           }
+          if (state.isNotificationsPermissionSnackBarShown) {
+            final snackBar = SnackBar(
+              content: const Text('Please allow notifications in your phone settings'),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          }
         },
         child: Builder(
           builder: (context) {

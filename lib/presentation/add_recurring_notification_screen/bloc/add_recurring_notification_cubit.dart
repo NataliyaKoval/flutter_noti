@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noti/domain/models/recurring_notification.dart';
 import 'package:noti/domain/use_cases/get_saved_recurring_notification_use_case.dart';
 import 'package:noti/domain/use_cases/save_recurring_notification_use_case.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 part 'add_recurring_notification_state.dart';
 
@@ -17,7 +18,8 @@ class AddRecurringNotificationCubit
   }) : super(const AddRecurringNotificationState());
 
   final SaveRecurringNotificationUseCase saveRecurringNotificationUseCase;
-  final GetSavedRecurringNotificationUseCase getSavedRecurringNotificationUseCase;
+  final GetSavedRecurringNotificationUseCase
+      getSavedRecurringNotificationUseCase;
   final int interval;
   final int? id;
   RecurringNotification? savedNotification;
@@ -48,8 +50,13 @@ class AddRecurringNotificationCubit
   }
 
   void createAndSaveNotification() async {
+    if (!await Permission.notification.request().isGranted) {
+      emit(state.copyWith(isNotificationsPermissionSnackBarShown: true));
+      return;
+    }
     RecurringNotification notification = RecurringNotification(
-      id: savedNotification?.id ?? DateTime.now().millisecondsSinceEpoch.remainder(100000),
+      id: savedNotification?.id ??
+          DateTime.now().millisecondsSinceEpoch.remainder(100000),
       message: state.message,
       iconIdIndex: state.isIconChosen ? state.iconIndex : null,
       colorIndex: state.isIconChosen ? state.iconBackgroundIndex : null,
@@ -64,7 +71,11 @@ class AddRecurringNotificationCubit
         body: notification.message,
         notificationLayout: NotificationLayout.Default,
       ),
-      schedule: NotificationInterval(interval: interval * 60, repeats: true),
+      schedule: NotificationInterval(
+        interval: interval * 60,
+        repeats: true,
+        preciseAlarm: true,
+      ),
     );
 
     await saveRecurringNotificationUseCase(notification);

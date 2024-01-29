@@ -6,6 +6,7 @@ import 'package:noti/consts/zero_width_space.dart';
 import 'package:noti/domain/models/one_time_notification.dart';
 import 'package:noti/domain/use_cases/get_saved_notification_use_case.dart';
 import 'package:noti/domain/use_cases/save_notification_use_case.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 part 'add_new_notification_state.dart';
 
@@ -73,6 +74,11 @@ class AddNewNotificationCubit extends Cubit<AddNewNotificationState> {
   }
 
   void createAndSaveNotification() async {
+    if (!await Permission.notification.request().isGranted) {
+      emit(state.copyWith(isNotificationsPermissionSnackBarShown: true));
+      return;
+    }
+
     DateTime now = DateTime.now();
     int hours = int.parse(
         '${state.hoursFirstDigit.substring(1)}${state.hoursSecondDigit.substring(1)}');
@@ -103,6 +109,7 @@ class AddNewNotificationCubit extends Cubit<AddNewNotificationState> {
         minute: time.minute,
         second: 0,
         millisecond: 0,
+        preciseAlarm: true,
       ),
     );
 

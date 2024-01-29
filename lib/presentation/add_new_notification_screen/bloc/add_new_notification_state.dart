@@ -13,6 +13,7 @@ class AddNewNotificationState {
     this.hoursSecondDigit = zeroWidthSpace,
     this.minutesFirstDigit = zeroWidthSpace,
     this.minutesSecondDigit = zeroWidthSpace,
+    this.isNotificationsPermissionSnackBarShown = false,
   });
 
   final String message;
@@ -25,6 +26,7 @@ class AddNewNotificationState {
   final String hoursSecondDigit;
   final String minutesFirstDigit;
   final String minutesSecondDigit;
+  final bool isNotificationsPermissionSnackBarShown;
 
   AddNewNotificationState copyWith({
     String? message,
@@ -37,6 +39,7 @@ class AddNewNotificationState {
     String? hoursSecondDigit,
     String? minutesFirstDigit,
     String? minutesSecondDigit,
+    bool? isNotificationsPermissionSnackBarShown,
   }) {
     return AddNewNotificationState(
       message: message ?? this.message,
@@ -50,6 +53,9 @@ class AddNewNotificationState {
       hoursSecondDigit: hoursSecondDigit ?? this.hoursSecondDigit,
       minutesFirstDigit: minutesFirstDigit ?? this.minutesFirstDigit,
       minutesSecondDigit: minutesSecondDigit ?? this.minutesSecondDigit,
+      isNotificationsPermissionSnackBarShown:
+          isNotificationsPermissionSnackBarShown ??
+              this.isNotificationsPermissionSnackBarShown,
     );
   }
 }
