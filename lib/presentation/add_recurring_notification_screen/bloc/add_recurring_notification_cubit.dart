@@ -26,10 +26,10 @@ class AddRecurringNotificationCubit
 
   void setMessage(String value) {
     emit(state.copyWith(message: value));
-    _enableConfirmButton();
+    _validateInput();
   }
 
-  void _enableConfirmButton() {
+  void _validateInput() {
     if (state.message.isNotEmpty) {
       emit(state.copyWith(isConfirmButtonEnabled: true));
     } else {
@@ -37,16 +37,19 @@ class AddRecurringNotificationCubit
     }
   }
 
-  void setIconBackground(int index) {
-    emit(state.copyWith(iconBackgroundIndex: index));
+  void setIconBackgroundIndexPicker(int index) {
+    emit(state.copyWith(iconBackgroundIndexPicker: index));
   }
 
-  void setIcon(int index) {
-    emit(state.copyWith(iconIndex: index));
+  void setIconIndexPicker(int index) {
+    emit(state.copyWith(iconIndexPicker: index));
   }
 
-  void displayIconData() {
-    emit(state.copyWith(isIconChosen: true));
+  void setIconAndBackground() {
+    emit(state.copyWith(
+      iconIndex: state.iconIndexPicker,
+      iconBackgroundIndex: state.iconBackgroundIndexPicker,
+    ));
   }
 
   void createAndSaveNotification() async {
@@ -58,8 +61,8 @@ class AddRecurringNotificationCubit
       id: savedNotification?.id ??
           DateTime.now().millisecondsSinceEpoch.remainder(100000),
       message: state.message,
-      iconIdIndex: state.isIconChosen ? state.iconIndex : null,
-      colorIndex: state.isIconChosen ? state.iconBackgroundIndex : null,
+      iconIdIndex: state.iconIndex,
+      colorIndex: state.iconBackgroundIndex,
       interval: interval,
     );
 
@@ -89,8 +92,8 @@ class AddRecurringNotificationCubit
         message: savedNotification?.message,
         iconIndex: savedNotification?.iconIdIndex,
         iconBackgroundIndex: savedNotification?.colorIndex,
-        isIconChosen: savedNotification?.iconIdIndex != null &&
-            savedNotification?.colorIndex != null,
+        iconIndexPicker: savedNotification?.iconIdIndex,
+        iconBackgroundIndexPicker: savedNotification?.colorIndex,
         isConfirmButtonEnabled: true,
       ));
     }

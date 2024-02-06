@@ -72,7 +72,8 @@ class _AddRecurringNotificationPageState
           }
           if (state.isNotificationsPermissionSnackBarShown) {
             final snackBar = SnackBar(
-              content: const Text('Please allow notifications in your phone settings'),
+              content: const Text(
+                  'Please allow notifications in your phone settings'),
             );
             ScaffoldMessenger.of(context).showSnackBar(snackBar);
           }
@@ -121,7 +122,6 @@ class _AddRecurringNotificationPageState
                         Row(
                           children: [
                             NotificationIcon(
-                              isIconChosen: state.isIconChosen,
                               iconBackgroundIndex: state.iconBackgroundIndex,
                               iconIndex: state.iconIndex,
                             ),
@@ -152,26 +152,28 @@ class _AddRecurringNotificationPageState
                                                   AddRecurringNotificationState
                                                       state) {
                                                 return IconBottomSheet(
-                                                  iconIndex: state.iconIndex,
-                                                  iconBackgroundIndex:
-                                                      state.iconBackgroundIndex,
+                                                  iconIndexPicker:
+                                                      state.iconIndexPicker,
+                                                  iconBackgroundIndexPicker:
+                                                      state.iconBackgroundIndexPicker,
                                                   onColorTap: (int index) {
                                                     context
                                                         .read<
                                                             AddRecurringNotificationCubit>()
-                                                        .setIconBackground(
+                                                        .setIconBackgroundIndexPicker(
                                                             index);
                                                   },
                                                   onIconTap: (int index) {
                                                     context
                                                         .read<
                                                             AddRecurringNotificationCubit>()
-                                                        .setIcon(index);
+                                                        .setIconIndexPicker(
+                                                            index);
                                                   },
                                                   onButtonPressed: () => context
                                                       .read<
                                                           AddRecurringNotificationCubit>()
-                                                      .displayIconData(),
+                                                      .setIconAndBackground(),
                                                 );
                                               },
                                             )),
