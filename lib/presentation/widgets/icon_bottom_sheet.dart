@@ -10,15 +10,15 @@ import 'package:noti/presentation/widgets/big_filled_button.dart';
 class IconBottomSheet extends StatelessWidget {
   const IconBottomSheet({
     super.key,
-    required this.iconIndex,
-    required this.iconBackgroundIndex,
+    required this.iconIndexPicker,
+    required this.iconBackgroundIndexPicker,
     required this.onColorTap,
     required this.onIconTap,
     required this.onButtonPressed,
   });
 
-  final int iconIndex;
-  final int iconBackgroundIndex;
+  final int iconIndexPicker;
+  final int iconBackgroundIndexPicker;
   final Function(int index) onColorTap;
   final Function(int index) onIconTap;
   final Function onButtonPressed;
@@ -66,7 +66,7 @@ class IconBottomSheet extends StatelessWidget {
             child: SizedBox(
               height: 70,
               child: IconBackgroundListView(
-                iconIndex: iconBackgroundIndex,
+                iconIndex: iconBackgroundIndexPicker,
                 onTap: (int index) {
                   onColorTap(index);
                 },
@@ -91,7 +91,7 @@ class IconBottomSheet extends StatelessWidget {
               onTap: (int index) {
                 onIconTap(index);
               },
-              iconIndex: iconIndex,
+              iconIndex: iconIndexPicker,
             ),
           ),
           Padding(
