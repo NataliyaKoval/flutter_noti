@@ -66,7 +66,7 @@ class _AddNewNotificationPageState extends State<AddNewNotificationPage> {
     return BlocProvider(
       create: (context) {
         AddNewNotificationCubit cubit = AddNewNotificationCubit(
-          id: widget.id,
+          savedNotificationId: widget.id,
           saveNotificationUseCase: SaveNotificationUseCase(
             repository: context.read<Repository>(),
           ),
@@ -157,7 +157,6 @@ class _AddNewNotificationPageState extends State<AddNewNotificationPage> {
                         Row(
                           children: [
                             NotificationIcon(
-                              isIconChosen: state.isIconChosen,
                               iconBackgroundIndex: state.iconBackgroundIndex,
                               iconIndex: state.iconIndex,
                             ),
@@ -188,22 +187,22 @@ class _AddNewNotificationPageState extends State<AddNewNotificationPage> {
                                         AddNewNotificationState state,
                                       ) {
                                         return IconBottomSheet(
-                                          iconIndex: state.iconIndex,
-                                          iconBackgroundIndex:
-                                              state.iconBackgroundIndex,
+                                          iconIndexPicker: state.iconIndexPicker,
+                                          iconBackgroundIndexPicker:
+                                              state.iconBackgroundIndexPicker,
                                           onColorTap: (int index) {
                                             context
                                                 .read<AddNewNotificationCubit>()
-                                                .setIconBackground(index);
+                                                .setIconBackgroundIndexPicker(index);
                                           },
                                           onIconTap: (int index) {
                                             context
                                                 .read<AddNewNotificationCubit>()
-                                                .setIcon(index);
+                                                .setIconIndexPicker(index);
                                           },
                                           onButtonPressed: () => context
                                               .read<AddNewNotificationCubit>()
-                                              .displayIconData(),
+                                              .setIconAndBackground(),
                                         );
                                       },
                                     ),

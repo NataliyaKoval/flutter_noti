@@ -14,24 +14,25 @@ class AddNewNotificationCubit extends Cubit<AddNewNotificationState> {
   AddNewNotificationCubit({
     required this.saveNotificationUseCase,
     required this.getSavedNotificationUseCase,
-    this.id,
+    this.savedNotificationId,
   }) : super(const AddNewNotificationState());
 
   final SaveNotificationUseCase saveNotificationUseCase;
   final GetSavedNotificationUseCase getSavedNotificationUseCase;
-  final int? id;
+  final int? savedNotificationId;
   OneTimeNotification? savedNotification;
 
   void setMessage(String value) {
     emit(state.copyWith(message: value));
-    _enableConfirmButton();
+    _validateInputs();
   }
 
   void setTime(TimeInputId id, String value) {
-    String newValue = value;
-    if (newValue == '') {
-      newValue = zeroWidthSpace;
-    }
+    String newValue = switch (value) {
+      '' => zeroWidthSpace,
+      _ => value
+    };
+
     switch (id) {
       case TimeInputId.first:
         emit(state.copyWith(hoursFirstDigit: newValue));
@@ -46,10 +47,10 @@ class AddNewNotificationCubit extends Cubit<AddNewNotificationState> {
         emit(state.copyWith(minutesSecondDigit: newValue));
         break;
     }
-    _enableConfirmButton();
+    _validateInputs();
   }
 
-  void _enableConfirmButton() {
+  void _validateInputs() {
     if (state.message.isNotEmpty &&
         state.hoursFirstDigit.length == 2 &&
         state.hoursSecondDigit.length == 2 &&
@@ -61,16 +62,19 @@ class AddNewNotificationCubit extends Cubit<AddNewNotificationState> {
     }
   }
 
-  void setIconBackground(int index) {
-    emit(state.copyWith(iconBackgroundIndex: index));
+  void setIconBackgroundIndexPicker(int index) {
+    emit(state.copyWith(iconBackgroundIndexPicker: index));
   }
 
-  void setIcon(int index) {
-    emit(state.copyWith(iconIndex: index));
+  void setIconIndexPicker(int index) {
+    emit(state.copyWith(iconIndexPicker: index));
   }
 
-  void displayIconData() {
-    emit(state.copyWith(isIconChosen: true));
+  void setIconAndBackground() {
+    emit(state.copyWith(
+      iconIndex: state.iconIndexPicker,
+      iconBackgroundIndex: state.iconBackgroundIndexPicker,
+    ));
   }
 
   void createAndSaveNotification() async {
@@ -91,8 +95,8 @@ class AddNewNotificationCubit extends Cubit<AddNewNotificationState> {
           DateTime.now().millisecondsSinceEpoch.remainder(10000),
       time: time,
       message: state.message,
-      iconIdIndex: state.isIconChosen ? state.iconIndex : null,
-      colorIndex: state.isIconChosen ? state.iconBackgroundIndex : null,
+      iconIdIndex: state.iconIndex,
+      colorIndex: state.iconBackgroundIndex,
     );
 
     await AwesomeNotifications().createNotification(
@@ -118,8 +122,9 @@ class AddNewNotificationCubit extends Cubit<AddNewNotificationState> {
   }
 
   void getSavedNotification() async {
-    if (id != null) {
-      savedNotification = await getSavedNotificationUseCase(id!);
+    if (savedNotificationId != null) {
+      savedNotification =
+          await getSavedNotificationUseCase(savedNotificationId!);
       String? hours = savedNotification?.time.hour.toString().padLeft(2, '0');
       String? minutes =
           savedNotification?.time.minute.toString().padLeft(2, '0');
@@ -131,8 +136,8 @@ class AddNewNotificationCubit extends Cubit<AddNewNotificationState> {
         minutesSecondDigit: '$zeroWidthSpace${minutes?[1]}',
         iconIndex: savedNotification?.iconIdIndex,
         iconBackgroundIndex: savedNotification?.colorIndex,
-        isIconChosen: savedNotification?.iconIdIndex != null &&
-            savedNotification?.colorIndex != null,
+        iconIndexPicker: savedNotification?.iconIdIndex,
+        iconBackgroundIndexPicker: savedNotification?.colorIndex,
         isConfirmButtonEnabled: true,
       ));
     }

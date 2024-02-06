@@ -5,9 +5,10 @@ class AddNewNotificationState {
   const AddNewNotificationState({
     this.message = '',
     this.isConfirmButtonEnabled = false,
-    this.iconIndex = 0,
-    this.iconBackgroundIndex = 0,
-    this.isIconChosen = false,
+    this.iconIndex,
+    this.iconBackgroundIndex,
+    this.iconIndexPicker = 0,
+    this.iconBackgroundIndexPicker = 0,
     this.isConfirmed = false,
     this.hoursFirstDigit = zeroWidthSpace,
     this.hoursSecondDigit = zeroWidthSpace,
@@ -18,9 +19,10 @@ class AddNewNotificationState {
 
   final String message;
   final bool isConfirmButtonEnabled;
-  final int iconIndex;
-  final int iconBackgroundIndex;
-  final bool isIconChosen;
+  final int? iconIndex;
+  final int? iconBackgroundIndex;
+  final int iconIndexPicker;
+  final int iconBackgroundIndexPicker;
   final bool isConfirmed;
   final String hoursFirstDigit;
   final String hoursSecondDigit;
@@ -33,7 +35,8 @@ class AddNewNotificationState {
     bool? isConfirmButtonEnabled,
     int? iconIndex,
     int? iconBackgroundIndex,
-    bool? isIconChosen,
+    int? iconIndexPicker,
+    int? iconBackgroundIndexPicker,
     bool? isConfirmed,
     String? hoursFirstDigit,
     String? hoursSecondDigit,
@@ -47,7 +50,9 @@ class AddNewNotificationState {
           isConfirmButtonEnabled ?? this.isConfirmButtonEnabled,
       iconIndex: iconIndex ?? this.iconIndex,
       iconBackgroundIndex: iconBackgroundIndex ?? this.iconBackgroundIndex,
-      isIconChosen: isIconChosen ?? this.isIconChosen,
+      iconIndexPicker: iconIndexPicker ?? this.iconIndexPicker,
+      iconBackgroundIndexPicker:
+          iconBackgroundIndexPicker ?? this.iconBackgroundIndexPicker,
       isConfirmed: isConfirmed ?? this.isConfirmed,
       hoursFirstDigit: hoursFirstDigit ?? this.hoursFirstDigit,
       hoursSecondDigit: hoursSecondDigit ?? this.hoursSecondDigit,
