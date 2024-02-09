@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:noti/consts/app_colors.dart';
-import 'package:noti/consts/icon_ids_list.dart';
+import 'package:noti/consts/notification_icon_ids_list.dart';
 
 class IconSelectionListView extends StatelessWidget {
   const IconSelectionListView({
@@ -15,12 +15,12 @@ class IconSelectionListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(padding: EdgeInsets.only(left: 11),
+    return ListView.separated(padding: const EdgeInsets.only(left: 11),
       scrollDirection: Axis.horizontal,
       separatorBuilder: (context, index) => const SizedBox(
         width: 6,
       ),
-      itemCount: iconIdsList.length,
+      itemCount: notificationIconIdsList.length,
       itemBuilder: (BuildContext context, int index) {
         return GestureDetector(
           onTap: () {
@@ -49,7 +49,7 @@ class IconSelectionListView extends StatelessWidget {
                 ),
                 child: Center(
                   child: SvgPicture.asset(
-                    'assets/icons/${iconIdsList[index]}.svg',
+                    'assets/icons/${notificationIconIdsList[index]}.svg',
                     colorFilter: const ColorFilter.mode(
                       AppColors.plumpPurple,
                       BlendMode.srcIn,

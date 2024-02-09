@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:noti/consts/app_colors.dart';
 import 'package:noti/consts/icon_colors_list.dart';
-import 'package:noti/consts/icon_ids_list.dart';
 import 'package:noti/consts/image_assets.dart';
+import 'package:noti/consts/notification_icon_ids_list.dart';
 import 'package:noti/consts/strings.dart';
 import 'package:noti/consts/triggers.dart';
 import 'package:noti/presentation/add_new_notification_screen/add_new_notification_page.dart';
@@ -95,7 +95,7 @@ class NotificationCard extends StatelessWidget {
                               color: iconColorsList[colorIndex!]),
                           child: Center(
                             child: SvgPicture.asset(
-                                'assets/icons/${iconIdsList[iconIndex!]}.svg', colorFilter: ColorFilter.mode(AppColors.plumpPurple, BlendMode.srcIn),  ),
+                                'assets/icons/${notificationIconIdsList[iconIndex!]}.svg', colorFilter: ColorFilter.mode(AppColors.plumpPurple, BlendMode.srcIn),  ),
                           ),
                         ),
                       )
@@ -166,7 +166,7 @@ class NotificationCard extends StatelessWidget {
                               MaterialPageRoute(
                                 builder: (context) => TriggerPage(
                                   title: 'Select trigger 1',
-                                  items: items1,
+                                  items: triggerItems1,
                                 ),
                               ),
                             );
@@ -185,7 +185,7 @@ class NotificationCard extends StatelessWidget {
                               MaterialPageRoute(
                                 builder: (context) => TriggerPage(
                                   title: 'Select trigger 2',
-                                  items: items2,
+                                  items: triggerItems2,
                                 ),
                               ),
                             );

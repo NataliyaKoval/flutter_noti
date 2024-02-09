@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:noti/consts/app_colors.dart';
 import 'package:noti/consts/icon_colors_list.dart';
-import 'package:noti/consts/icon_ids_list.dart';
 import 'package:noti/consts/image_assets.dart';
+import 'package:noti/consts/notification_icon_ids_list.dart';
 
 class NotificationIcon extends StatelessWidget {
   const NotificationIcon({
@@ -30,7 +30,7 @@ class NotificationIcon extends StatelessWidget {
       child: Center(
         child: iconIndex != null
             ? SvgPicture.asset(
-                'assets/icons/${iconIdsList[iconIndex!]}.svg',
+                'assets/icons/${notificationIconIdsList[iconIndex!]}.svg',
                 colorFilter: const ColorFilter.mode(
                     AppColors.plumpPurple, BlendMode.srcIn),
                 width: 40,
