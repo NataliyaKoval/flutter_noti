@@ -1,6 +1,8 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:noti/consts/notification_channels.dart';
+import 'package:noti/consts/strings.dart';
 import 'package:noti/consts/time_input_id.dart';
 import 'package:noti/consts/zero_width_space.dart';
 import 'package:noti/domain/models/one_time_notification.dart';
@@ -67,7 +69,7 @@ class AddNewNotificationCubit extends Cubit<AddNewNotificationState> {
     emit(state.copyWith(iconIndexPicker: index));
   }
 
-  void setIconAndBackground() {
+  void applyIconAndBackground() {
     emit(state.copyWith(
       iconIndex: state.iconIndexPicker,
       iconBackgroundIndex: state.iconBackgroundIndexPicker,
@@ -103,12 +105,10 @@ class AddNewNotificationCubit extends Cubit<AddNewNotificationState> {
     await AwesomeNotifications().createNotification(
       content: NotificationContent(
         id: notification.id,
-        channelKey: 'scheduled_channel',
-        //Todo class NotiChannels + static prop
+        channelKey: NotificationChannels.scheduledChannel,
         body: notification.message,
         notificationLayout: NotificationLayout.Default,
-        title: 'noti',
-        //todo
+        title: Strings.appStrings.appName,
         wakeUpScreen: true,
       ),
       schedule: NotificationCalendar(
@@ -120,15 +120,33 @@ class AddNewNotificationCubit extends Cubit<AddNewNotificationState> {
       ),
     );
 
-    await saveNotificationUseCase(notification);
-    emit(state.copyWith(isConfirmed: true)); //Todo try catch
+    try {
+      await saveNotificationUseCase(notification);
+      emit(state.copyWith(isConfirmed: true));
+    } catch (e) {
+      emit(state.copyWith(isErrorSnackBarShown: true));
+    }
+  }
+
+  void onErrorSnackBarHidden() {
+    emit(state.copyWith(isErrorSnackBarShown: false));
   }
 
   void getSavedNotification() async {
     if (savedNotificationId == null) {
       return;
     }
-    savedNotification = await getSavedNotificationUseCase(savedNotificationId!); //Todo return if null
+
+    try {
+      savedNotification =
+          await getSavedNotificationUseCase(savedNotificationId!);
+    } catch (e) {
+      emit(state.copyWith(isErrorSnackBarShown: true));
+    }
+
+    if (savedNotification == null) {
+      return;
+    }
     String? hours = savedNotification?.time.hour.toString().padLeft(2, '0');
     String? minutes = savedNotification?.time.minute.toString().padLeft(2, '0');
     emit(state.copyWith(

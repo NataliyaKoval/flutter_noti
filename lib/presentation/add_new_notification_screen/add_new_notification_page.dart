@@ -90,14 +90,24 @@ class _AddNewNotificationPageState extends State<AddNewNotificationPage> {
             Navigator.pop(context);
           }
           if (state.isNotificationsPermissionSnackBarShown) {
-            final snackBar = const SnackBar(
+            const permissionSnackBar = SnackBar(
               content:
                   Text('Please allow notifications in your phone settings'),
             );
-            ScaffoldMessenger.of(context).showSnackBar(snackBar).closed.then(
+            ScaffoldMessenger.of(context).showSnackBar(permissionSnackBar).closed.then(
                 (value) => context
                     .read<AddNewNotificationCubit>()
                     .onNotificationsPermissionSnackBarHidden());
+          }
+          if (state.isErrorSnackBarShown) {
+            const errorSnackBar = SnackBar(
+              content:
+              Text('Something went wrong'),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(errorSnackBar).closed.then(
+                    (value) => context
+                    .read<AddNewNotificationCubit>()
+                    .onErrorSnackBarHidden());
           }
         },
         child: Builder(
@@ -210,7 +220,7 @@ class _AddNewNotificationPageState extends State<AddNewNotificationPage> {
                                           },
                                           onButtonPressed: () => context
                                               .read<AddNewNotificationCubit>()
-                                              .setIconAndBackground(),
+                                              .applyIconAndBackground(),
                                         );
                                       },
                                     ),
