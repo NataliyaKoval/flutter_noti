@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noti/consts/app_colors.dart';
 import 'package:noti/consts/strings.dart';
-import 'package:noti/domain/repository/repository.dart';
+import 'package:noti/domain/repository/recurring_notifications_repository.dart';
 import 'package:noti/domain/use_cases/get_saved_recurring_notification_use_case.dart';
 import 'package:noti/domain/use_cases/save_recurring_notification_use_case.dart';
 import 'package:noti/presentation/widgets/big_filled_button.dart';
@@ -52,13 +52,15 @@ class _AddRecurringNotificationPageState
     return BlocProvider(
       create: (context) => AddRecurringNotificationCubit(
         saveRecurringNotificationUseCase: SaveRecurringNotificationUseCase(
-          repository: context.read<Repository>(),
+          recurringNotificationsRepository:
+              context.read<RecurringNotificationsRepository>(),
         ),
         interval: widget.interval,
         id: widget.id,
         getSavedRecurringNotificationUseCase:
             GetSavedRecurringNotificationUseCase(
-          repository: context.read<Repository>(),
+          recurringNotificationsRepository:
+              context.read<RecurringNotificationsRepository>(),
         ),
       )..getSavedNotification(),
       child: BlocListener<AddRecurringNotificationCubit,
@@ -154,8 +156,8 @@ class _AddRecurringNotificationPageState
                                                 return IconBottomSheet(
                                                   iconIndexPicker:
                                                       state.iconIndexPicker,
-                                                  iconBackgroundIndexPicker:
-                                                      state.iconBackgroundIndexPicker,
+                                                  iconBackgroundIndexPicker: state
+                                                      .iconBackgroundIndexPicker,
                                                   onColorTap: (int index) {
                                                     context
                                                         .read<

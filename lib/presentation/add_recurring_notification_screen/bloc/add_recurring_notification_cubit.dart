@@ -30,6 +30,7 @@ class AddRecurringNotificationCubit
   }
 
   void _validateInput() {
+    emit(state.copyWith(isConfirmButtonEnabled: state.message.isNotEmpty));//Todo
     if (state.message.isNotEmpty) {
       emit(state.copyWith(isConfirmButtonEnabled: true));
     } else {
@@ -45,7 +46,7 @@ class AddRecurringNotificationCubit
     emit(state.copyWith(iconIndexPicker: index));
   }
 
-  void setIconAndBackground() {
+  void setIconAndBackground() {//Todo applySelected,,,
     emit(state.copyWith(
       iconIndex: state.iconIndexPicker,
       iconBackgroundIndex: state.iconBackgroundIndexPicker,
@@ -54,12 +55,12 @@ class AddRecurringNotificationCubit
 
   void createAndSaveNotification() async {
     if (!await Permission.notification.request().isGranted) {
-      emit(state.copyWith(isNotificationsPermissionSnackBarShown: true));
+      emit(state.copyWith(isNotificationsPermissionSnackBarShown: true));//Todo: hide snackbar
       return;
     }
     RecurringNotification notification = RecurringNotification(
       id: savedNotification?.id ??
-          DateTime.now().millisecondsSinceEpoch.remainder(100000),
+          DateTime.now().millisecondsSinceEpoch.remainder(100000),//todo utils
       message: state.message,
       iconIdIndex: state.iconIndex,
       colorIndex: state.iconBackgroundIndex,
@@ -75,7 +76,7 @@ class AddRecurringNotificationCubit
         notificationLayout: NotificationLayout.Default,
       ),
       schedule: NotificationInterval(
-        interval: interval * 60,
+        interval: interval * 60,//todo intervalSeconds
         repeats: true,
         preciseAlarm: true,
       ),

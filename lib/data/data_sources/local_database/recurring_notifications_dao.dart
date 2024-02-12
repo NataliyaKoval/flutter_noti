@@ -1,24 +1,9 @@
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:noti/data/entity/one_time_notification_entity.dart';
 import 'package:noti/data/entity/recurring_notification_entity.dart';
 
-class LocalDatabase {
-  final Box<OneTimeNotificationEntity> oneTimeNotifications =
-      Hive.box<OneTimeNotificationEntity>('OneTimeNotifications');
+class RecurringNotificationsDao {
   final Box<RecurringNotificationEntity> recurringNotifications =
-      Hive.box<RecurringNotificationEntity>('OneMinuteNotifications');
-
-  void addOneTimeNotification(OneTimeNotificationEntity notification) {
-    oneTimeNotifications.put(notification.id, notification);
-  }
-
-  List<OneTimeNotificationEntity> getOneTimeNotifications() {
-    return oneTimeNotifications.values.toList();
-  }
-
-  void removeOneTimeNotification(int key) {
-    oneTimeNotifications.delete(key);
-  }
+  Hive.box<RecurringNotificationEntity>('RecurringNotifications');
 
   void addRecurringNotification(RecurringNotificationEntity notification) {
     recurringNotifications.put(notification.id, notification);
@@ -44,10 +29,6 @@ class LocalDatabase {
 
   void removeRecurringNotification(int key) {
     recurringNotifications.delete(key);
-  }
-
-  OneTimeNotificationEntity? getSavedNotification(int key) {
-    return oneTimeNotifications.get(key);
   }
 
   RecurringNotificationEntity? getSavedRecurringNotification(int key) {

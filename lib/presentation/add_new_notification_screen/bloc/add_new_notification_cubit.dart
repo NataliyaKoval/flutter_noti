@@ -28,10 +28,7 @@ class AddNewNotificationCubit extends Cubit<AddNewNotificationState> {
   }
 
   void setTime(TimeInputId id, String value) {
-    String newValue = switch (value) {
-      '' => zeroWidthSpace,
-      _ => value
-    };
+    String newValue = switch (value) { '' => zeroWidthSpace, _ => value };
 
     switch (id) {
       case TimeInputId.first:
@@ -77,6 +74,10 @@ class AddNewNotificationCubit extends Cubit<AddNewNotificationState> {
     ));
   }
 
+  void onNotificationsPermissionSnackBarHidden() {
+    emit(state.copyWith(isNotificationsPermissionSnackBarShown: false));
+  }
+
   void createAndSaveNotification() async {
     if (!await Permission.notification.request().isGranted) {
       emit(state.copyWith(isNotificationsPermissionSnackBarShown: true));
@@ -103,9 +104,11 @@ class AddNewNotificationCubit extends Cubit<AddNewNotificationState> {
       content: NotificationContent(
         id: notification.id,
         channelKey: 'scheduled_channel',
+        //Todo class NotiChannels + static prop
         body: notification.message,
         notificationLayout: NotificationLayout.Default,
         title: 'noti',
+        //todo
         wakeUpScreen: true,
       ),
       schedule: NotificationCalendar(
@@ -118,28 +121,27 @@ class AddNewNotificationCubit extends Cubit<AddNewNotificationState> {
     );
 
     await saveNotificationUseCase(notification);
-    emit(state.copyWith(isConfirmed: true));
+    emit(state.copyWith(isConfirmed: true)); //Todo try catch
   }
 
   void getSavedNotification() async {
-    if (savedNotificationId != null) {
-      savedNotification =
-          await getSavedNotificationUseCase(savedNotificationId!);
-      String? hours = savedNotification?.time.hour.toString().padLeft(2, '0');
-      String? minutes =
-          savedNotification?.time.minute.toString().padLeft(2, '0');
-      emit(state.copyWith(
-        message: savedNotification?.message,
-        hoursFirstDigit: '$zeroWidthSpace${hours?[0]}',
-        hoursSecondDigit: '$zeroWidthSpace${hours?[1]}',
-        minutesFirstDigit: '$zeroWidthSpace${minutes?[0]}',
-        minutesSecondDigit: '$zeroWidthSpace${minutes?[1]}',
-        iconIndex: savedNotification?.iconIdIndex,
-        iconBackgroundIndex: savedNotification?.colorIndex,
-        iconIndexPicker: savedNotification?.iconIdIndex,
-        iconBackgroundIndexPicker: savedNotification?.colorIndex,
-        isConfirmButtonEnabled: true,
-      ));
+    if (savedNotificationId == null) {
+      return;
     }
+    savedNotification = await getSavedNotificationUseCase(savedNotificationId!); //Todo return if null
+    String? hours = savedNotification?.time.hour.toString().padLeft(2, '0');
+    String? minutes = savedNotification?.time.minute.toString().padLeft(2, '0');
+    emit(state.copyWith(
+      message: savedNotification?.message,
+      hoursFirstDigit: '$zeroWidthSpace${hours?[0]}',
+      hoursSecondDigit: '$zeroWidthSpace${hours?[1]}',
+      minutesFirstDigit: '$zeroWidthSpace${minutes?[0]}',
+      minutesSecondDigit: '$zeroWidthSpace${minutes?[1]}',
+      iconIndex: savedNotification?.iconIdIndex,
+      iconBackgroundIndex: savedNotification?.colorIndex,
+      iconIndexPicker: savedNotification?.iconIdIndex,
+      iconBackgroundIndexPicker: savedNotification?.colorIndex,
+      isConfirmButtonEnabled: true,
+    ));
   }
 }

@@ -1,15 +1,12 @@
 import 'package:noti/domain/models/recurring_notification.dart';
-import 'package:noti/domain/repository/repository.dart';
-import 'package:noti/domain/use_cases/use_case.dart';
+import 'package:noti/domain/repository/recurring_notifications_repository.dart';
 
-class GetRecurringNotificationsUseCase
-    extends UseCase<List<RecurringNotification>, int> {
-  GetRecurringNotificationsUseCase({required this.repository});
+class GetRecurringNotificationsUseCase {
+  GetRecurringNotificationsUseCase({required this.recurringNotificationsRepository});
 
-  final Repository repository;
+  final RecurringNotificationsRepository recurringNotificationsRepository;
 
-  @override
-  Future<List<RecurringNotification>> call(int params) async {
-    return repository.getRecurringNotifications(params);
+  Future<List<RecurringNotification>> call(int interval) async {
+    return recurringNotificationsRepository.getAllNotifications(interval);
   }
 }

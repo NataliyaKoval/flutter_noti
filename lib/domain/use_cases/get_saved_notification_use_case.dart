@@ -1,14 +1,12 @@
 import 'package:noti/domain/models/one_time_notification.dart';
-import 'package:noti/domain/repository/repository.dart';
-import 'package:noti/domain/use_cases/use_case.dart';
+import 'package:noti/domain/repository/one_time_notifications_repository.dart';
 
-class GetSavedNotificationUseCase extends UseCase<OneTimeNotification?, int> {
-  GetSavedNotificationUseCase({required this.repository});
+class GetSavedNotificationUseCase {
+  GetSavedNotificationUseCase({required this.oneTimeNotificationsRepository});
 
-  final Repository repository;
+  final OneTimeNotificationsRepository oneTimeNotificationsRepository;
 
-  @override
-  Future<OneTimeNotification?> call(int params) async {
-    return repository.getSavedNotification(params);
+  Future<OneTimeNotification?> call(int id) async {
+    return oneTimeNotificationsRepository.getSavedNotification(id);
   }
 }

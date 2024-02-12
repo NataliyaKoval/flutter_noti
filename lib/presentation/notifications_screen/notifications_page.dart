@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noti/consts/app_colors.dart';
 import 'package:noti/consts/image_assets.dart';
 import 'package:noti/consts/strings.dart';
-import 'package:noti/domain/repository/repository.dart';
+import 'package:noti/domain/repository/one_time_notifications_repository.dart';
 import 'package:noti/domain/use_cases/get_one_time_notifications_use_case.dart';
 import 'package:noti/domain/use_cases/remove_notification_use_case.dart';
 import 'package:noti/presentation/notifications_screen/widgets/custom_tab.dart';
@@ -27,10 +27,12 @@ class _NotificationsPageState extends State<NotificationsPage> {
     return BlocProvider(
       create: (context) => OneTimeTabCubit(
         getOneTimeNotificationsUseCase: GetOneTimeNotificationsUseCase(
-          repository: context.read<Repository>(),
+          oneTimeNotificationsRepository:
+              context.read<OneTimeNotificationsRepository>(),
         ),
         removeNotificationUseCase: RemoveNotificationUseCase(
-          repository: context.read<Repository>(),
+          oneTimeNotificationsRepository:
+              context.read<OneTimeNotificationsRepository>(),
         ),
       )..getOneTimeNotifications(),
       child: DefaultTabController(
@@ -87,9 +89,9 @@ class _NotificationsPageState extends State<NotificationsPage> {
                 ),
               ),
             ),
-            body: TabBarView(
+            body: const TabBarView(
               children: [
-                const OneTimeTab(),
+                OneTimeTab(),
                 RecurringTab(),
               ],
             ),

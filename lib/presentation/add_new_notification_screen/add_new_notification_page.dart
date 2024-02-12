@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noti/consts/app_colors.dart';
 import 'package:noti/consts/strings.dart';
 import 'package:noti/consts/time_input_id.dart';
-import 'package:noti/domain/repository/repository.dart';
+import 'package:noti/domain/repository/one_time_notifications_repository.dart';
 import 'package:noti/domain/use_cases/get_saved_notification_use_case.dart';
 import 'package:noti/domain/use_cases/save_notification_use_case.dart';
 import 'package:noti/presentation/add_new_notification_screen/bloc/add_new_notification_cubit.dart';
@@ -68,10 +68,12 @@ class _AddNewNotificationPageState extends State<AddNewNotificationPage> {
         AddNewNotificationCubit cubit = AddNewNotificationCubit(
           savedNotificationId: widget.id,
           saveNotificationUseCase: SaveNotificationUseCase(
-            repository: context.read<Repository>(),
+            oneTimeNotificationsRepository:
+                context.read<OneTimeNotificationsRepository>(),
           ),
           getSavedNotificationUseCase: GetSavedNotificationUseCase(
-            repository: context.read<Repository>(),
+            oneTimeNotificationsRepository:
+            context.read<OneTimeNotificationsRepository>(),
           ),
         );
 
@@ -89,9 +91,13 @@ class _AddNewNotificationPageState extends State<AddNewNotificationPage> {
           }
           if (state.isNotificationsPermissionSnackBarShown) {
             final snackBar = const SnackBar(
-              content: Text('Please allow notifications in your phone settings'),
+              content:
+                  Text('Please allow notifications in your phone settings'),
             );
-            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            ScaffoldMessenger.of(context).showSnackBar(snackBar).closed.then(
+                (value) => context
+                    .read<AddNewNotificationCubit>()
+                    .onNotificationsPermissionSnackBarHidden());
           }
         },
         child: Builder(
@@ -187,13 +193,15 @@ class _AddNewNotificationPageState extends State<AddNewNotificationPage> {
                                         AddNewNotificationState state,
                                       ) {
                                         return IconBottomSheet(
-                                          iconIndexPicker: state.iconIndexPicker,
+                                          iconIndexPicker:
+                                              state.iconIndexPicker,
                                           iconBackgroundIndexPicker:
                                               state.iconBackgroundIndexPicker,
                                           onColorTap: (int index) {
                                             context
                                                 .read<AddNewNotificationCubit>()
-                                                .setIconBackgroundIndexPicker(index);
+                                                .setIconBackgroundIndexPicker(
+                                                    index);
                                           },
                                           onIconTap: (int index) {
                                             context

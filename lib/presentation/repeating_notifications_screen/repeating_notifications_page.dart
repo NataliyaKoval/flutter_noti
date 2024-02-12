@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noti/consts/strings.dart';
-import 'package:noti/domain/repository/repository.dart';
+import 'package:noti/domain/repository/recurring_notifications_repository.dart';
 import 'package:noti/domain/use_cases/get_recurring_notifications_use_case.dart';
-import 'package:noti/domain/use_cases/remove_notification_use_case.dart';
+import 'package:noti/domain/use_cases/remove_recurring_notification_use_case.dart';
 import 'package:noti/presentation/add_recurring_notification_screen/add_recurring_notification_page.dart';
 import 'package:noti/presentation/notifications_screen/widgets/button_with_icon.dart';
 import 'package:noti/presentation/widgets/custom_app_bar.dart';
@@ -25,10 +25,12 @@ class RepeatingNotificationsPage extends StatelessWidget {
     return BlocProvider(
       create: (context) => RepeatingNotificationsCubit(
         getRecurringNotificationsUseCase: GetRecurringNotificationsUseCase(
-          repository: context.read<Repository>(),
+          recurringNotificationsRepository:
+              context.read<RecurringNotificationsRepository>(),
         ),
-        removeNotificationUseCase: RemoveNotificationUseCase(
-          repository: context.read<Repository>(),
+        removeRecurringNotificationUseCase: RemoveRecurringNotificationUseCase(
+          recurringNotificationsRepository:
+              context.read<RecurringNotificationsRepository>(),
         ),
         interval: interval,
       )..getNotifications(),

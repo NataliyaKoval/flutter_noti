@@ -1,23 +1,22 @@
-import 'package:noti/domain/repository/repository.dart';
-import 'package:noti/domain/use_cases/use_case.dart';
+import 'package:noti/domain/repository/one_time_notifications_repository.dart';
 
-class RemoveNotificationUseCase extends UseCase<void, RemoveNotificationParams> {
-  RemoveNotificationUseCase({required this.repository});
+class RemoveNotificationUseCase {
+  RemoveNotificationUseCase({required this.oneTimeNotificationsRepository});
 
-  final Repository repository;
+  final OneTimeNotificationsRepository oneTimeNotificationsRepository;
 
-  @override
-  Future<void> call(RemoveNotificationParams params) async {
-    repository.removeNotification(params.id, params.interval);
+  Future<void> call(int id) async {
+    oneTimeNotificationsRepository.removeNotification(id);
   }
 }
 
-class RemoveNotificationParams {
-  const RemoveNotificationParams({
-    required this.id,
-    this.interval,
-  });
-
-  final int id;
-  final int? interval;
-}
+//Todo: builder
+// class RemoveNotificationParams {
+//   const RemoveNotificationParams({
+//     required this.id,
+//     this.interval,
+//   });
+//
+//   final int id;
+//   final int? interval;
+// }
