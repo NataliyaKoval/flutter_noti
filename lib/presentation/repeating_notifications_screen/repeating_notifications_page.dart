@@ -5,7 +5,7 @@ import 'package:noti/domain/repository/recurring_notifications_repository.dart';
 import 'package:noti/domain/use_cases/get_recurring_notifications_use_case.dart';
 import 'package:noti/domain/use_cases/remove_recurring_notification_use_case.dart';
 import 'package:noti/presentation/add_recurring_notification_screen/add_recurring_notification_page.dart';
-import 'package:noti/presentation/notifications_screen/widgets/button_with_icon.dart';
+import 'package:noti/presentation/widgets/button_with_icon.dart';
 import 'package:noti/presentation/widgets/custom_app_bar.dart';
 import 'package:noti/presentation/widgets/notification_card.dart';
 import 'package:noti/presentation/repeating_notifications_screen/bloc/repeating_notifications_cubit.dart';
@@ -75,18 +75,21 @@ class RepeatingNotificationsPage extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 34, top: 24),
-                      child: ButtonWithIcon(onPressed: () async {
-                        await Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => AddRecurringNotificationPage(
-                            interval: interval,
-                            title: Strings.addNewStrings.title,
-                          ),
-                        ));
-                        if (!context.mounted) return;
-                        context
-                            .read<RepeatingNotificationsCubit>()
-                            .getNotifications();
-                      }),
+                      child: ButtonWithIcon(
+                          text: Strings.notificationsScreenStrings.addNew,
+                          onPressed: () async {
+                            await Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                                  AddRecurringNotificationPage(
+                                interval: interval,
+                                title: Strings.addNewStrings.title,
+                              ),
+                            ));
+                            if (!context.mounted) return;
+                            context
+                                .read<RepeatingNotificationsCubit>()
+                                .getNotifications();
+                          }),
                     ),
                   ],
                 );
