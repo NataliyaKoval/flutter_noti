@@ -1,7 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:noti/consts/app_colors.dart';
-import 'package:noti/consts/triggers.dart';
+import 'package:noti/presentation/trigger_screen/trigger_item.dart';
 import 'package:noti/presentation/trigger_screen/widgets/bold_list_tile.dart';
 import 'package:noti/presentation/trigger_screen/widgets/custom_list_tile.dart';
 import 'package:noti/presentation/trigger_screen/widgets/custom_expansion_tile.dart';
