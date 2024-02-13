@@ -4,7 +4,7 @@ import 'package:noti/consts/app_colors.dart';
 import 'package:noti/consts/strings.dart';
 import 'package:noti/consts/time_input_id.dart';
 import 'package:noti/presentation/login_screen/bloc/login_bloc.dart';
-import 'package:noti/presentation/login_screen/widgets/error_message.dart';
+import 'package:noti/presentation/login_screen/widgets/login_error_message.dart';
 import 'package:noti/presentation/widgets/big_filled_button.dart';
 import 'package:noti/presentation/notifications_screen/notifications_page.dart';
 import 'package:noti/presentation/widgets/custom_app_bar.dart';
@@ -67,8 +67,11 @@ class _LoginPageState extends State<LoginPage> {
           backgroundColor: AppColors.white,
           resizeToAvoidBottomInset: false,
           appBar: PreferredSize(
-              preferredSize: const Size.fromHeight(44),
-              child: CustomAppBar(title: Strings.loginPageStrings.title,)),
+            preferredSize: const Size.fromHeight(44),
+            child: CustomAppBar(
+              title: Strings.loginPageStrings.title,
+            ),
+          ),
           body: BlocBuilder<LoginBloc, LoginState>(
             builder: (context, state) {
               return Column(
@@ -109,23 +112,24 @@ class _LoginPageState extends State<LoginPage> {
                   TimeInputsRow(
                       hoursFirstDigitController: hoursFirstDigitController,
                       hoursSecondDigitController: hoursSecondDigitController,
-                      minutesFirstDigitController:
-                          minutesFirstDigitController,
+                      minutesFirstDigitController: minutesFirstDigitController,
                       minutesSecondDigitController:
                           minutesSecondDigitController,
                       onChanged: (TimeInputId id, String value) {
-                        context.read<LoginBloc>().add(InputChangedEvent(
-                            inputId: id, inputValue: value));
+                        context.read<LoginBloc>().add(
+                            InputChangedEvent(inputId: id, inputValue: value));
                       }),
                   Expanded(child: Container()),
                   AnimatedOpacity(
                     duration: const Duration(milliseconds: 500),
                     opacity: state.isErrorVisible ? 1 : 0,
-                    child: const ErrorMessage(),
+                    child: const LoginErrorMessage(),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        vertical: 32, horizontal: 16),
+                      vertical: 32,
+                      horizontal: 16,
+                    ),
                     child: BigFilledButton(
                       text: Strings.loginPageStrings.buttonText,
                       onPressed: state.isConfirmButtonEnabled
