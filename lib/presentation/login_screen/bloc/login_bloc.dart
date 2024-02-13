@@ -44,10 +44,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   Future<void> _setTimeFromInput(
       InputChangedEvent event, Emitter<LoginState> emit) async {
-    String value = event.inputValue;
-    if (value == '') {
-      value = zeroWidthSpace;
-    }
+    String value = switch (event.inputValue) {
+      '' => zeroWidthSpace,
+      _ => event.inputValue
+    };
     switch (event.inputId) {
       case TimeInputId.first:
         emit(state.copyWith(hoursFirstDigit: value));
@@ -76,8 +76,13 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   Future<void> _compareCurrentTimeAndInputTime(
       ConfirmButtonClickedEvent event, Emitter<LoginState> emit) async {
+    String hoursFirstDigit = state.hoursFirstDigit.substring(1);
+    String hoursSecondDigit = state.hoursSecondDigit.substring(1);
+    String minutesFirstDigit = state.minutesFirstDigit.substring(1);
+    String minutesSecondDigit = state.minutesSecondDigit.substring(1);
+
     if (formattedTime ==
-        '${state.hoursFirstDigit.substring(1)}${state.hoursSecondDigit.substring(1)}:${state.minutesFirstDigit.substring(1)}${state.minutesSecondDigit.substring(1)}') {
+        '$hoursFirstDigit$hoursSecondDigit:$minutesFirstDigit$minutesSecondDigit') {
       emit(state.copyWith(isConfirmed: true));
     } else {
       emit(state.copyWith(
