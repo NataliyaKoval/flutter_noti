@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noti/consts/app_colors.dart';
 import 'package:noti/consts/strings.dart';
-import 'package:noti/domain/repository/repository.dart';
+import 'package:noti/domain/repository/recurring_notifications_repository.dart';
 import 'package:noti/domain/use_cases/get_saved_recurring_notification_use_case.dart';
 import 'package:noti/domain/use_cases/save_recurring_notification_use_case.dart';
 import 'package:noti/presentation/widgets/big_filled_button.dart';
+import 'package:noti/presentation/widgets/custom_app_bar.dart';
 import 'package:noti/presentation/widgets/icon_bottom_sheet.dart';
 import 'package:noti/presentation/widgets/multiline_text_field.dart';
 import 'package:noti/presentation/widgets/notification_icon.dart';
@@ -51,13 +52,15 @@ class _AddRecurringNotificationPageState
     return BlocProvider(
       create: (context) => AddRecurringNotificationCubit(
         saveRecurringNotificationUseCase: SaveRecurringNotificationUseCase(
-          repository: context.read<Repository>(),
+          recurringNotificationsRepository:
+              context.read<RecurringNotificationsRepository>(),
         ),
         interval: widget.interval,
         id: widget.id,
         getSavedRecurringNotificationUseCase:
             GetSavedRecurringNotificationUseCase(
-          repository: context.read<Repository>(),
+          recurringNotificationsRepository:
+              context.read<RecurringNotificationsRepository>(),
         ),
       )..getSavedNotification(),
       child: BlocListener<AddRecurringNotificationCubit,
@@ -69,27 +72,29 @@ class _AddRecurringNotificationPageState
           if (state.isConfirmed == true) {
             Navigator.pop(context);
           }
+          if (state.isNotificationsPermissionSnackBarShown) {
+            final snackBar = SnackBar(
+              content: const Text(
+                  'Please allow notifications in your phone settings'),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          }
         },
         child: Builder(
           builder: (context) {
             return Scaffold(
+              backgroundColor: AppColors.white,
               resizeToAvoidBottomInset: false,
-              appBar: AppBar(
-                backgroundColor: AppColors.eerieBlack,
-                toolbarHeight: 44,
-                centerTitle: true,
-                title: Text(
-                  widget.title,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
+              appBar: PreferredSize(
+                preferredSize: const Size.fromHeight(44),
+                child: CustomAppBar(
+                  title: widget.title,
+                  leading: IconButton(
+                    icon: const Icon(Icons.arrow_back_ios),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
                   ),
-                ),
-                leading: IconButton(
-                  icon: const Icon(Icons.arrow_back_ios),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
                 ),
               ),
               body: Padding(
@@ -119,7 +124,6 @@ class _AddRecurringNotificationPageState
                         Row(
                           children: [
                             NotificationIcon(
-                              isIconChosen: state.isIconChosen,
                               iconBackgroundIndex: state.iconBackgroundIndex,
                               iconIndex: state.iconIndex,
                             ),
@@ -150,26 +154,28 @@ class _AddRecurringNotificationPageState
                                                   AddRecurringNotificationState
                                                       state) {
                                                 return IconBottomSheet(
-                                                  iconIndex: state.iconIndex,
-                                                  iconBackgroundIndex:
-                                                      state.iconBackgroundIndex,
+                                                  iconIndexPicker:
+                                                      state.iconIndexPicker,
+                                                  iconBackgroundIndexPicker: state
+                                                      .iconBackgroundIndexPicker,
                                                   onColorTap: (int index) {
                                                     context
                                                         .read<
                                                             AddRecurringNotificationCubit>()
-                                                        .setIconBackground(
+                                                        .setIconBackgroundIndexPicker(
                                                             index);
                                                   },
                                                   onIconTap: (int index) {
                                                     context
                                                         .read<
                                                             AddRecurringNotificationCubit>()
-                                                        .setIcon(index);
+                                                        .setIconIndexPicker(
+                                                            index);
                                                   },
                                                   onButtonPressed: () => context
                                                       .read<
                                                           AddRecurringNotificationCubit>()
-                                                      .displayIconData(),
+                                                      .setIconAndBackground(),
                                                 );
                                               },
                                             )),

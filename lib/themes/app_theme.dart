@@ -14,13 +14,17 @@ class AppTheme {
     ),
     listTileTheme: const ListTileThemeData(
       dense: true,
-      horizontalTitleGap: 0.0,
+      horizontalTitleGap: -4,
     ),
     expansionTileTheme: const ExpansionTileThemeData(
       textColor: AppColors.eerieBlack,
       iconColor: AppColors.eerieBlack,
       collapsedTextColor: AppColors.eerieBlack,
       collapsedIconColor: AppColors.eerieBlack,
+    ),
+    textSelectionTheme: const TextSelectionThemeData(
+      cursorColor: AppColors.eerieBlack,
+      selectionHandleColor: AppColors.eerieBlack,
     ),
   );
 }

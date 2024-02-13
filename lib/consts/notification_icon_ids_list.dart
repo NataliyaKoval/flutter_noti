@@ -1,4 +1,4 @@
-const iconIdsList = [
+const notificationIconIdsList = [
   'actions',
   'add_circle',
   'analytics',

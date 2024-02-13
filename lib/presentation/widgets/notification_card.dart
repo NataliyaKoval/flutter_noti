@@ -3,14 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:noti/consts/app_colors.dart';
 import 'package:noti/consts/icon_colors_list.dart';
-import 'package:noti/consts/icon_ids_list.dart';
 import 'package:noti/consts/image_assets.dart';
+import 'package:noti/consts/notification_icon_ids_list.dart';
 import 'package:noti/consts/strings.dart';
-import 'package:noti/consts/triggers.dart';
 import 'package:noti/presentation/add_new_notification_screen/add_new_notification_page.dart';
 import 'package:noti/presentation/add_recurring_notification_screen/add_recurring_notification_page.dart';
 import 'package:noti/presentation/one_time_tab/bloc/one_time_tab_cubit.dart';
 import 'package:noti/presentation/repeating_notifications_screen/bloc/repeating_notifications_cubit.dart';
+import 'package:noti/presentation/trigger_screen/trigger_items_list_1.dart';
+import 'package:noti/presentation/trigger_screen/trigger_items_list_2.dart';
 import 'package:noti/presentation/trigger_screen/trigger_page.dart';
 import 'package:noti/presentation/widgets/small_outlined_button.dart';
 
@@ -68,7 +69,7 @@ class NotificationCard extends StatelessWidget {
         }
       },
       child: Container(
-        padding: const EdgeInsets.only(left: 16, bottom: 14),
+        padding: const EdgeInsets.only(left: 16, bottom: 10),
         decoration: BoxDecoration(
           color: AppColors.ghostWhite,
           border: Border.all(color: AppColors.plumpPurple, width: 1),
@@ -84,7 +85,7 @@ class NotificationCard extends StatelessWidget {
                 ),
                 colorIndex != null && iconIndex != null
                     ? Padding(
-                        padding: const EdgeInsets.only(bottom: 3),
+                        padding: const EdgeInsets.only(bottom: 8),
                         child: Container(
                           width: 32,
                           height: 32,
@@ -95,7 +96,7 @@ class NotificationCard extends StatelessWidget {
                               color: iconColorsList[colorIndex!]),
                           child: Center(
                             child: SvgPicture.asset(
-                                'assets/icons/${iconIdsList[iconIndex!]}.svg', colorFilter: ColorFilter.mode(AppColors.plumpPurple, BlendMode.srcIn),  ),
+                                'assets/icons/${notificationIconIdsList[iconIndex!]}.svg', colorFilter: ColorFilter.mode(AppColors.plumpPurple, BlendMode.srcIn),  ),
                           ),
                         ),
                       )
@@ -106,7 +107,7 @@ class NotificationCard extends StatelessWidget {
                     Text(
                       Strings.notificationsScreenStrings.time,
                       style: const TextStyle(
-                          color: AppColors.sonicSilver, height: 1.4),
+                          color: AppColors.sonicSilver, height: 1.43),
                     ),
                     const SizedBox(
                       width: 4,
@@ -124,28 +125,35 @@ class NotificationCard extends StatelessWidget {
                 const SizedBox(
                   height: 8,
                 ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      Strings.notificationsScreenStrings.message,
-                      style: const TextStyle(
-                          color: AppColors.sonicSilver, height: 1.43),
-                    ),
-                    SizedBox(
-                      width: 4,
-                    ),
-                    Text(
-                      message,
-                      style: TextStyle(
-                        fontSize: 14,
-                        height: 1.43,
-                        fontWeight: FontWeight.w700,
+                Padding(
+                  padding: const EdgeInsets.only(right: 16),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        Strings.notificationsScreenStrings.message,
+                        style: const TextStyle(
+                            color: AppColors.sonicSilver, height: 1.43),
                       ),
-                    ),
-                  ],
+                      SizedBox(
+                        width: 4,
+                      ),
+                      Expanded(
+                        child: Text(
+                          message,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: 14,
+                            height: 1.43,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 12),
                 Padding(
                   padding: const EdgeInsets.only(right: 16),
                   child: Row(
@@ -159,7 +167,7 @@ class NotificationCard extends StatelessWidget {
                               MaterialPageRoute(
                                 builder: (context) => TriggerPage(
                                   title: 'Select trigger 1',
-                                  items: items1,
+                                  items: triggerItems1,
                                 ),
                               ),
                             );
@@ -178,7 +186,7 @@ class NotificationCard extends StatelessWidget {
                               MaterialPageRoute(
                                 builder: (context) => TriggerPage(
                                   title: 'Select trigger 2',
-                                  items: items2,
+                                  items: triggerItems2,
                                 ),
                               ),
                             );

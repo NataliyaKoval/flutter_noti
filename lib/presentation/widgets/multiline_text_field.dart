@@ -25,7 +25,6 @@ class MultilineTextField extends StatelessWidget {
           fontSize: 16,
           height: 1.5,
         ),
-        helperText: ' ',
         border: const OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(8.0)),
           borderSide: BorderSide(
@@ -61,19 +60,15 @@ class MultilineTextField extends StatelessWidget {
       ),
       minLines: 4,
       maxLines: 4,
-      cursorHeight: 24,
-      cursorColor: AppColors.eerieBlack,
+      cursorRadius: const Radius.circular(2),
       style: const TextStyle(
         fontSize: 16,
         height: 1.5,
         color: AppColors.eerieBlack,
       ),
-      keyboardType: TextInputType.multiline,
+      textInputAction: TextInputAction.next,
       textCapitalization: TextCapitalization.sentences,
       onChanged: onChanged,
-      // validator: (value) => value == null || value.isEmpty
-      //     ? Strings.addNewStrings.errorMessage
-      //     : null,
     );
   }
 }

@@ -35,7 +35,7 @@ class OneTimeTabCubit extends Cubit<OneTimeTabState> {
   }
 
   void removeOneTimeNotification(int id) {
-    removeNotificationUseCase(RemoveNotificationParams(id: id));
+    removeNotificationUseCase(id);
     AwesomeNotifications().cancelSchedule(id);
     emit(state.copyWith(
         list: List.of(state.list)..removeWhere((element) => element.id == id)));

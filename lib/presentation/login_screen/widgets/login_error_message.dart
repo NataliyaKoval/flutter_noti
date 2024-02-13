@@ -4,8 +4,8 @@ import 'package:noti/consts/app_colors.dart';
 import 'package:noti/consts/image_assets.dart';
 import 'package:noti/consts/strings.dart';
 
-class ErrorMessage extends StatelessWidget {
-  const ErrorMessage({super.key});
+class LoginErrorMessage extends StatelessWidget {
+  const LoginErrorMessage({super.key});
 
   @override
   Widget build(BuildContext context) {

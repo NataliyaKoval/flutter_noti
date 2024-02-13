@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noti/domain/models/recurring_notification.dart';
 import 'package:noti/domain/use_cases/get_saved_recurring_notification_use_case.dart';
 import 'package:noti/domain/use_cases/save_recurring_notification_use_case.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 part 'add_recurring_notification_state.dart';
 
@@ -17,17 +18,19 @@ class AddRecurringNotificationCubit
   }) : super(const AddRecurringNotificationState());
 
   final SaveRecurringNotificationUseCase saveRecurringNotificationUseCase;
-  final GetSavedRecurringNotificationUseCase getSavedRecurringNotificationUseCase;
+  final GetSavedRecurringNotificationUseCase
+      getSavedRecurringNotificationUseCase;
   final int interval;
   final int? id;
   RecurringNotification? savedNotification;
 
   void setMessage(String value) {
     emit(state.copyWith(message: value));
-    _enableConfirmButton();
+    _validateInput();
   }
 
-  void _enableConfirmButton() {
+  void _validateInput() {
+    emit(state.copyWith(isConfirmButtonEnabled: state.message.isNotEmpty));//Todo
     if (state.message.isNotEmpty) {
       emit(state.copyWith(isConfirmButtonEnabled: true));
     } else {
@@ -35,24 +38,32 @@ class AddRecurringNotificationCubit
     }
   }
 
-  void setIconBackground(int index) {
-    emit(state.copyWith(iconBackgroundIndex: index));
+  void setIconBackgroundIndexPicker(int index) {
+    emit(state.copyWith(iconBackgroundIndexPicker: index));
   }
 
-  void setIcon(int index) {
-    emit(state.copyWith(iconIndex: index));
+  void setIconIndexPicker(int index) {
+    emit(state.copyWith(iconIndexPicker: index));
   }
 
-  void displayIconData() {
-    emit(state.copyWith(isIconChosen: true));
+  void setIconAndBackground() {//Todo applySelected,,,
+    emit(state.copyWith(
+      iconIndex: state.iconIndexPicker,
+      iconBackgroundIndex: state.iconBackgroundIndexPicker,
+    ));
   }
 
   void createAndSaveNotification() async {
+    if (!await Permission.notification.request().isGranted) {
+      emit(state.copyWith(isNotificationsPermissionSnackBarShown: true));//Todo: hide snackbar
+      return;
+    }
     RecurringNotification notification = RecurringNotification(
-      id: savedNotification?.id ?? DateTime.now().millisecondsSinceEpoch.remainder(100000),
+      id: savedNotification?.id ??
+          DateTime.now().millisecondsSinceEpoch.remainder(100000),//todo utils
       message: state.message,
-      iconIdIndex: state.isIconChosen ? state.iconIndex : null,
-      colorIndex: state.isIconChosen ? state.iconBackgroundIndex : null,
+      iconIdIndex: state.iconIndex,
+      colorIndex: state.iconBackgroundIndex,
       interval: interval,
     );
 
@@ -64,7 +75,11 @@ class AddRecurringNotificationCubit
         body: notification.message,
         notificationLayout: NotificationLayout.Default,
       ),
-      schedule: NotificationInterval(interval: interval * 60, repeats: true),
+      schedule: NotificationInterval(
+        interval: interval * 60,//todo intervalSeconds
+        repeats: true,
+        preciseAlarm: true,
+      ),
     );
 
     await saveRecurringNotificationUseCase(notification);
@@ -78,8 +93,8 @@ class AddRecurringNotificationCubit
         message: savedNotification?.message,
         iconIndex: savedNotification?.iconIdIndex,
         iconBackgroundIndex: savedNotification?.colorIndex,
-        isIconChosen: savedNotification?.iconIdIndex != null &&
-            savedNotification?.colorIndex != null,
+        iconIndexPicker: savedNotification?.iconIdIndex,
+        iconBackgroundIndexPicker: savedNotification?.colorIndex,
         isConfirmButtonEnabled: true,
       ));
     }

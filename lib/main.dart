@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:noti/consts/app_colors.dart';
+import 'package:noti/consts/notification_channels.dart';
 import 'package:noti/consts/strings.dart';
 import 'package:noti/data/entity/one_time_notification_entity.dart';
 import 'package:noti/data/entity/recurring_notification_entity.dart';
@@ -19,20 +20,20 @@ Future<void> main() async {
   Hive.registerAdapter<RecurringNotificationEntity>(
       RecurringNotificationEntityAdapter());
   await Hive.openBox<OneTimeNotificationEntity>('OneTimeNotifications');
-  await Hive.openBox<RecurringNotificationEntity>('OneMinuteNotifications');
+  await Hive.openBox<RecurringNotificationEntity>('RecurringNotifications');
   await AwesomeNotifications().initialize(
     // set the icon to null if you want to use the default app icon
     null,
     [
       NotificationChannel(
-        channelKey: 'scheduled_channel',
+        channelKey: NotificationChannels.scheduledChannel,
         channelName: 'Scheduled Notifications',
         defaultColor: Colors.teal,
         importance: NotificationImportance.High,
         channelDescription: 'Notification channel for scheduled notifications',
       ),
       NotificationChannel(
-        channelKey: 'recurring_channel',
+        channelKey: NotificationChannels.recurringChannel,
         channelName: 'Recurring Notifications',
         defaultColor: Colors.teal,
         importance: NotificationImportance.High,

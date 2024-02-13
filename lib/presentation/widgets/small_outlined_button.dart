@@ -20,6 +20,7 @@ class SmallOutlinedButton extends StatelessWidget {
           vertical: 10,
         ),
         foregroundColor: AppColors.plumpPurple,
+        backgroundColor: AppColors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         side: const BorderSide(
           width: 1,
@@ -33,6 +34,7 @@ class SmallOutlinedButton extends StatelessWidget {
           fontSize: 14,
           height: 1.43,
           fontWeight: FontWeight.w700,
+          leadingDistribution: TextLeadingDistribution.even,
         ),
       ),
     );

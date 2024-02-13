@@ -10,18 +10,21 @@ class CustomExpansionTile extends StatefulWidget {
     required this.title,
     required this.children,
     required this.lineVisibility,
+    required this.isFirstItem,
   });
 
   final String title;
   final List<Widget> children;
   final LineVisibility lineVisibility;
+  final bool isFirstItem;
 
   @override
   State<CustomExpansionTile> createState() => _CustomExpansionTileState();
 }
 
 class _CustomExpansionTileState extends State<CustomExpansionTile> {
-  bool isChecked = false;
+  bool _isChecked = false;
+  bool _isExpanded = false;
 
   @override
   Widget build(BuildContext context) {
@@ -37,49 +40,83 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> {
             ),
           ),
         ),
-        Padding(
+        Container(
           padding: widget.lineVisibility == LineVisibility.full ||
                   widget.lineVisibility == LineVisibility.partial
-              ? const EdgeInsets.only(left: 42)
+              ? const EdgeInsets.only(left: 39)
               : const EdgeInsets.only(left: 0),
-          child: ExpansionTile(
-            controlAffinity: ListTileControlAffinity.leading,
-            trailing: InkWell(
-              customBorder: CircleBorder(),
-              onTap: () {
+          child: Theme(
+            data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+            child: ExpansionTile(
+              shape: _buildBorder(),
+              tilePadding: widget.lineVisibility == LineVisibility.full ||
+                      widget.lineVisibility == LineVisibility.partial
+                  ? const EdgeInsets.only(left: 13, right: 16, top: 3, bottom: 3)
+                  : const EdgeInsets.symmetric(horizontal: 16, vertical: 3),
+              controlAffinity: ListTileControlAffinity.leading,
+              leading: AnimatedRotation(
+                turns: _isExpanded ? .5 : 0,
+                duration: const Duration(milliseconds: 300),
+                child: SvgPicture.asset(
+                  ImageAssets.expandMore,
+                  colorFilter: const ColorFilter.mode(
+                      AppColors.plumpPurple, BlendMode.srcIn),
+                ),
+              ),
+              trailing: InkWell(
+                customBorder: CircleBorder(),
+                onTap: () {
+                  setState(() {
+                    _isChecked = !_isChecked;
+                  });
+                },
+                child: _isChecked
+                    ? SvgPicture.asset(ImageAssets.checkbox)
+                    : Container(
+                        height: 24,
+                        width: 24,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: AppColors.antiFlashWhite,
+                          border: Border.all(color: AppColors.platinum),
+                        ),
+                      ),
+              ),
+              title: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 0),
+                child: Text(
+                  widget.title,
+                  maxLines: 4,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    height: 1.5,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+              children: widget.children,
+              onExpansionChanged: (value) {
                 setState(() {
-                  isChecked = !isChecked;
+                  _isExpanded = value;
                 });
               },
-              child: isChecked
-                  ? SvgPicture.asset(ImageAssets.checkbox)
-                  : Container(
-                height: 24,
-                width: 24,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: AppColors.antiFlashWhite,
-                ),
-              ),
             ),
-            title: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Text(
-                widget.title,
-                maxLines: 4,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontSize: 16,
-                  height: 1.5,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ),
-            children: widget.children,
+            //),
           ),
-        ),
+        )
       ],
     );
+  }
+
+  _buildBorder() {
+    if (widget.isFirstItem) {
+      return Border(
+        top: BorderSide(
+          color: AppColors.antiFlashWhite,
+        ),
+      );
+    }
   }
 
   Widget _displayLine() {
@@ -87,7 +124,7 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> {
       return Stack(
         children: [
           const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 27),
+              padding: EdgeInsets.only(left: 27, right: 11),
               child: VerticalDivider(
                 color: AppColors.antiFlashWhite,
                 width: 1,
@@ -104,8 +141,10 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> {
                   decoration: BoxDecoration(
                     color: AppColors.white,
                     shape: BoxShape.circle,
-                    border:
-                        Border.all(width: 1, color: AppColors.antiFlashWhite),
+                    border: Border.all(
+                      width: 1,
+                      color: AppColors.platinum,
+                    ),
                   ),
                 ),
                 const SizedBox(
@@ -150,7 +189,7 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> {
                     shape: BoxShape.circle,
                     border: Border.all(
                       width: 1,
-                      color: AppColors.antiFlashWhite,
+                      color: AppColors.platinum,
                     ),
                   ),
                 ),

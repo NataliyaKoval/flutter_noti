@@ -32,7 +32,7 @@ class BigFilledButton extends StatelessWidget {
           style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w700,
-            //height: 1.5,
+            height: 1.5,
             color: AppColors.white,
           ),
         ),
