@@ -12,4 +12,7 @@ class AddNewStrings {
   String get backgroundColors => 'Background colors';
   String get selectIcons => 'Select icons';
   String get saveButtonText => 'Save changes';
+
+  String get errorSnackBarText => 'Something went wrong';
+  String get permissionSnackBarText => 'Please allow notifications in your phone settings';
 }

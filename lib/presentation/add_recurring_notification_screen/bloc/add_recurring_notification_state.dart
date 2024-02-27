@@ -11,6 +11,7 @@ class AddRecurringNotificationState {
     this.iconBackgroundIndexPicker = 0,
     this.isConfirmed = false,
     this.isNotificationsPermissionSnackBarShown = false,
+    this.isErrorSnackBarShown = false,
   });
 
   final String message;
@@ -21,6 +22,7 @@ class AddRecurringNotificationState {
   final int iconBackgroundIndexPicker;
   final bool isConfirmed;
   final bool isNotificationsPermissionSnackBarShown;
+  final bool isErrorSnackBarShown;
 
   AddRecurringNotificationState copyWith({
     String? message,
@@ -31,6 +33,7 @@ class AddRecurringNotificationState {
     int? iconBackgroundIndexPicker,
     bool? isConfirmed,
     bool? isNotificationsPermissionSnackBarShown,
+    bool? isErrorSnackBarShown,
   }) {
     return AddRecurringNotificationState(
       message: message ?? this.message,
@@ -45,6 +48,7 @@ class AddRecurringNotificationState {
       isNotificationsPermissionSnackBarShown:
           isNotificationsPermissionSnackBarShown ??
               this.isNotificationsPermissionSnackBarShown,
+      isErrorSnackBarShown: isErrorSnackBarShown ?? this.isErrorSnackBarShown,
     );
   }
 }

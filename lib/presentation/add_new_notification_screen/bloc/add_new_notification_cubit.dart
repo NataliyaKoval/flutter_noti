@@ -8,6 +8,7 @@ import 'package:noti/consts/zero_width_space.dart';
 import 'package:noti/domain/models/one_time_notification.dart';
 import 'package:noti/domain/use_cases/get_saved_notification_use_case.dart';
 import 'package:noti/domain/use_cases/save_notification_use_case.dart';
+import 'package:noti/utils/create_notification_id.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 part 'add_new_notification_state.dart';
@@ -94,8 +95,7 @@ class AddNewNotificationCubit extends Cubit<AddNewNotificationState> {
     DateTime time = DateTime(now.year, now.month, now.day, hours, minutes);
 
     OneTimeNotification notification = OneTimeNotification(
-      id: savedNotification?.id ??
-          DateTime.now().millisecondsSinceEpoch.remainder(10000),
+      id: savedNotification?.id ?? createNotificationId(),
       time: time,
       message: state.message,
       iconIdIndex: state.iconIndex,

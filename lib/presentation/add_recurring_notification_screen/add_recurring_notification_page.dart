@@ -55,8 +55,8 @@ class _AddRecurringNotificationPageState
           recurringNotificationsRepository:
               context.read<RecurringNotificationsRepository>(),
         ),
-        interval: widget.interval,
-        id: widget.id,
+        intervalMinutes: widget.interval,
+        savedNotificationId: widget.id,
         getSavedRecurringNotificationUseCase:
             GetSavedRecurringNotificationUseCase(
           recurringNotificationsRepository:
@@ -73,11 +73,26 @@ class _AddRecurringNotificationPageState
             Navigator.pop(context);
           }
           if (state.isNotificationsPermissionSnackBarShown) {
-            final snackBar = SnackBar(
-              content: const Text(
-                  'Please allow notifications in your phone settings'),
+            final permissionSnackBar = SnackBar(
+              content: Text(Strings.addNewStrings.permissionSnackBarText),
             );
-            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            ScaffoldMessenger.of(context)
+                .showSnackBar(permissionSnackBar)
+                .closed
+                .then((value) => context
+                    .read<AddRecurringNotificationCubit>()
+                    .onNotificationsPermissionSnackBarHidden());
+          }
+          if (state.isErrorSnackBarShown) {
+            final errorSnackBar = SnackBar(
+              content: Text(Strings.addNewStrings.errorSnackBarText),
+            );
+            ScaffoldMessenger.of(context)
+                .showSnackBar(errorSnackBar)
+                .closed
+                .then((value) => context
+                    .read<AddRecurringNotificationCubit>()
+                    .onErrorSnackBarHidden());
           }
         },
         child: Builder(
@@ -175,7 +190,7 @@ class _AddRecurringNotificationPageState
                                                   onButtonPressed: () => context
                                                       .read<
                                                           AddRecurringNotificationCubit>()
-                                                      .setIconAndBackground(),
+                                                      .applySelectedIconAndBackground(),
                                                 );
                                               },
                                             )),
