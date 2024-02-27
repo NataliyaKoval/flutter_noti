@@ -5,7 +5,7 @@ class LoginState {
   const LoginState({
     required this.currentTime,
     this.isConfirmButtonEnabled = false,
-    this.isConfirmed = false,
+    this.isVerified = false,
     this.isErrorVisible = false,
     this.hoursFirstDigit = zeroWidthSpace,
     this.hoursSecondDigit = zeroWidthSpace,
@@ -15,7 +15,7 @@ class LoginState {
 
   final String currentTime;
   final bool isConfirmButtonEnabled;
-  final bool isConfirmed;
+  final bool isVerified;
   final bool isErrorVisible;
   final String hoursFirstDigit;
   final String hoursSecondDigit;
@@ -25,7 +25,7 @@ class LoginState {
   LoginState copyWith({
     String? currentTime,
     bool? isConfirmButtonEnabled,
-    bool? isConfirmed,
+    bool? isVerified,
     bool? isErrorVisible,
     String? hoursFirstDigit,
     String? hoursSecondDigit,
@@ -36,7 +36,7 @@ class LoginState {
       currentTime: currentTime ?? this.currentTime,
       isConfirmButtonEnabled:
           isConfirmButtonEnabled ?? this.isConfirmButtonEnabled,
-      isConfirmed: isConfirmed ?? this.isConfirmed,
+      isVerified: isVerified ?? this.isVerified,
       isErrorVisible: isErrorVisible ?? this.isErrorVisible,
       hoursFirstDigit: hoursFirstDigit ?? this.hoursFirstDigit,
       hoursSecondDigit: hoursSecondDigit ?? this.hoursSecondDigit,

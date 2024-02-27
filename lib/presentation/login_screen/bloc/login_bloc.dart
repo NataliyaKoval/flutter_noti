@@ -20,7 +20,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     _currentTimeSubscription = currentTime().listen(_onCurrentTimeTicked);
     on<CurrentTimeTickedEvent>(_setCurrentTime);
     on<InputChangedEvent>(_setTimeFromInput);
-    on<ConfirmButtonClickedEvent>(_compareCurrentTimeAndInputTime);
+    on<ConfirmButtonClickedEvent>(_verifyInputTime);
   }
 
   late final StreamSubscription _currentTimeSubscription;
@@ -74,7 +74,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     }
   }
 
-  Future<void> _compareCurrentTimeAndInputTime(
+  Future<void> _verifyInputTime(
       ConfirmButtonClickedEvent event, Emitter<LoginState> emit) async {
     String hoursFirstDigit = state.hoursFirstDigit.substring(1);
     String hoursSecondDigit = state.hoursSecondDigit.substring(1);
@@ -83,7 +83,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
     if (formattedTime ==
         '$hoursFirstDigit$hoursSecondDigit:$minutesFirstDigit$minutesSecondDigit') {
-      emit(state.copyWith(isConfirmed: true));
+      emit(state.copyWith(isVerified: true));
     } else {
       emit(state.copyWith(
         isErrorVisible: true,

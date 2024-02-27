@@ -54,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
             minutesSecondDigitController.text = state.minutesSecondDigit;
           });
 
-          if (state.isConfirmed == true) {
+          if (state.isVerified == true) {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
