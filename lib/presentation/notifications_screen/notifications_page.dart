@@ -6,7 +6,7 @@ import 'package:noti/consts/strings.dart';
 import 'package:noti/domain/repository/one_time_notifications_repository.dart';
 import 'package:noti/domain/use_cases/get_one_time_notifications_use_case.dart';
 import 'package:noti/domain/use_cases/remove_notification_use_case.dart';
-import 'package:noti/presentation/notifications_screen/widgets/custom_tab.dart';
+import 'package:noti/presentation/notifications_screen/widgets/notifications_tab.dart';
 import 'package:noti/presentation/one_time_tab/bloc/one_time_tab_cubit.dart';
 import 'package:noti/presentation/one_time_tab/one_time_tab.dart';
 import 'package:noti/presentation/recurring_tab/recurring_tab.dart';
@@ -62,12 +62,12 @@ class _NotificationsPageState extends State<NotificationsPage> {
                       ),
                       child: TabBar(
                         tabs: [
-                          CustomTab(
+                          NotificationsTab(
                             text: Strings.notificationsScreenStrings.firstTab,
                             iconData: ImageAssets.timerTab,
                             isActive: activeTab == 0,
                           ),
-                          CustomTab(
+                          NotificationsTab(
                             text: Strings.notificationsScreenStrings.secondTab,
                             iconData: ImageAssets.recursion,
                             isActive: activeTab == 1,

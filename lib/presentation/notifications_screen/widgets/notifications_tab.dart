@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:noti/consts/app_colors.dart';
 
-class CustomTab extends StatelessWidget {
-  const CustomTab({
+class NotificationsTab extends StatelessWidget {
+  const NotificationsTab({
     super.key,
     required this.text,
     required this.iconData,
