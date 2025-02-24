@@ -3,18 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noti/consts/strings.dart';
 import 'package:noti/presentation/add_new_notification_screen/add_new_notification_page.dart';
+import 'package:noti/presentation/one_time_notifications_tab/bloc/one_time_notifications_tab_cubit.dart';
 import 'package:noti/presentation/widgets/button_with_icon.dart';
 import 'package:noti/presentation/widgets/notification_card.dart';
-import 'package:noti/presentation/one_time_tab/bloc/one_time_tab_cubit.dart';
 
-class OneTimeTab extends StatefulWidget {
-  const OneTimeTab({super.key});
+class OneTimeNotificationsTab extends StatefulWidget {
+  const OneTimeNotificationsTab({super.key});
 
   @override
-  State<OneTimeTab> createState() => _OneTimeTabState();
+  State<OneTimeNotificationsTab> createState() =>
+      _OneTimeNotificationsTabState();
 }
 
-class _OneTimeTabState extends State<OneTimeTab> {
+class _OneTimeNotificationsTabState extends State<OneTimeNotificationsTab> {
   @override
   void initState() {
     super.initState();
@@ -32,13 +33,14 @@ class _OneTimeTabState extends State<OneTimeTab> {
   Future<void> onNotificationDisplayedMethod(
       ReceivedNotification receivedNotification) async {
     context
-        .read<OneTimeTabCubit>()
+        .read<OneTimeNotificationsTabCubit>()
         .removeOneTimeNotification(receivedNotification.id!);
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<OneTimeTabCubit, OneTimeTabState>(
+    return BlocBuilder<OneTimeNotificationsTabCubit,
+        OneTimeNotificationsTabState>(
       builder: (context, state) {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -59,7 +61,7 @@ class _OneTimeTabState extends State<OneTimeTab> {
                     colorIndex: state.list[index].colorIndex,
                     iconIndex: state.list[index].iconIdIndex,
                     onPressed: context
-                        .read<OneTimeTabCubit>()
+                        .read<OneTimeNotificationsTabCubit>()
                         .removeOneTimeNotification,
                   ),
                 ),
@@ -74,7 +76,7 @@ class _OneTimeTabState extends State<OneTimeTab> {
                         ));
                         if (!context.mounted) return;
                         context
-                            .read<OneTimeTabCubit>()
+                            .read<OneTimeNotificationsTabCubit>()
                             .getOneTimeNotifications();
                       }),
                 ),

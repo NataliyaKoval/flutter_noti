@@ -8,7 +8,7 @@ import 'package:noti/consts/notification_icon_ids_list.dart';
 import 'package:noti/consts/strings.dart';
 import 'package:noti/presentation/add_new_notification_screen/add_new_notification_page.dart';
 import 'package:noti/presentation/add_recurring_notification_screen/add_recurring_notification_page.dart';
-import 'package:noti/presentation/one_time_tab/bloc/one_time_tab_cubit.dart';
+import 'package:noti/presentation/one_time_notifications_tab/bloc/one_time_notifications_tab_cubit.dart';
 import 'package:noti/presentation/repeating_notifications_screen/bloc/repeating_notifications_cubit.dart';
 import 'package:noti/presentation/trigger_screen/trigger_items_list_1.dart';
 import 'package:noti/presentation/trigger_screen/trigger_items_list_2.dart';
@@ -65,7 +65,7 @@ class NotificationCard extends StatelessWidget {
             ),
           );
           if (!context.mounted) return;
-          context.read<OneTimeTabCubit>().getOneTimeNotifications();
+          context.read<OneTimeNotificationsTabCubit>().getOneTimeNotifications();
         }
       },
       child: Container(

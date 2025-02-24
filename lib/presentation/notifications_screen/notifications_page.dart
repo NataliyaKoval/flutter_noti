@@ -7,8 +7,8 @@ import 'package:noti/domain/repository/one_time_notifications_repository.dart';
 import 'package:noti/domain/use_cases/get_one_time_notifications_use_case.dart';
 import 'package:noti/domain/use_cases/remove_notification_use_case.dart';
 import 'package:noti/presentation/notifications_screen/widgets/notifications_tab.dart';
-import 'package:noti/presentation/one_time_tab/bloc/one_time_tab_cubit.dart';
-import 'package:noti/presentation/one_time_tab/one_time_tab.dart';
+import 'package:noti/presentation/one_time_notifications_tab/bloc/one_time_notifications_tab_cubit.dart';
+import 'package:noti/presentation/one_time_notifications_tab/one_time_notifications_tab.dart';
 import 'package:noti/presentation/recurring_tab/recurring_tab.dart';
 import 'package:noti/presentation/widgets/custom_app_bar.dart';
 
@@ -25,7 +25,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => OneTimeTabCubit(
+      create: (context) => OneTimeNotificationsTabCubit(
         getOneTimeNotificationsUseCase: GetOneTimeNotificationsUseCase(
           oneTimeNotificationsRepository:
               context.read<OneTimeNotificationsRepository>(),
@@ -76,7 +76,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                         onTap: (value) {
                           if (value == 0) {
                             context
-                                .read<OneTimeTabCubit>()
+                                .read<OneTimeNotificationsTabCubit>()
                                 .getOneTimeNotifications();
                           }
                           setState(() {
@@ -91,7 +91,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
             ),
             body: const TabBarView(
               children: [
-                OneTimeTab(),
+                OneTimeNotificationsTab(),
                 RecurringTab(),
               ],
             ),
